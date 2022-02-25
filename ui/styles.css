@@ -1,3 +1,44 @@
 body {
     font-family: 'Montserrat', sans-serif;
+    margin: 0;
+
+    font-size: 16px;
 }
+
+* {
+    box-sizing: border-box;
+}
+
+button {
+    color: #fff;
+    background-color: #000;
+    border-radius: 5px;
+    border-color: #fff;
+    padding: 10px 20px;
+
+    font-weight: 600;
+}
+
+/* HEADER */
+
+header {
+    background-color: black;
+    height: 55px;
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main__logo {
+    padding: 0 20px;
+    
+    
+}
+
+.header__right {
+    width: 20%;
+    align-content: space-between;
+    padding-top: 4px;
+}
+
