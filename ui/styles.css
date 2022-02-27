@@ -9,15 +9,6 @@ body {
     box-sizing: border-box;
 }
 
-button {
-    color: #fff;
-    background-color: #000;
-    border-radius: 5px;
-    border-color: #fff;
-    padding: 10px 20px;
-
-    font-weight: 600;
-}
 
 /* HEADER */
 
@@ -25,20 +16,176 @@ header {
     background-color: black;
     height: 55px;
     display: flex;
+    position: fixed;
 
     justify-content: space-between;
     align-items: center;
 }
 
-.main__logo {
+.header {
+    display: flex;
+    width: 100vw;
+    justify-content: space-between;
+}
+
+.white__logo {
     padding: 0 20px;
-    
-    
+}
+
+.black__logo {
+    display: none;
 }
 
 .header__right {
-    width: 20%;
-    align-content: space-between;
-    padding-top: 4px;
+    width: 250px;
+    height: 90%;
+    justify-content: space-between;
+    padding-top: 8px;
+    padding-right: 20px;
+    padding-left: 20px;
+    display: flex;
+    
 }
 
+.sign__up {
+    color: #11BF30;
+    border-color: #11BF30;
+    border-radius: 5px;
+    background-color: #000;
+    padding: 10px 20px;
+
+    font-weight: 600;
+}
+
+.sign__up:hover {
+    opacity: 0.9;
+}
+
+.log__in {
+    color: #fff;
+    border-color: #11BF30;
+    border-radius: 5px;
+    background-color: #11BF30;
+    padding: 10px 20px;
+
+    font-weight: 600;
+}
+
+.log__in:hover {
+    opacity: 0.9;
+}
+
+/* MAIN */
+
+main {
+    display: flex;
+}
+
+nav {
+    min-width: 264px;   
+}
+
+section {
+    width: 100%;
+}
+
+aside {
+    min-width: 250px;
+}
+
+/* SECTION */
+
+.filters {
+    display: flex;
+    
+}
+
+.filters__header {
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0;
+   
+
+}
+
+.active__filters {
+    display: flex;
+    padding: 0 20px;
+}
+
+.active__filter {
+    height: max-content;
+}
+
+.space {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+} 
+
+.arrow__down {
+    border: none;
+    background-color: #fff;
+    right: 0px;
+}
+
+/* FOOTER */
+
+footer {
+    display: flex;
+    padding: 0 5%;
+    justify-content: space-between;
+
+    font-weight: 200;
+    font-size: 14px;
+}
+
+
+
+@media (max-width: 500px) {
+    /* HEADER */
+    header {
+        background-color: #fff;
+    }
+    
+    .header {
+        justify-content: center;
+    }
+
+    .white__logo {
+        display: none;
+    }
+    .black__logo {
+        display: block;
+    }
+
+    .header__right {
+        position: fixed;
+        bottom: 20px;
+    }
+    
+    /* MAIN */
+    nav {
+        min-width: 0%;
+    }
+
+    aside {
+        min-width: 0%;
+    }
+
+    .active__filters {
+        display: block;
+    }
+
+    .sign__up {
+        display: none;
+    }
+
+    .log__in {
+        display: none;
+    }
+
+    /* FOOTER */
+    
+
+}
