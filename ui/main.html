@@ -10,16 +10,16 @@
 </head>
 <body>
     
-    <header>
-            <div class="header">
-                <img class="white__logo" src="/ui/img/whitelogo.svg" alt="logo">
-                <img class="black__logo" src="/ui/img/minilogo.svg" alt="logo">
+    <header class="header">
 
-                <div class="header__right">
-                    <button class="log__in">Log In</button>
-                    <button class="sign__up">Sign Up</button>
-                </div>
-            </div>
+        <img class="white__logo" src="/ui/img/whitelogo.svg" alt="logo">
+        <img class="black__logo" src="/ui/img/minilogo.svg" alt="logo">
+
+        <div class="header__right">
+            <button class="log__in">Log In</button>
+            <button class="sign__up">Sign Up</button>
+        </div>
+
             
     </header>
         
@@ -36,9 +36,15 @@
                         <div class="active__filter">17.02.2022-18.02.2022</div>
                         <div class="active__filter">seltikes</div>
                     </div>
-                    <button class="arrow__down">
-                        <img src="/ui/img/arrow-down.svg" alt="arrow-down">
-                    </button>
+                    <div class="filter__buttons">
+                        <button class="filters__reset">
+                            <span class="iconify" data-icon="carbon:filter-remove"></span>
+                        </button>
+                        <button class="arrow__down">
+                            <span class="iconify" data-icon="dashicons:arrow-down-alt2"></span>
+                        </button>
+                    </div>
+                    
                 </div>
             </article>
 
@@ -63,13 +69,13 @@
     <footer>
         <div class="main__panel">
             <div class="panel__item">
-                <img src="/ui/img/home.svg" alt="home">
+                <span class="iconify" data-icon="ant-design:home-filled"></span>
             </div>
             <div class="panel__item">
-                <img src="/ui/img/loop.svg" alt="loop">
+                <span class="iconify" data-icon="pepicons:loop"></span>
             </div>
             <div class="panel__item">
-                <img src="/ui/img/user.svg" alt="user">
+                <span class="iconify" data-icon="bxs:user"></span>
             </div>
         </div>
         <div class="footer">
@@ -79,6 +85,8 @@
             <span>27.02.2022</span>  
         </div>
     </footer>
+
+    <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
 
 </body>
 </html>
