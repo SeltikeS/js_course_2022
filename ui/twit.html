@@ -1,1 +1,115 @@
-twit
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700;900&display=swap" rel="stylesheet">
+    <title>LetsPlay</title>
+</head>
+<body>
+
+    <header class="header">
+
+        <img class="white__logo" src="/ui/img/whitelogo.svg" alt="logo">
+        <img class="black__logo" src="/ui/img/minilogo.svg" alt="logo">
+
+        <div class="header__right">
+            <button class="log__in">Log In</button>
+            <button class="sign__up">Sign Up</button>
+        </div>
+
+            
+    </header>
+
+    <main>
+        <nav></nav>
+
+        <section>
+            <article class="go__home">
+                <a class="go__home__ref" href="main.html">
+                    <span class="iconify" data-icon="ant-design:home-filled"></span>
+                </a>
+            </article>
+            <article class="twit">
+                <div class="twit__ref">
+                    <div class="twit__content">
+                        <div class="twit__header">
+                            <div>
+                                <h2 class="username">Seltikes</h2>
+                                <h3 class="date">17:40 01.03.2022</h3>
+                            </div>
+                            <div class="twit__icons">
+                                <button class="edit__twit">
+                                    <span class="iconify" data-icon="system-uicons:pen"></span>
+                                </button>
+                                <button class="delete__twit">
+                                    <span class="iconify" data-icon="akar-icons:cross"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <p>
+                            Бывшие разработчики Ведьмака 3 и  Cyberpunk 2077 основали новую студию и уже готовят мрачную 
+                            фэнтэзи RPG на Unreal Engine 5.
+                            Игра будет называться Rebel Wolves.
+                            #cdpr #witcher #cyberpunk2077 #rpg #rebel_wolves
+                        </p>
+                        <div class="comments">
+
+                            <div class="single__comment">
+                                <h3 class="comment__username">Seltikes</h3>
+                                <h3 class="date">17:40 01.03.2022</h3>
+                                <p class="comment__text">
+                                    Интересно будет посмотреть, что же у них в итоге получится. 
+                                    Пожелаем им удачи.
+                                </p>
+                            </div>
+                            <div class="single__comment">
+                                <h3 class="comment__username">Seltikes</h3>
+                                <h3 class="date">17:40 01.03.2022</h3>
+                                <p class="comment__text">
+                                    Интересно будет посмотреть, что же у них в итоге получится. 
+                                    Пожелаем им удачи.
+                                </p>
+                            </div>
+                            <form class="new__comment" action="">
+                                <input class="new__comment__input" type="text" placeholder="Leave new comment...">
+                                <input class="new__comment__button" type="submit" value="submit">
+                            </form>
+                            
+                        </div>
+                    </div>
+                </div> 
+            </article>
+
+        </section>
+
+        <aside></aside>
+
+    </main>
+
+    <footer>
+        <div class="main__panel">
+            <a class="panel__item" href="main.html">
+                <span class="iconify" data-icon="ant-design:home-filled"></span>
+            </a>
+            <div class="panel__item">
+                <span class="iconify" data-icon="pepicons:loop"></span>
+            </div>
+            <div class="panel__item">
+                <span class="iconify" data-icon="bxs:user"></span>
+            </div>
+        </div>
+        <div class="footer">
+            <span>LetsPlay</span>  
+            <span>Maxim Gorelikov</span>  
+            <span>pschenka@gmail.com</span>  
+            <span>01.03.2022</span>  
+        </div>
+    </footer>
+
+    <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
+
+</body>
+</html>

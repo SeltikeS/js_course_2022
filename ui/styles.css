@@ -25,6 +25,14 @@ body {
     box-sizing: border-box;
 }
 
+a:visited {
+    color: var(--black-color);
+}
+
+.iconify {
+    display: flex;
+}
+
 
 /* HEADER */
 
@@ -250,6 +258,57 @@ section {
     margin: 0;
 }
 
+.single__comment {
+    margin-left: var(--default-offset);
+    margin-top: 0.5rem;
+    border-bottom: 1px solid var(--grey-color);
+}
+
+.comment__username {
+    font-size: 1rem;
+    font-weight: 400;
+    margin: 0;  
+}
+
+.comment__text {
+    font-size: 14px;
+    padding: 0.5rem 0;
+    margin: 0;
+}
+
+.new__comment {
+    border-bottom: 1px solid var(--grey-color);
+    display: flex;
+    height: 1.5rem;
+    margin: 0 var(--default-offset);
+    width: calc(100% - var(--default-offset));
+}
+
+.new__comment__input {
+    border: none;
+    display: flex;
+    font: inherit;
+    font-size: 14px;
+    width: 85%;
+}
+
+.new__comment__button {
+    background-color: var(--white-color);
+    border: none;
+    color: var(--black-color);
+    display: flex;
+    font: inherit;
+    font-size: 14px;
+    opacity: 0.7;
+    min-width: min-content;
+    justify-content: center;
+    width: 15%;
+}
+
+.new__comment__button:hover {
+    background-color: var(--light-grey-color);
+}
+
 .twit__icons {
     display: flex;
 }
@@ -279,6 +338,32 @@ section {
     background-color: var(--light-grey-color);
     border-radius: 5px;
 }
+
+.go__home {
+    color: var(--black-color);
+    display: flex;
+    font-size: 2rem;
+    justify-content: center;
+    padding: var(--default-offset);
+    width: 100%;
+}
+
+.go__home:hover {
+    background-color: var(--light-grey-color);
+}
+
+.go__home:active {
+    opacity: 0.7;
+}
+
+.go__home__ref {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+
+
 
 
 /* FOOTER */
