@@ -301,7 +301,18 @@ footer {
     display: none;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 1024px) {
+    nav,
+    aside {
+        min-width: 0%;
+    }
+
+    .filters {
+        padding: 0 var(--default-offset);
+    }
+}
+
+@media (max-width: 768px) {
     /* HEADER */
     header {
         background-color: var(--white-color);
@@ -330,14 +341,6 @@ footer {
         padding: var(--default-offset);
     }
 
-    nav {
-        min-width: 0%;
-    }
-
-    aside {
-        min-width: 0%;
-    }
-
     .filters {
         display: none;
     }
@@ -362,7 +365,11 @@ footer {
     }
 
     .panel__item:hover {
-        background-color: var(--grey-color);
+        background-color: var(--light-grey-color);
+        opacity: 0.9;
+    }
+    .panel__item:active {
+        background-color: var(--white-color);
         opacity: 0.7;
     }
 
