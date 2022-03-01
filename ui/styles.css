@@ -1,7 +1,8 @@
 :root {
-    --black-color: black;
+    --black-color: #000;
     --green-color: #11BF30;
     --grey-color: #bfbfbf;
+    --light-grey-color: #eee;
     --white-color: white;
 
     --default-offset: 1rem;
@@ -50,6 +51,7 @@ header {
 .header__right {
     display: flex;
     justify-content: space-around;
+    padding: 0 calc(2 * var(--default-offset));
     width: 264px;
 }
 
@@ -67,6 +69,10 @@ header {
     opacity: 0.9;
 }
 
+.sign__up:active {
+    opacity: 0.7;
+}
+
 .log__in {
     background-color: var(--green-color);
     border: var(--green-color);
@@ -79,6 +85,10 @@ header {
 
 .log__in:hover {
     opacity: 0.9;
+}
+
+.log__in:active {
+    opacity: 0.7;
 }
 
 
@@ -115,7 +125,7 @@ section {
     display: flex;
     font-size: 1rem;
     font-weight: 400;
-    padding: var(--default-offset) 0;
+    padding: calc(var(--default-offset) + 2px) 0;
     margin: 0;
 }
 
@@ -155,7 +165,11 @@ section {
 }
 
 .arrow__down:hover {
-    background-color: var(--grey-color);
+    background-color: var(--light-grey-color);
+    border-radius: 5px;
+}
+
+.arrow__down:active {
     opacity: 0.7;
 }
 
@@ -168,8 +182,102 @@ section {
 }
 
 .filters__reset:hover {
-    background-color: var(--grey-color);
+    background-color: var(--light-grey-color);
+    border-radius: 5px;
+}
+
+.filters__reset:active {
     opacity: 0.7;
+}
+
+.show__more {
+    border-top: 2px solid var(--grey-color);
+    border-bottom: 2px solid var(--grey-color);
+    display: flex;
+    justify-content: center;
+}
+
+.show__more__button {
+    border: none;
+    background-color: var(--white-color);
+    font-size: 20px;
+    font-weight: 400;
+    padding: 1rem;
+    margin: 0;
+    width: 100%;
+}
+
+.show__more__button:active {
+    background-color: var(--light-grey-color); 
+    opacity: 0.9;
+}
+
+/* TWIT */
+.twit {
+    border-top: 2px solid var(--grey-color);
+}
+
+.twit__ref {
+    color: var(--black-color);
+    display: flex;
+    font-size: 1rem;
+    padding: var(--default-offset);
+    text-decoration: none;
+}
+
+.twit__header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.username {
+    font-size: 20px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.date {
+    font-size: 1rem;
+    font-weight: 200;
+    margin: 0;
+}
+
+.comments {
+    border-top: 1px solid var(--grey-color);
+    font-size: 1rem;
+    font-weight: 400;
+    padding-top: 1rem;
+    margin: 0;
+}
+
+.twit__icons {
+    display: flex;
+}
+
+.edit__twit {
+    align-items: center;
+    background-color: var(--white-color);
+    border: none;
+    display: flex;
+    font-size: 1.5rem;
+}
+
+.edit__twit:hover {
+    background-color: var(--light-grey-color);
+    border-radius: 5px;
+}
+
+.delete__twit {
+    align-items: center;
+    background-color: var(--white-color);
+    border: none;
+    display: flex;
+    font-size: 1.5rem;
+}
+
+.delete__twit:hover {
+    background-color: var(--light-grey-color);
+    border-radius: 5px;
 }
 
 
@@ -208,7 +316,8 @@ footer {
         display: none;
     }
     .black__logo {
-        display: block;
+        display: flex;
+        align-items: center;
     }
 
     .header__right {
@@ -217,7 +326,7 @@ footer {
     
     /* MAIN */
     main {
-        height: calc(100% - (2 * 4rem + 1rem));
+        height: calc(100% - (2 * var(--header-height) + var(--footer-height)));
         padding: var(--default-offset);
     }
 
@@ -229,13 +338,10 @@ footer {
         min-width: 0%;
     }
 
-    .active__filters {
-        display: block;
+    .filters {
+        display: none;
     }
 
-    .active__filter {
-        justify-content: center;
-    }
 
     /* FOOTER */
     .main__panel {
