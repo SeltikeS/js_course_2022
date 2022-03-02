@@ -28,7 +28,7 @@ p {
     display: flex;
     flex-flow: column;
     justify-content: space-between;
-    width: 460px;
+    width: 30.5rem;
 }
 
 .modal__header {
