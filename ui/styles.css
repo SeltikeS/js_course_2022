@@ -420,7 +420,8 @@ footer {
     width: 50%;
 }
 
-.signup__active {
+.signup__active,
+.login__active {
     align-items: center;
     border: 2px solid var(--white-color);
     border-top-left-radius: 5px;
@@ -435,7 +436,8 @@ footer {
     width: 100%;
 }
 
-.login__grey {
+.login__grey,
+.signup__grey {
     align-items: center;
     border: 2px solid var(--grey-color);
     border-top-left-radius: 5px;
@@ -453,7 +455,9 @@ footer {
 }
 
 .login__ref,
-.login__ref:visited {
+.login__ref:visited,
+.signin__ref,
+.signin__ref:visited {
     color: var(--grey-color);
     font-size: 20px;
     font-weight: 600;
