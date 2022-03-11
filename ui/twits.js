@@ -203,7 +203,9 @@ tweet.addTweet('A bc d #js #datamola');
 
 
 // Check getTweets
-console.log(tweet.getTweets(3, 6));
+console.log(tweet.getTweets());
+console.log(tweet.getTweets(0, 5));
+console.log(tweet.getTweets(5, 5));
 
 // Check filterConfig
 console.log(tweet.getTweets(0, 30, {author: 'SeltikeS'}));
@@ -214,15 +216,19 @@ console.log(tweet.getTweets(0, 30, {dateTo: new Date()}));
 
 // Check addTweet
 console.log(tweet.addTweet('Write text'));
+console.log(tweet.getTweets(0, 30));
 
 // Check editTweet
 console.log(tweet.editTweet('22', 'New text'));
+console.log(tweet.getTweets(0, 30));
 
 // Check removeTweet
 console.log(tweet.removeTweet('22'));
+console.log(tweet.getTweets(0, 30));
 
 // Check addComment
 console.log(tweet.addComment('1', 'new comment'));
+console.log(tweet.getTweets(0, 30));
 
 
 
