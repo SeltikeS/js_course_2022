@@ -10,7 +10,7 @@ arr.forEach(item => {
             sum = nSum;
         }
         return nSum;
-    }, 0)
+    }, 0);
     nArr.shift();
 })
 

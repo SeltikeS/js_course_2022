@@ -1,14 +1,11 @@
-;const tweetModul = (function() {
+;const tweet = (function() {
 
     // Prototypes and variables
     let user = 'SeltikeS';
-    const tweets = [];  
-
-
+    const tweets = []; 
+ 
     const tweet = { id: 0 };
     const comment = { id: 0 };
-    
-
 
     // Tweet functions
 
@@ -30,9 +27,15 @@
             if((filt.author) && (filt.author !== tw.author) ||
                (filt.dateTo < tw.createdAt) || 
                (filt.dateFrom > tw.createdAt) ||
-               (filt.hashtags) && (!tw.text.includes(filt.hashtags)) ||
                (filt.text) && (!tw.text.includes(filt.text))) {
                 return false;
+            }
+            if(filt.hashtags) {
+                for(tag of filt.hashtags) {
+                    if(!tw.text.includes(tag)) {
+                        return false;
+                    }
+                }
             }
             return true;
         }
@@ -173,48 +176,53 @@
         user = usr;
     }
 
-
-    
-    // Check results
-
-    for(let i = 0; i < 20; ++i) {
-        addTweet('Write text');
+    return {
+        user, 
+        getTweets, 
+        getTweet, 
+        validateTweet, 
+        addTweet, 
+        editTweet,
+        removeTweet,
+        validateComment,
+        addComment,
+        changeUser
     }
-
-    addTweet('A bc d #js #datamola');
-
-    // Check addTweet and getTweets
-    console.log(tweets);
-    console.log(getTweets(3, 6));
-
-    // Check filterConfig
-    console.log(getTweets(0, 30, {author: 'SeltikeS'}));
-    console.log(getTweets(0, 30, {text: 'bc'}));
-    console.log(getTweets(0, 30, {hashtags: '#js'}));
-    console.log(getTweets(0, 30, {dateFrom: null}));
-    console.log(getTweets(0, 30, {dateTo: new Date()}));
-
-    // Check validateTweet
-    console.log(validateTweet(tweets[0]));
-
-    // Check addTweet
-    console.log(addTweet('Write text'));
-
-    // Check editTweet
-    console.log(editTweet('22', 'New text'));
-    console.log(tweets);
-
-    // Check removeTweet
-    console.log(removeTweet('22'));
-    console.log(tweets);
-
-    // Check addComment
-    console.log(addComment('1', 'new comment'));
-    console.log(tweets);
 
 }());
 
 
+// Check results
+
+for(let i = 0; i < 20; ++i) {
+    tweet.addTweet('Write text');
+}
+
+tweet.addTweet('A bc d #js #datamola');
+
+
+
+// Check getTweets
+console.log(tweet.getTweets(3, 6));
+
+// Check filterConfig
+console.log(tweet.getTweets(0, 30, {author: 'SeltikeS'}));
+console.log(tweet.getTweets(0, 30, {text: 'bc'}));
+console.log(tweet.getTweets(0, 30, {hashtags: ['#js', '#datamola']}));
+console.log(tweet.getTweets(0, 30, {dateFrom: null}));
+console.log(tweet.getTweets(0, 30, {dateTo: new Date()}));
+
+// Check addTweet
+console.log(tweet.addTweet('Write text'));
+
+// Check editTweet
+console.log(tweet.editTweet('22', 'New text'));
+
+// Check removeTweet
+console.log(tweet.removeTweet('22'));
+
+// Check addComment
+console.log(tweet.addComment('1', 'new comment'));
 
 
 
