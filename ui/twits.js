@@ -12,32 +12,28 @@
 
     // Tweet functions
 
-    function getTweets(skip = 0, top = 10, filterConfig = {
-        author: null,
-        dateFrom: null,
-        dateTo: new Date(),
-        hashtags: null,
-        text: ""
+    function getTweets(
+        skip = 0, 
+        top = 10, 
+        filterConfig = {
+            author: null,
+            dateFrom: null,
+            dateTo: new Date(),
+            hashtags: null,
+            text: ""
     }) {
         const out = [];
         let skipCnt = skip;
         let topCnt = top;
 
         function filterConfigCheck(filt, tw) {
-
-            if((filt.author) && (filt.author !== tw.author)) {
+            if((filt.author) && (filt.author !== tw.author) ||
+               (filt.dateTo < tw.createdAt) || 
+               (filt.dateFrom > tw.createdAt) ||
+               (filt.hashtags) && (!tw.text.includes(filt.hashtags)) ||
+               (filt.text) && (!tw.text.includes(filt.text))) {
                 return false;
             }
-            if((filt.dateTo < tw.createdAt) || (filt.dateFrom > tw.createdAt)) {
-                return false;
-            }            
-            if((filt.hashtags) && (!tw.text.includes(filt.hashtags))) {
-                return false;
-            }
-            if((filt.text) && (!tw.text.includes(filt.text))) {
-                return false;
-            }
-
             return true;
         }
 
@@ -46,7 +42,6 @@
                 skipCnt--;
                 continue;
             }
-
             if(topCnt) {
                 if(filterConfigCheck(filterConfig, tweets[i])) {
                     out.push(tweets[i]);
@@ -66,7 +61,7 @@
                 return tweets[i];
             }
         }
-        return undefined;
+        return null;
     }  
 
     function validateTweet(tw) {
@@ -178,8 +173,9 @@
         user = usr;
     }
 
-    // Check results
 
+    
+    // Check results
 
     for(let i = 0; i < 20; ++i) {
         addTweet('Write text');
@@ -193,7 +189,7 @@
 
     // Check filterConfig
     console.log(getTweets(0, 30, {author: 'SeltikeS'}));
-    console.log(getTweets(0, 30, {text: 't'}));
+    console.log(getTweets(0, 30, {text: 'bc'}));
     console.log(getTweets(0, 30, {hashtags: '#js'}));
     console.log(getTweets(0, 30, {dateFrom: null}));
     console.log(getTweets(0, 30, {dateTo: new Date()}));
