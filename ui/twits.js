@@ -2,10 +2,166 @@
 
     // Prototypes and variables
     let user = 'SeltikeS';
-    const tweets = []; 
  
     const tweet = { id: 0 };
     const comment = { id: 0 };
+
+    const tweets = [{
+        id: String(++tweet.id),
+        text: "It's my first tweet",
+        createdAt: new Date("2021-12-12T22:02:02"),
+        author: "SeltikeS",
+        comments: []
+    }, {
+        id: String(++tweet.id),
+        text: "Happy New Year!!! #newyear",
+        createdAt: new Date("2021-12-31T23:59:00"),
+        author: "SeltikeS",
+        comments: []  
+    }, {
+        id: String(++tweet.id),
+        text: "OMG, it was crazy",
+        createdAt: new Date("2022-01-01T12:00:00"),
+        author: "Dora",
+        comments: [{ 
+            id: String(++comment.id),
+            text: "Yeeee",
+            createdAt: new Date("2022-01-01T13:00:00"),
+            author: "Kira" 
+        }]  
+    }, {
+        id: String(++tweet.id),
+        text: "Hello, world #js",
+        createdAt: new Date("2022-01-01T18:10:00"),
+        author: "SeltikeS",
+        comments: []  
+    }, {
+        id: String(++tweet.id),
+        text: "Привет! #js #datamola",
+        createdAt: new Date("2022-01-10T10:10:00"),
+        author: "user123",
+        comments: [{ 
+            id: String(++comment.id),
+            text: "Hi",
+            createdAt: new Date("2022-01-10T11:10:00"),
+            author: "SeltikeS" 
+        }, { 
+            id: String(++comment.id),
+            text: "=)",
+            createdAt: new Date("2022-01-10T13:10:00"),
+            author: "user123" 
+        },]  
+    }, {
+        id: String(++tweet.id),
+        text: 'Netflix Buys Another Game Studio To Create "World Class" Games #netflix',
+        createdAt: new Date("2022-03-02T14:08:00"),
+        author: "Eddie Makuch",
+        comments: []  
+    }, {
+        id: String(++tweet.id),
+        text: 'Pokemon Scarlet And Violet Preorders Are Live #pokemon',
+        createdAt: new Date("2022-03-02T15:26:00"),
+        author: "Brendan Hesse",
+        comments: []  
+    }, {
+        id: String(++tweet.id),
+        text: 'Apex Legends Is Now Playable On Steam Deck #apex #steamdeck',
+        createdAt: new Date("2022-03-02T17:53:00"),
+        author: "Demi Williams",
+        comments: []  
+    }, {
+        id: String(++tweet.id),
+        text: 'Elden Ring Has A Massive Start In The UK #eldenring',
+        createdAt: new Date("2022-03-03T14:18:00"),
+        author: "George Yang",
+        comments: []  
+    }, {
+        id: String(++tweet.id),
+        text: 'Wrath Of The Lich King Classic Could Be In The Works #wow',
+        createdAt: new Date("2022-03-03T16:44:00"),
+        author: "Cameron Koch",
+        comments: [{ 
+            id: String(++comment.id),
+            text: "Wait it",
+            createdAt: new Date("2022-03-03T20:00:00"),
+            author: "SeltikeS" 
+        }]  
+    }, {
+        id: String(++tweet.id),
+        text: 'Free Guy Sequels Are Coming #freeguys',
+        createdAt: new Date("2022-03-03T16:57:00"),
+        author: "Eddie Makuch",
+        comments: []  
+    }, {
+        id: String(++tweet.id),
+        text: 'Disney Plus Adding Ad-Supported Version In US Later This Year #disney',
+        createdAt: new Date("2022-03-04T09:03:00"),
+        author: "David Wolinsky",
+        comments: []  
+    }, {
+        id: String(++tweet.id),
+        text: 'Microsoft Is Ceasing All "New Sales" In Russia #microsoft',
+        createdAt: new Date("2022-03-04T10:30:00"),
+        author: "Cameron Koch",
+        comments: []  
+    }, {
+        id: String(++tweet.id),
+        text: 'Russian Version Of New World No Longer In The Works #newworld',
+        createdAt: new Date("2022-03-04T14:28:00"),
+        author: "Cameron Koch",
+        comments: [{ 
+            id: String(++comment.id),
+            text: "Плак плак",
+            createdAt: new Date("2022-03-04T20:20:00"),
+            author: "Yammy" 
+        }]  
+    }, {
+        id: String(++tweet.id),
+        text: 'Elden Ring May Be Getting A PVP Arena DLC #eldenring',
+        createdAt: new Date("2022-03-07T18:08:00"),
+        author: "Demi Williams",
+        comments: []  
+    }, {
+        id: String(++tweet.id),
+        text: "Marvel's Guardians Of The Galaxy Did Not Meet Square Enix's Expectations #marvel #squareenix",
+        createdAt: new Date("2022-03-07T21:21:00"),
+        author: "Eddie Makuch",
+        comments: []  
+    }, {
+        id: String(++tweet.id),
+        text: "Lego Star Wars: The Skywalker Saga DLC Includes The Mandalorian And Young Lando #lego #starwars",
+        createdAt: new Date("2022-03-07T23:28:00"),
+        author: "Darryn Bonthuys",
+        comments: []  
+    }, {
+        id: String(++tweet.id),
+        text: 'Next Pokemon TCG Expansion Revolves Around Pokemon Legends: Arceus #pokemon',
+        createdAt: new Date("2022-03-08T14:07:00"),
+        author: "Brendan Hesse",
+        comments: []  
+    }, {
+        id: String(++tweet.id),
+        text: 'Elden Ring Speedrunner Beats Game In Less Than Three Hours #eldenring',
+        createdAt: new Date("2022-03-08T21:06:00"),
+        author: "Gabe Gurwin",
+        comments: [{ 
+            id: String(++comment.id),
+            text: "Wow. So fast",
+            createdAt: new Date("2022-03-08T23:06:00"),
+            author: "Dora" 
+        }]  
+    }, {
+        id: String(++tweet.id),
+        text: 'Homework deadline is comming #js #datamola',
+        createdAt: new Date("2022-03-10T09:06:00"),
+        author: "SeltikeS",
+        comments: [{ 
+            id: String(++comment.id),
+            text: "+++++++",
+            createdAt: new Date("2022-03-10T12:31:00"),
+            author: "Dora" 
+    }]  
+}]; 
 
     // Tweet functions
 
@@ -40,7 +196,7 @@
             return true;
         }
 
-        for(let i = 0; i < tweets.length; ++i) {
+        for(let i = tweets.length - 1; i >= 0; --i) {
             if(skipCnt) {
                 skipCnt--;
                 continue;
@@ -194,12 +350,6 @@
 
 // Check results
 
-for(let i = 0; i < 20; ++i) {
-    tweet.addTweet('Write text');
-}
-
-tweet.addTweet('A bc d #js #datamola');
-
 
 
 // Check getTweets
@@ -219,15 +369,15 @@ console.log(tweet.addTweet('Write text'));
 console.log(tweet.getTweets(0, 30));
 
 // Check editTweet
-console.log(tweet.editTweet('22', 'New text'));
+console.log(tweet.editTweet('21', 'New text'));
 console.log(tweet.getTweets(0, 30));
 
 // Check removeTweet
-console.log(tweet.removeTweet('22'));
+console.log(tweet.removeTweet('21'));
 console.log(tweet.getTweets(0, 30));
 
 // Check addComment
-console.log(tweet.addComment('1', 'new comment'));
+console.log(tweet.addComment('20', 'new comment'));
 console.log(tweet.getTweets(0, 30));
 
 
