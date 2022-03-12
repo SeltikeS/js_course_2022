@@ -13,11 +13,9 @@ function maxProfit(arr) {
         for(let j = arr.length; j > i; --j) {
             const fArr = arr.slice(i, j);
             const sArr = arr.slice(j, arr.length);
-            let calcHere = 0 - fArr[0] + fArr[fArr.length - 1];
-            let calcFnc = maxProfit(sArr);
-            if(maxValue < (calcHere + calcFnc)) {
-                maxValue = calcHere + calcFnc;
-            }
+            maxValue = Math.max(
+                maxValue, 
+                fArr[fArr.length-1] - fArr[0] + maxProfit(sArr));
         }
     }
     return maxValue;
