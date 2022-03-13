@@ -9,15 +9,15 @@ function maxProfit(arr) {
     if(arr.length === 0 || arr.length === 1) {
         return maxValue;
     }
-    for(let i = 0; i < arr.length - 1; ++i) {
-        for(let j = arr.length; j > i; --j) {
-            const fArr = arr.slice(i, j);
+    arr.forEach((item, index) => {
+        for(let j = arr.length; j > index; --j) {
+            const fArr = arr.slice(index, j);
             const sArr = arr.slice(j, arr.length);
             maxValue = Math.max(
                 maxValue, 
                 fArr[fArr.length-1] - fArr[0] + maxProfit(sArr));
         }
-    }
+    });
     return maxValue;
 }
 
