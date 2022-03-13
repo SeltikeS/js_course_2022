@@ -166,10 +166,10 @@
 
     // Template methods
     function filterConfigCheck(filt, tw) {
-        if(filt.author && (filt.author !== tw.author) ||
-        (filt.dateTo < tw.createdAt) || 
-        (filt.dateFrom > tw.createdAt) ||
-        filt.text && (!tw.text.toLowerCase().includes(filt.text.toLowerCase()))) {
+        if(filt.author && !tw.author.toLowerCase().includes(filt.author.toLowerCase()) ||
+        filt.dateTo < tw.createdAt || 
+        filt.dateFrom > tw.createdAt ||
+        filt.text && !tw.text.toLowerCase().includes(filt.text.toLowerCase())) {
             return false;
         }
         if(filt.hashtags) {
@@ -283,7 +283,9 @@
 
     function removeTweet(id) {  
         for(let i = 0; i < tweets.length; ++i) {
-            if(validateTweet(tweets[i]) && tweets[i].id === id) {
+            if(validateTweet(tweets[i]) &&
+               tweets[i].author === user && 
+               tweets[i].id === id) {
                 tweets.splice(i, 1);
                 return true;
             }
