@@ -217,12 +217,7 @@
     }
 
     function getTweet(id) {
-        for(let i = 0; i < tweets.length; ++i) {
-            if(validateTweet(tweets[i]) && tweets[i].id === id) {
-                return tweets[i];
-            }
-        }
-        return null;
+        return tweets.find(tweet => validateTweet(tweet) && tweet.id === id);
     }  
 
     function validateTweet(tw) {
