@@ -217,12 +217,7 @@
     }
 
     function getTweet(id) {
-        for(let i = 0; i < tweets.length; ++i) {
-            if(validateTweet(tweets[i]) && tweets[i].id === id) {
-                return tweets[i];
-            }
-        }
-        return null;
+        return tweets.find(tweet => validateTweet(tweet) && tweet.id === id);
     }  
 
     function validateTweet(tw) {
@@ -282,13 +277,12 @@
     }
 
     function removeTweet(id) {  
-        for(let i = 0; i < tweets.length; ++i) {
-            if(validateTweet(tweets[i]) &&
-               tweets[i].author === user && 
-               tweets[i].id === id) {
-                tweets.splice(i, 1);
-                return true;
-            }
+        const index = tweets.findIndex(tweet => validateTweet(tweet) && 
+                                                tweet.author === user &&
+                                                tweet.id === id);
+        if(index >= 0) {
+            tweets.splice(index, 1);
+            return true;
         }
         return false;
     }
