@@ -373,6 +373,7 @@ class TweetCollection {
     }
 
     _user = 'SeltikeS';
+    
     get _user() {
         return this._user;
     }
@@ -389,12 +390,6 @@ class TweetCollection {
             return false;
         }
         if(filt.hashtags) {
-            // for(tag of filt.hashtags) {
-            //     if(!tw._text.toLowerCase().includes(tag.toLowerCase())) {
-            //         return false;
-            //     }
-            // } 
-            // Цикл for of почему-то не работает ??????????????????
             for(let i = 0; i < filt.hashtags.length; ++i) {
                 if(!tw._text.toLowerCase().includes(filt.hashtags[i].toLowerCase())) {
                     return false;
@@ -545,8 +540,6 @@ class Tweet extends Comment {
         }
         return false;
     }
-
-
 }
 
 
