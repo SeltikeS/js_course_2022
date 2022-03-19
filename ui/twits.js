@@ -351,6 +351,259 @@
 
 }());
 
+// Class Counter
+class Counter {
+    constructor() {
+        this._counter = 0;
+    }
+
+    next() {
+        return String(++this._counter);
+    }
+
+    reset() {
+        this._counter = 0;
+    }
+}
+
+// Class TweetCollection
+class TweetCollection {
+    constructor(tws) {
+        this._tweets = tws;
+    }
+
+    _user = 'SeltikeS';
+    get _user() {
+        return this._user;
+    }
+    set _user(newUser = 'SeltikeS') {
+        this._user = newUser;
+    }
+    _id = new Counter();
+
+    static filterConfigCheck(filt, tw) {
+        if(filt.author && !tw._author.toLowerCase().includes(filt.author.toLowerCase()) ||
+        filt.dateTo < tw._createdAt || 
+        filt.dateFrom > tw._createdAt ||
+        filt.text && !tw._text.toLowerCase().includes(filt.text.toLowerCase())) {
+            return false;
+        }
+        if(filt.hashtags) {
+            // for(tag of filt.hashtags) {
+            //     if(!tw._text.toLowerCase().includes(tag.toLowerCase())) {
+            //         return false;
+            //     }
+            // } 
+            // Цикл for of почему-то не работает ??????????????????
+            for(let i = 0; i < filt.hashtags.length; ++i) {
+                if(!tw._text.toLowerCase().includes(filt.hashtags[i].toLowerCase())) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    getPage(
+        skip = 0, 
+        top = 10, 
+        filterConfig = {
+            author: null,
+            dateFrom: null,
+            dateTo: new Date(),
+            hashtags: null,
+            text: ""
+    }) {
+        const out = [];
+        let skipCnt = skip;
+        let topCnt = top;
+
+        for(let i = this._tweets.length - 1; i >= 0; --i) {
+            if(TweetCollection.filterConfigCheck(filterConfig, this._tweets[i])) {
+                if(skipCnt) {
+                    skipCnt--;
+                    continue;
+                }
+                if(topCnt) {
+                    out.push(this._tweets[i]);
+                    topCnt--;
+                } else {
+                    break;
+                }
+            }
+            
+        }
+        
+        return out;
+    }
+
+    get(id) {
+        return this._tweets.find(tweet => Tweet.validate(tweet) && tweet.id === id);
+    } 
+
+    add(text) {
+        if(text) {
+            const newTweet = new Tweet(this._id.next(), text, this._user);
+            if(Tweet.validate(newTweet)) {
+                this._tweets.push(newTweet);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    edit(id, text) {
+        const tw = this.get(id);
+        if(Tweet.validate(tw) && tw._author === this._user) {
+            tw._text = text;
+            return true;
+        }
+        return false;
+    }
+
+    remove(id) {
+        const index = this._tweets.findIndex(tweet => Tweet.validate(tweet) && 
+                                                tweet._author === this._user &&
+                                                tweet._id === id);
+        if(index >= 0) {
+            this._tweets.splice(index, 1);
+            return true;
+        }
+        return false;
+    }
+
+    addAll(tws) {
+        tws.forEach(element => {
+            if(Tweet.validate(element)) {
+                this._tweets.push(element);
+            }
+        }); 
+    }
+
+    clear() {
+        this._tweets = [];
+    }
+}
+
+// Class Comment
+class Comment {
+    constructor(id, text, author) {
+        this._id = id;
+        this._text = text;
+        this._createdAt = new Date();
+        this._author = author;
+    }
+
+    get id() {
+        return this._id;
+    }
+    get createdAt() {
+        return this._createdAt;
+    }
+    get author() {
+        return this._author;
+    }
+
+    static validate(com) {
+        if(com &&
+           typeof(com._id) === 'string' && 
+           typeof(com._text) === 'string' && 
+           typeof(com._createdAt) === 'object' && 
+           typeof(com._author) === 'string') {
+            return true;
+        }
+        return false;
+    }
+}
+
+// Class Tweet
+class Tweet extends Comment {
+    constructor(id, text, author) {
+        super(id, text, author);
+        this._comments = [];
+    }
+
+    static validate(tw) {
+        if(tw &&
+           typeof(tw._id) === 'string' && 
+           typeof(tw._text) === 'string' && 
+           typeof(tw._createdAt) === 'object' && 
+           typeof(tw._author) === 'string' && 
+           typeof(tw._comments) === 'object') {
+            return true;
+        }
+        return false;
+    }
+
+    addComment(id, text) {
+        if(id && text) {
+            const newComment = new Comment(id, text, this._author);
+            if(Comment.validate(newComment)) {
+                this._comments.push(newComment);
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+}
+
+
+
+const tweetCollection = new TweetCollection([]);
+tweetCollection.add('first tweet');
+tweetCollection._tweets[0].addComment(tweetCollection._id.next(), 'new comment');
+tweetCollection.add('first tweet');
+tweetCollection._user = 'Sam';
+tweetCollection.add('first tweet');
+tweetCollection._user = 'SeltikeS';
+tweetCollection.add('first tweet');
+tweetCollection.add('first tweet');
+tweetCollection.add('first tweet');
+tweetCollection.add('first tweet');
+tweetCollection.add('first tweet');
+tweetCollection.add('first tweet');
+tweetCollection.add('first tweet');
+tweetCollection.add('first tweet');
+tweetCollection.add('first tweet');
+tweetCollection.add('first tweet');
+tweetCollection.add('first tweet');
+tweetCollection.add('first tweet');
+tweetCollection.add('first tweet');
+tweetCollection.add('first tweet');
+tweetCollection.add('first tweet');
+tweetCollection.add('first tweet');
+tweetCollection.add('first tweet');
+
+console.log(tweetCollection.get('1'));
+console.log(tweetCollection.get('3'));
+
+console.log(tweetCollection.edit('3', 'third tweet #js #DataMola'));
+console.log(tweetCollection.edit('4', 'third tweet'));
+console.log(tweetCollection.get('3'));
+
+console.log(tweetCollection);
+console.log(tweetCollection.remove('4'));
+console.log(tweetCollection.remove('5'));
+console.log(tweetCollection);
+tweetCollection.add('first tweet');
+
+console.log(tweetCollection.getPage(0, 1000));
+console.log(tweetCollection.getPage(10, 5));
+console.log(tweetCollection.getPage(0, 1000, {author: 'Sam'}));
+console.log(tweetCollection.getPage(0, 1000, {text: 'third'}));
+console.log(tweetCollection.getPage(0, 1000, {hashtags: ['js', 'data']}));
+
+tweetCollection.addAll([
+    new Tweet(tweetCollection._id.next(), '11111111', tweetCollection._user), 
+    new Tweet(tweetCollection._id.next(), '22222222', tweetCollection._user)
+]);
+console.log(tweetCollection.getPage(0, 1000));
+
+tweetCollection.clear();
+console.log(tweetCollection);
+
 
 
 
