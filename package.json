@@ -175,8 +175,8 @@
     "yallist": "^4.0.0"
   },
   "scripts": {
-    "lint": "eslint ./ui",
-    "lint:fix": "eslint ./ui --fix",
+    "lint": "eslint ./ui/js",
+    "lint:fix": "eslint ./ui/js --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
