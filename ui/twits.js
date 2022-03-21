@@ -1,3 +1,8 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-plusplus */
+
+// eslint-disable-next-line func-names
 const tweet = (function () {
   // Prototypes and variables
   let user = 'SeltikeS';
@@ -164,14 +169,16 @@ const tweet = (function () {
 
   // Template methods
   function filterConfigCheck(filt, tw) {
-    if (filt.author && !tw.author.toLowerCase().includes(filt.author.toLowerCase())
+    if ((filt.author && !tw.author.toLowerCase().includes(filt.author.toLowerCase()))
         || filt.dateTo < tw.createdAt
         || filt.dateFrom > tw.createdAt
-        || filt.text && !tw.text.toLowerCase().includes(filt.text.toLowerCase())) {
+        || (filt.text && !tw.text.toLowerCase().includes(filt.text.toLowerCase()))) {
       return false;
     }
     if (filt.hashtags) {
+      // eslint-disable-next-line no-undef
       for (tag of filt.hashtags) {
+        // eslint-disable-next-line no-undef
         if (!tw.text.toLowerCase().includes(tag.toLowerCase())) {
           return false;
         }
@@ -200,6 +207,7 @@ const tweet = (function () {
       if (filterConfigCheck(filterConfig, tweets[i])) {
         if (skipCnt) {
           skipCnt--;
+          // eslint-disable-next-line no-continue
           continue;
         }
         if (topCnt) {
@@ -214,10 +222,6 @@ const tweet = (function () {
     return out;
   }
 
-  function getTweet(id) {
-    return tweets.find((tweet) => validateTweet(tweet) && tweet.id === id);
-  }
-
   function validateTweet(tw) {
     if (tw
            && typeof (tw.id) === 'string'
@@ -228,6 +232,10 @@ const tweet = (function () {
       return true;
     }
     return false;
+  }
+
+  function getTweet(id) {
+    return tweets.find((tw) => validateTweet(tw) && tw.id === id);
   }
 
   function addTweet(text) {
@@ -275,9 +283,9 @@ const tweet = (function () {
   }
 
   function removeTweet(id) {
-    const index = tweets.findIndex((tweet) => validateTweet(tweet)
-                                                && tweet.author === user
-                                                && tweet.id === id);
+    const index = tweets.findIndex((tw) => validateTweet(tw)
+                                                && tw.author === user
+                                                && tw.id === id);
     if (index >= 0) {
       tweets.splice(index, 1);
       return true;
