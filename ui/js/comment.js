@@ -11,6 +11,14 @@ class Comment {
     return this._id;
   }
 
+  get text() {
+    return this._text;
+  }
+
+  set text(newText) {
+    this._text = newText;
+  }
+
   get createdAt() {
     return this._createdAt;
   }
@@ -21,10 +29,10 @@ class Comment {
 
   static validate(com) {
     if (com
-                && typeof (com._id) === 'string'
-                && typeof (com._text) === 'string'
-                && typeof (com._createdAt) === 'object'
-                && typeof (com._author) === 'string') {
+                && typeof (com.id) === 'string'
+                && typeof (com.text) === 'string'
+                && typeof (com.createdAt) === 'object'
+                && typeof (com.author) === 'string') {
       return true;
     }
     return false;

@@ -4,6 +4,10 @@ class Counter {
     this._counter = newCounter;
   }
 
+  get counter() {
+    return this._counter;
+  }
+
   next() {
     return String(++this._counter);
   }

@@ -1,10 +1,10 @@
 const tweetCollection = new TweetCollection([]);
 tweetCollection.add('first tweet');
-tweetCollection._tweets[0].addComment(tweetCollection._id.next(), 'new comment');
+tweetCollection.tweets[0].addComment(tweetCollection.id.next(), 'new comment');
 tweetCollection.add('first tweet');
-tweetCollection._user = 'Sam';
+tweetCollection.user = 'Sam';
 tweetCollection.add('first tweet');
-tweetCollection._user = 'SeltikeS';
+tweetCollection.user = 'SeltikeS';
 tweetCollection.add('first tweet');
 tweetCollection.add('first tweet');
 tweetCollection.add('first tweet');
@@ -43,8 +43,8 @@ console.log(tweetCollection.getPage(0, 1000, { text: 'third' }));
 console.log(tweetCollection.getPage(0, 1000, { hashtags: ['js', 'data'] }));
 
 tweetCollection.addAll([
-  new Tweet(tweetCollection._id.next(), '11111111', tweetCollection._user),
-  new Tweet(tweetCollection._id.next(), '22222222', tweetCollection._user),
+  new Tweet(tweetCollection.id.next(), '11111111', tweetCollection.user),
+  new Tweet(tweetCollection.id.next(), '22222222', tweetCollection.user),
 ]);
 console.log(tweetCollection.getPage(0, 1000));
 

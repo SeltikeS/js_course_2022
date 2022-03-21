@@ -7,20 +7,40 @@ class TweetCollection {
   }
 
   static filterConfigCheck(filt, tw) {
-    if ((filt.author && !tw._author.toLowerCase().includes(filt.author.toLowerCase()))
-            || filt.dateTo < tw._createdAt
-            || filt.dateFrom > tw._createdAt
-            || (filt.text && !tw._text.toLowerCase().includes(filt.text.toLowerCase()))) {
+    if ((filt.author && !tw.author.toLowerCase().includes(filt.author.toLowerCase()))
+            || filt.dateTo < tw.createdAt
+            || filt.dateFrom > tw.createdAt
+            || (filt.text && !tw.text.toLowerCase().includes(filt.text.toLowerCase()))) {
       return false;
     }
     if (filt.hashtags) {
       for (let i = 0; i < filt.hashtags.length; ++i) {
-        if (!tw._text.toLowerCase().includes(filt.hashtags[i].toLowerCase())) {
+        if (!tw.text.toLowerCase().includes(filt.hashtags[i].toLowerCase())) {
           return false;
         }
       }
     }
     return true;
+  }
+
+  get user() {
+    return this._user;
+  }
+
+  set user(newUser) {
+    this._user = newUser;
+  }
+
+  get tweets() {
+    return this._tweets;
+  }
+
+  set tweets(newTweets) {
+    this._tweets = newTweets;
+  }
+
+  get id() {
+    return this._id;
   }
 
   getPage(
@@ -38,14 +58,14 @@ class TweetCollection {
     let skipCnt = skip;
     let topCnt = top;
 
-    for (let i = this._tweets.length - 1; i >= 0; --i) {
-      if (TweetCollection.filterConfigCheck(filterConfig, this._tweets[i])) {
+    for (let i = this.tweets.length - 1; i >= 0; --i) {
+      if (TweetCollection.filterConfigCheck(filterConfig, this.tweets[i])) {
         if (skipCnt) {
           skipCnt--;
           continue;
         }
         if (topCnt) {
-          out.push(this._tweets[i]);
+          out.push(this.tweets[i]);
           topCnt--;
         } else {
           break;
@@ -57,14 +77,14 @@ class TweetCollection {
   }
 
   get(id) {
-    return this._tweets.find((tweet) => Tweet.validate(tweet) && tweet.id === id);
+    return this.tweets.find((tweet) => Tweet.validate(tweet) && tweet.id === id);
   }
 
   add(text) {
     if (text) {
-      const newTweet = new Tweet(this._id.next(), text, this._user);
+      const newTweet = new Tweet(this.id.next(), text, this.user);
       if (Tweet.validate(newTweet)) {
-        this._tweets.push(newTweet);
+        this.tweets.push(newTweet);
         return true;
       }
     }
@@ -73,19 +93,19 @@ class TweetCollection {
 
   edit(id, text) {
     const tw = this.get(id);
-    if (Tweet.validate(tw) && tw._author === this._user) {
-      tw._text = text;
+    if (Tweet.validate(tw) && tw.author === this.user) {
+      tw.text = text;
       return true;
     }
     return false;
   }
 
   remove(id) {
-    const index = this._tweets.findIndex((tweet) => Tweet.validate(tweet)
-                                                    && tweet._author === this._user
-                                                    && tweet._id === id);
+    const index = this.tweets.findIndex((tweet) => Tweet.validate(tweet)
+                                                    && tweet.author === this.user
+                                                    && tweet.id === id);
     if (index >= 0) {
-      this._tweets.splice(index, 1);
+      this.tweets.splice(index, 1);
       return true;
     }
     return false;
@@ -94,12 +114,12 @@ class TweetCollection {
   addAll(tws) {
     tws.forEach((element) => {
       if (Tweet.validate(element)) {
-        this._tweets.push(element);
+        this.tweets.push(element);
       }
     });
   }
 
   clear() {
-    this._tweets = [];
+    this.tweets = [];
   }
 }
