@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-plusplus */
 const array1 = [7, 1, 5, 3, 6, 4];
 const array2 = [1, 2, 3, 4, 5];
 const array3 = [7, 6, 4, 3, 1];

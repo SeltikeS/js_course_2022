@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-undef */
 const tweetCollection = new TweetCollection([]);
 tweetCollection.add('first tweet');
 tweetCollection.tweets[0].addComment(tweetCollection.id.next(), 'new comment');

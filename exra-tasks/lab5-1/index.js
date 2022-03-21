@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 // Class Node
 // eslint-disable-next-line max-classes-per-file
 class Node {

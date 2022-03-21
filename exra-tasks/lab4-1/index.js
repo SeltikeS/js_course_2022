@@ -1,3 +1,5 @@
+/* eslint-disable no-loop-func */
+/* eslint-disable no-console */
 const arr1 = [-2, 1, -3, 4, -1, 2, 1, -5, 4];
 const arr2 = [-2, 1];
 

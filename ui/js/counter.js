@@ -1,3 +1,6 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-unused-vars */
 // Class Counter
 class Counter {
   constructor(newCounter = 0) {

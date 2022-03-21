@@ -1,4 +1,8 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-plusplus */
+/* eslint-disable no-undef */
 // Class TweetCollection
+// eslint-disable-next-line no-unused-vars
 class TweetCollection {
   constructor(tws) {
     this._tweets = tws;
@@ -62,6 +66,7 @@ class TweetCollection {
       if (TweetCollection.filterConfigCheck(filterConfig, this.tweets[i])) {
         if (skipCnt) {
           skipCnt--;
+          // eslint-disable-next-line no-continue
           continue;
         }
         if (topCnt) {
