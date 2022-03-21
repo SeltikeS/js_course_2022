@@ -35,14 +35,6 @@ class TweetCollection {
     this._user = newUser;
   }
 
-  get tweets() {
-    return this._tweets;
-  }
-
-  set tweets(newTweets) {
-    this._tweets = newTweets;
-  }
-
   get id() {
     return this._id;
   }
@@ -62,15 +54,15 @@ class TweetCollection {
     let skipCnt = skip;
     let topCnt = top;
 
-    for (let i = this.tweets.length - 1; i >= 0; --i) {
-      if (TweetCollection.filterConfigCheck(filterConfig, this.tweets[i])) {
+    for (let i = this._tweets.length - 1; i >= 0; --i) {
+      if (TweetCollection.filterConfigCheck(filterConfig, this._tweets[i])) {
         if (skipCnt) {
           skipCnt--;
           // eslint-disable-next-line no-continue
           continue;
         }
         if (topCnt) {
-          out.push(this.tweets[i]);
+          out.push(this._tweets[i]);
           topCnt--;
         } else {
           break;
@@ -82,14 +74,14 @@ class TweetCollection {
   }
 
   get(id) {
-    return this.tweets.find((tweet) => Tweet.validate(tweet) && tweet.id === id);
+    return this._tweets.find((tweet) => Tweet.validate(tweet) && tweet.id === id);
   }
 
   add(text) {
     if (text) {
       const newTweet = new Tweet(this.id.next(), text, this.user);
       if (Tweet.validate(newTweet)) {
-        this.tweets.push(newTweet);
+        this._tweets.push(newTweet);
         return true;
       }
     }
@@ -106,25 +98,36 @@ class TweetCollection {
   }
 
   remove(id) {
-    const index = this.tweets.findIndex((tweet) => Tweet.validate(tweet)
+    const index = this._tweets.findIndex((tweet) => Tweet.validate(tweet)
                                                     && tweet.author === this.user
                                                     && tweet.id === id);
     if (index >= 0) {
-      this.tweets.splice(index, 1);
+      this._tweets.splice(index, 1);
       return true;
     }
     return false;
   }
 
+  addComment(id, text) {
+    if (id && text) {
+      const newComment = new Comment(id, text, this.user);
+      if (Comment.validate(newComment)) {
+        this.get(id)._comments.push(newComment);
+        return true;
+      }
+    }
+    return false;
+  }
+
   addAll(tws) {
-    tws.forEach((element) => {
-      if (Tweet.validate(element)) {
-        this.tweets.push(element);
+    tws.forEach((tw) => {
+      if (Tweet.validate(tw)) {
+        this._tweets.push(tw);
       }
     });
   }
 
   clear() {
-    this.tweets = [];
+    this._tweets = [];
   }
 }
