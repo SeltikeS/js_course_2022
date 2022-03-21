@@ -110,7 +110,7 @@ class TweetCollection {
 
   addComment(id, text) {
     if (id && text) {
-      const newComment = new Comment(id, text, this.user);
+      const newComment = new Comment(this.id.next(), text, this.user);
       if (Comment.validate(newComment)) {
         this.get(id)._comments.push(newComment);
         return true;

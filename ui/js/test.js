@@ -39,22 +39,22 @@ console.log(tweetCollection.getPage(0, 1000));
 console.log('Этот твит сделал SeltikeS');
 console.log(tweetCollection.get('1'));
 console.log('Этот твит сделал Sam');
-console.log(tweetCollection.get('3'));
+console.log(tweetCollection.get('4'));
 
 console.log('Меняю чужой твит - ожидание FALSE, текст не поменялся');
-console.log(tweetCollection.edit('3', 'one tweet #js #DataMola'));
-console.log(tweetCollection.get('3'));
-
-console.log('Меняю свой твит - ожидание TRUE, текст поменялся');
 console.log(tweetCollection.edit('4', 'one tweet #js #DataMola'));
 console.log(tweetCollection.get('4'));
+
+console.log('Меняю свой твит - ожидание TRUE, текст поменялся');
+console.log(tweetCollection.edit('5', 'one tweet #js #DataMola'));
+console.log(tweetCollection.get('5'));
 
 console.log('Вся коллекция твитов перед удалением');
 console.log(tweetCollection.getPage(0, 1000));
 console.log('Удаляю свой твит - ожидание TRUE');
-console.log(tweetCollection.remove('2'));
-console.log('Удаляю чужой твит - ожидание FALSE');
 console.log(tweetCollection.remove('3'));
+console.log('Удаляю чужой твит - ожидание FALSE');
+console.log(tweetCollection.remove('4'));
 console.log('Коллекция уменьшилась на 1 твит');
 console.log(tweetCollection.getPage(0, 1000));
 tweetCollection.add('first tweet');
@@ -80,6 +80,8 @@ tweetCollection.addAll([
 console.log(tweetCollection.getPage(0, 1000));
 
 console.log('Очищаю коллекцию');
+console.log(tweetCollection);
+console.log('Очищено');
 tweetCollection.clear();
 console.log(tweetCollection.getPage(0, 1000));
 console.log(tweetCollection);
