@@ -4,10 +4,10 @@
 // Class TweetCollection
 // eslint-disable-next-line no-unused-vars
 class TweetCollection {
-  constructor(tws) {
-    this._tweets = tws;
+  constructor(tws = [], newCnt = 0) {
     this._user = 'SeltikeS';
-    this._id = new Counter();
+    this._id = new Counter(newCnt);
+    this._tweets = tws;
   }
 
   static filterConfigCheck(filt, tw) {
@@ -110,11 +110,8 @@ class TweetCollection {
 
   addComment(id, text) {
     if (id && text) {
-      const newComment = new Comment(this.id.next(), text, this.user);
-      if (Comment.validate(newComment)) {
-        this.get(id)._comments.push(newComment);
-        return true;
-      }
+      this.get(id).addComment(this.id.next(), text, this.user);
+      return true;
     }
     return false;
   }

@@ -3,8 +3,8 @@
 /* eslint-disable no-unused-vars */
 // Class Tweet
 class Tweet extends Comment {
-  constructor(id, text, author) {
-    super(id, text, author);
+  constructor(id, text, author, date) {
+    super(id, text, author, date);
     this._comments = [];
   }
 
@@ -16,6 +16,17 @@ class Tweet extends Comment {
              && typeof (tw.author) === 'string'
              && typeof (tw._comments) === 'object') {
       return true;
+    }
+    return false;
+  }
+
+  addComment(id, text, author, date = new Date()) {
+    if (id && text && author) {
+      const newComment = new Comment(id, text, author, date);
+      if (Comment.validate(newComment)) {
+        this._comments.push(newComment);
+        return true;
+      }
     }
     return false;
   }

@@ -2,10 +2,10 @@
 /* eslint-disable no-unused-vars */
 // Class Comment
 class Comment {
-  constructor(id, text, author) {
+  constructor(id, text, author, date = new Date()) {
     this._id = id;
     this._text = text;
-    this._createdAt = new Date();
+    this._createdAt = date;
     this._author = author;
   }
 
