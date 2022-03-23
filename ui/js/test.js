@@ -253,24 +253,27 @@ let count = 0;
 
 const tweetsTweet = tweets.map((tw) => {
   const newTweet = new Tweet(
-    ++count,
+    String(++count),
     tw.text,
     tw.author,
     tw.createdAt,
   );
 
-  for (let i = 0; i < tw.comments.length; ++i) {
+  tw.comments.forEach((element) => {
     newTweet._comments.push(new Comment(
-      ++count,
-      tw.comments[i].text,
-      tw.comments[i].author,
-      tw.comments[i].createdAt,
+      String(++count),
+      element.text,
+      element.author,
+      element.createdAt,
     ));
-  }
+  });
 
   return newTweet;
 });
 
 const newTweetCollection = new TweetCollection(tweetsTweet, count);
+console.log(newTweetCollection);
 
+console.log('Добавляю твиты с комментами через addAll');
+newTweetCollection.addAll(tweetsTweet);
 console.log(newTweetCollection);

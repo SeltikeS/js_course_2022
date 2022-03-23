@@ -117,11 +117,32 @@ class TweetCollection {
   }
 
   addAll(tws) {
+    const invalidTweets = [];
     tws.forEach((tw) => {
       if (Tweet.validate(tw)) {
-        this._tweets.push(tw);
+        const newTweet = new Tweet(
+          this.id.next(),
+          tw.text,
+          tw.author,
+          tw.createdAt,
+        );
+        tw._comments.forEach((com) => {
+          if (Comment.validate(com)) {
+            newTweet._comments.push(new Comment(
+              this.id.next(),
+              com.text,
+              com.author,
+              com.createdAt,
+            ));
+          }
+        });
+        this._tweets.push(newTweet);
+      } else {
+        invalidTweets.push(tw);
       }
     });
+
+    return invalidTweets;
   }
 
   clear() {
