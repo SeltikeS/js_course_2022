@@ -19,7 +19,7 @@ class TweetCollection {
     }
     if (filt.hashtags) {
       for (let i = 0; i < filt.hashtags.length; ++i) {
-        if (!tw.text.toLowerCase().includes(filt.hashtags[i].toLowerCase())) {
+        if (!tw.text.toLowerCase().includes(`#${filt.hashtags[i].toLowerCase()}`)) {
           return false;
         }
       }
