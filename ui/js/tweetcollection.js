@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-undef */
+
 // Class TweetCollection
-// eslint-disable-next-line no-unused-vars
 class TweetCollection {
   constructor(tws = [], newCnt = 0) {
     this._user = 'SeltikeS';

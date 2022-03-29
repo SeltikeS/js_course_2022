@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
+
 // Class Tweet
 class Tweet extends Comment {
   constructor(id, text, author, date) {

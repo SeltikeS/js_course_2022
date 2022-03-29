@@ -9,13 +9,15 @@
     <title>LetsPlay</title>
 </head>
 <body>
-    <header class="header">
+    <header class="header" id="header-id">
         <img class="white__logo" src="img/whitelogo.svg" alt="logo">
         <img class="black__logo" src="img/minilogo.svg" alt="logo">
 
-        <div class="header__right">
+        <div class="header__right" id="header__right">
             <a class="log__in" href="login.html">Log In</a>
             <a class="sign__up" href="signup.html">Sign Up</a>
+            <div class="username hidden">Username</div>
+            <button class="button log__out hidden">Log Out</button>
         </div>    
     </header>
         
@@ -25,8 +27,8 @@
                 <h3 class="filters__header">Filters: </h3>
                 <div class="space">
                     <div class="active__filters">
-                        <div class="active__filter">17.02.2022-18.02.2022</div>
-                        <div class="active__filter">seltikes</div>
+                        <!-- <div class="active__filter">17.02.2022-18.02.2022</div>
+                        <div class="active__filter">seltikes</div> -->
                     </div>
                     <div class="filter__buttons">
                         <button class="filters__reset">
@@ -40,7 +42,7 @@
                 </div>
             </article>
 
-            <article class="twit">
+            <!-- <article class="twit">
                 <a class="twit__ref" href="twit.html">
                     <div class="twit__content">
                         <div class="twit__header">
@@ -309,7 +311,7 @@
                         <h3 class="comments">Comments: 3</h3>
                     </div>
                 </a> 
-            </article>
+            </article> -->
 
             <article class="show__more">
                 <button class="show__more__button">Show more</button>
@@ -343,7 +345,9 @@
     <script src="./js/comment.js"></script>
     <script src="./js/tweet.js"></script>
     <script src="./js/tweetcollection.js"></script>
-    <script src="./js/test.js"></script>
+    <script src="./js/script.js"></script>
+
+    <!-- <script src="./js/test.js"></script> -->
 
 </body>
 </html>
