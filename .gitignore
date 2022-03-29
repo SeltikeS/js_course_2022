@@ -1,6 +1,4 @@
 # ignore eslint files
 
 node_modules
-package.json
 package-lock.json
-.eslintrc

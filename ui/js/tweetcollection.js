@@ -19,7 +19,7 @@ class TweetCollection {
     }
     if (filt.hashtags) {
       for (let i = 0; i < filt.hashtags.length; ++i) {
-        if (!tw.text.toLowerCase().includes(filt.hashtags[i].toLowerCase())) {
+        if (!tw.text.toLowerCase().includes(`#${filt.hashtags[i].toLowerCase()}`)) {
           return false;
         }
       }
@@ -78,7 +78,7 @@ class TweetCollection {
   }
 
   add(text) {
-    if (text) {
+    if (text && text.length <= 280) {
       const newTweet = new Tweet(this.id.next(), text, this.user);
       if (Tweet.validate(newTweet)) {
         this._tweets.push(newTweet);
@@ -109,7 +109,7 @@ class TweetCollection {
   }
 
   addComment(id, text) {
-    if (id && text) {
+    if (id && text && text.length <= 280) {
       this.get(id).addComment(this.id.next(), text, this.user);
       return true;
     }
