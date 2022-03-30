@@ -49,6 +49,10 @@ a:visited {
   font-weight: 600;
 }
 
+.button:hover {
+  opacity: 0.9;
+}
+
 /* HEADER */
 
 header {
@@ -118,28 +122,30 @@ header {
   opacity: 0.7;
 }
 
-.username {
+.header__username {
   color: var(--white-color);
-  font-weight: 600;
+  font-size: calc(1.2 * var(--default-offset));
+  font-weight: 400;
+  max-width: 60%;
 }
 
 /* MAIN */
 
 .main {
   display: flex;
+  flex-flow: column;
   height: calc(100% - (var(--header-height) + var(--footer-height)));
   overflow-y: auto;
   padding: 0 var(--logo-width);
 }
 
-/* SECTION */
-.section {
-  width: 100%;
-  word-wrap: break-word;
-}
+/* FILTERS */
 
 .filters {
+  /* align-items: center; */
   display: flex;
+  width: 100%;
+  word-wrap: break-word;
 }
 
 .filters__header {
@@ -152,7 +158,7 @@ header {
 
 .active__filters {
   display: flex;
-  flex-flow: wrap;
+  flex-flow: column wrap;
   padding: 0 var(--default-offset);
 }
 
@@ -165,12 +171,21 @@ header {
   margin: 1px;
 }
 
-.space {
-  align-items: start;
+.filters__space {
+  align-items: center;
   display: flex;
   padding: var(--default-offset) 0;
   justify-content: space-between;
   width: 100%;
+}
+
+.filter__line {
+  display: flex;
+}
+
+.filter__line__property {
+  display: flex;
+  width: calc(5.5 * var(--default-offset));
 }
 
 .filter__buttons {
@@ -178,10 +193,12 @@ header {
 }
 
 .arrow__down {
+  align-items: center;
   border: none;
   background-color: var(--white-color);
   display: flex;
   font-size: calc(2 * var(--default-offset));
+  max-height: calc(2.5 * var(--default-offset));
 }
 
 .arrow__down:hover {
@@ -199,6 +216,9 @@ header {
   background-color: var(--white-color);
   display: flex;
   font-size: var(--default-offset);
+  max-height: calc(2.5 * var(--default-offset));
+  min-width: calc(5 * var(--default-offset));
+  justify-content: center;
 }
 
 .filters__reset:hover {
@@ -210,6 +230,7 @@ header {
   opacity: 0.7;
 }
 
+/* SHOW MORE */
 .show__more {
   border-top: 2px solid var(--grey-color);
   border-bottom: 2px solid var(--grey-color);
@@ -243,6 +264,11 @@ header {
   font-size: var(--default-offset);
   padding: var(--default-offset);
   text-decoration: none;
+  width: 100%;
+}
+
+.twit__content {
+  width: 100%;
 }
 
 .twit__header {

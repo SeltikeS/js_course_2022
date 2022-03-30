@@ -16,31 +16,31 @@
         <div class="header__right" id="header__right">
             <a class="log__in" href="login.html">Log In</a>
             <a class="sign__up" href="signup.html">Sign Up</a>
-            <div class="username hidden">Username</div>
+            <div class="header__username hidden">Username</div>
             <button class="button log__out hidden">Log Out</button>
         </div>    
     </header>
         
     <main class="main">
-        <section class="section">
-            <article class="filters">
-                <h3 class="filters__header">Filters: </h3>
-                <div class="space">
-                    <div class="active__filters">
-                        <!-- <div class="active__filter">17.02.2022-18.02.2022</div>
-                        <div class="active__filter">seltikes</div> -->
-                    </div>
-                    <div class="filter__buttons">
-                        <button class="filters__reset">
-                            clear all
-                        </button>
-                        <button class="arrow__down">
-                            <span class="iconify" data-icon="dashicons:arrow-down-alt2"></span>
-                        </button>
-                    </div>
-                    
+        <section class="filters">
+            <h3 class="filters__header">Filters: </h3>
+            <div class="filters__space">
+                <div class="active__filters" id="filter-id">
+                    <!-- <div class="active__filter">17.02.2022-18.02.2022</div>
+                    <div class="active__filter">seltikes</div> -->
                 </div>
-            </article>
+            </div>
+            <div class="filter__buttons">
+                <button class="filters__reset">
+                    clear all
+                </button>
+                <button class="arrow__down">
+                    <span class="iconify" data-icon="dashicons:arrow-down-alt2"></span>
+                </button>
+            </div>
+        </section>
+
+        <section class="tweet__feed" id="tweet-feed-id">
 
             <!-- <article class="twit">
                 <a class="twit__ref" href="twit.html">
@@ -313,9 +313,10 @@
                 </a> 
             </article> -->
 
-            <article class="show__more">
-                <button class="show__more__button">Show more</button>
-            </article>
+        </section>
+
+        <section class="show__more">
+            <button class="show__more__button">Show more</button>
         </section>
     </main>
 
@@ -345,9 +346,12 @@
     <script src="./js/comment.js"></script>
     <script src="./js/tweet.js"></script>
     <script src="./js/tweetcollection.js"></script>
-    <script src="./js/script.js"></script>
 
-    <!-- <script src="./js/test.js"></script> -->
+    <script src="./js/headerview.js"></script>
+    <script src="./js/tweetfeedview.js"></script>
+    <script src="./js/filterview.js"></script>
+
+    <script src="./js/script.js"></script>
 
 </body>
 </html>
