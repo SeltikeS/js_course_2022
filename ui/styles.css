@@ -26,16 +26,16 @@ body {
   box-sizing: border-box;
 }
 
+a {
+  color: inherit;
+}
+
 a:visited {
   color: inherit;
 }
 
 .iconify {
   display: flex;
-}
-
-.hidden {
-  display: none;
 }
 
 .button {
@@ -315,9 +315,10 @@ header {
 }
 
 .new__comment {
+  align-items: end;
   border-bottom: 1px solid var(--grey-color);
   display: flex;
-  height: calc(1.5 * var(--default-offset));
+  height: calc(5 * var(--default-offset));
   margin: 0 var(--default-offset);
   width: calc(100% - var(--default-offset));
 }
@@ -327,6 +328,7 @@ header {
   display: flex;
   font: inherit;
   font-size: 14px;
+  height: calc(4 * var(--default-offset));
   width: 85%;
 }
 
@@ -340,6 +342,7 @@ header {
   opacity: 0.7;
   min-width: min-content;
   justify-content: center;
+  height: calc(4 * var(--default-offset));
   width: 15%;
 }
 
@@ -581,6 +584,10 @@ footer {
 
   font-weight: 200;
   font-size: 14px;
+}
+
+.hidden {
+  display: none;
 }
 
 @media (max-width: 1024px) {

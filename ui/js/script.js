@@ -188,6 +188,7 @@ const tweets = new TweetCollection(tweetsTweet, count);
 const headerView = new HeaderView('header-id');
 const tweetFeedView = new TweetFeedView('tweet-feed-id');
 const filterView = new FilterView('filter-id');
+const tweetView = new TweetView('tweet-feed-id');
 
 function setCurrentUser(user) {
   tweets.user = user;
@@ -195,6 +196,15 @@ function setCurrentUser(user) {
 }
 
 function getFeed(skip, top, filterConfig) {
+  const filters = document.querySelector('.filters');
+  const showMore = document.querySelector('.show__more');
+  if (filters.classList.contains('hidden')) {
+    filters.classList.remove('hidden');
+  }
+  if (showMore.classList.contains('hidden')) {
+    showMore.classList.remove('hidden');
+  }
+
   const tweetFeed = tweets.getPage(skip, top, filterConfig);
   filterView.display(filterConfig);
   tweetFeedView.display(tweetFeed);
@@ -213,4 +223,20 @@ function editTweet(id, text) {
 function removeTweet(id) {
   tweets.remove(id);
   getFeed(0, 10);
+}
+
+function showTweet(id = null) {
+  const filters = document.querySelector('.filters');
+  const showMore = document.querySelector('.show__more');
+  if (!filters.classList.contains('hidden')) {
+    filters.classList.add('hidden');
+  }
+  if (!showMore.classList.contains('hidden')) {
+    showMore.classList.add('hidden');
+  }
+  tweetFeedView.display([]);
+  const tweet = tweets.get(id);
+  if (tweet) {
+    tweetView.display(tweet);
+  }
 }
