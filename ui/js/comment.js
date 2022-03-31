@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
+
 // Class Comment
 class Comment {
   constructor(id, text, author, date = new Date()) {

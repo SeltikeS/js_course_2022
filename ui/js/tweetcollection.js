@@ -1,19 +1,21 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-undef */
+
 // Class TweetCollection
-// eslint-disable-next-line no-unused-vars
 class TweetCollection {
   constructor(tws = [], newCnt = 0) {
     this._user = 'SeltikeS';
     this._id = new Counter(newCnt);
     this._tweets = tws;
+    this._filterConfig = {};
   }
 
   static filterConfigCheck(filt, tw) {
     if ((filt.author && !tw.author.toLowerCase().includes(filt.author.toLowerCase()))
-            || filt.dateTo < tw.createdAt
-            || filt.dateFrom > tw.createdAt
+            || new Date(filt.dateTo) < tw.createdAt
+            || new Date(filt.dateFrom) > tw.createdAt
             || (filt.text && !tw.text.toLowerCase().includes(filt.text.toLowerCase()))) {
       return false;
     }
@@ -39,6 +41,10 @@ class TweetCollection {
     return this._id;
   }
 
+  get filterConfig() {
+    return this._filterConfig;
+  }
+
   getPage(
     skip = 0,
     top = 10,
@@ -53,6 +59,7 @@ class TweetCollection {
     const out = [];
     let skipCnt = skip;
     let topCnt = top;
+    this._filterConfig = filterConfig;
 
     for (let i = this._tweets.length - 1; i >= 0; --i) {
       if (TweetCollection.filterConfigCheck(filterConfig, this._tweets[i])) {

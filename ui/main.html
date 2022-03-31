@@ -9,311 +9,314 @@
     <title>LetsPlay</title>
 </head>
 <body>
-    <header class="header">
+    <header class="header" id="header-id">
         <img class="white__logo" src="img/whitelogo.svg" alt="logo">
         <img class="black__logo" src="img/minilogo.svg" alt="logo">
 
-        <div class="header__right">
+        <div class="header__right" id="header__right">
             <a class="log__in" href="login.html">Log In</a>
             <a class="sign__up" href="signup.html">Sign Up</a>
+            <div class="header__username hidden">Username</div>
+            <button class="button log__out hidden">Log Out</button>
         </div>    
     </header>
         
     <main class="main">
-        <section class="section">
-            <article class="filters">
-                <h3 class="filters__header">Filters: </h3>
-                <div class="space">
-                    <div class="active__filters">
-                        <div class="active__filter">17.02.2022-18.02.2022</div>
-                        <div class="active__filter">seltikes</div>
-                    </div>
-                    <div class="filter__buttons">
-                        <button class="filters__reset">
-                            clear all
-                        </button>
-                        <button class="arrow__down">
-                            <span class="iconify" data-icon="dashicons:arrow-down-alt2"></span>
-                        </button>
-                    </div>
-                    
+        <section class="filters hidden">
+            <h3 class="filters__header">Filters: </h3>
+            <div class="filters__space">
+                <div class="active__filters" id="filter-id">
+                    <!-- <div class="active__filter">17.02.2022-18.02.2022</div>
+                    <div class="active__filter">seltikes</div> -->
                 </div>
-            </article>
+            </div>
+            <div class="filter__buttons">
+                <button class="filters__reset">
+                    clear all
+                </button>
+                <button class="arrow__down">
+                    <span class="iconify" data-icon="dashicons:arrow-down-alt2"></span>
+                </button>
+            </div>
+        </section>
 
-            <article class="twit">
-                <a class="twit__ref" href="twit.html">
-                    <div class="twit__content">
-                        <div class="twit__header">
-                            <div>
-                                <h2 class="username">Seltikes</h2>
-                                <h3 class="date">17:40 01.03.2022</h3>
-                            </div>
-                            <div class="twit__icons">
-                                <button class="edit__twit">
-                                    <span class="iconify" data-icon="system-uicons:pen"></span>
-                                </button>
-                                <button class="delete__twit">
-                                    <span class="iconify" data-icon="akar-icons:cross"></span>
-                                </button>
-                            </div>
-                        </div>
-                        <p>
-                            Бывшие разработчики Ведьмака 3 и  Cyberpunk 2077 основали новую студию и уже готовят мрачную 
-                            фэнтэзи RPG на Unreal Engine 5.
-                            Игра будет называться Rebel Wolves.
-                            #cdpr #witcher #cyberpunk2077 #rpg #rebel_wolves
-                        </p>
-                        <h3 class="comments">Comments: 3</h3>
-                    </div>
-                </a> 
-            </article>
-            <article class="twit">
-                <a class="twit__ref" href="twit.html">
-                    <div class="twit__content">
-                        <div class="twit__header">
-                            <div>
-                                <h2 class="username">Seltikes</h2>
-                                <h3 class="date">17:40 01.03.2022</h3>
-                            </div>
-                            <div class="twit__icons">
-                                <button class="edit__twit">
-                                    <span class="iconify" data-icon="system-uicons:pen"></span>
-                                </button>
-                                <button class="delete__twit">
-                                    <span class="iconify" data-icon="akar-icons:cross"></span>
-                                </button>
-                            </div>
-                        </div>
-                        <p>
-                            Бывшие разработчики Ведьмака 3 и  Cyberpunk 2077 основали новую студию и уже готовят мрачную 
-                            фэнтэзи RPG на Unreal Engine 5.
-                            Игра будет называться Rebel Wolves.
-                            #cdpr #witcher #cyberpunk2077 #rpg #rebel_wolves
-                        </p>
-                        <h3 class="comments">Comments: 3</h3>
-                    </div>
-                </a> 
-            </article>
-            <article class="twit">
-                <a class="twit__ref" href="twit.html">
-                    <div class="twit__content">
-                        <div class="twit__header">
-                            <div>
-                                <h2 class="username">Seltikes</h2>
-                                <h3 class="date">17:40 01.03.2022</h3>
-                            </div>
-                            <div class="twit__icons">
-                                <button class="edit__twit">
-                                    <span class="iconify" data-icon="system-uicons:pen"></span>
-                                </button>
-                                <button class="delete__twit">
-                                    <span class="iconify" data-icon="akar-icons:cross"></span>
-                                </button>
-                            </div>
-                        </div>
-                        <p>
-                            Бывшие разработчики Ведьмака 3 и  Cyberpunk 2077 основали новую студию и уже готовят мрачную 
-                            фэнтэзи RPG на Unreal Engine 5.
-                            Игра будет называться Rebel Wolves.
-                            #cdpr #witcher #cyberpunk2077 #rpg #rebel_wolves
-                        </p>
-                        <h3 class="comments">Comments: 3</h3>
-                    </div>
-                </a> 
-            </article>
-            <article class="twit">
-                <a class="twit__ref" href="twit.html">
-                    <div class="twit__content">
-                        <div class="twit__header">
-                            <div>
-                                <h2 class="username">Seltikes</h2>
-                                <h3 class="date">17:40 01.03.2022</h3>
-                            </div>
-                            <div class="twit__icons">
-                                <button class="edit__twit">
-                                    <span class="iconify" data-icon="system-uicons:pen"></span>
-                                </button>
-                                <button class="delete__twit">
-                                    <span class="iconify" data-icon="akar-icons:cross"></span>
-                                </button>
-                            </div>
-                        </div>
-                        <p>
-                            Бывшие разработчики Ведьмака 3 и  Cyberpunk 2077 основали новую студию и уже готовят мрачную 
-                            фэнтэзи RPG на Unreal Engine 5.
-                            Игра будет называться Rebel Wolves.
-                            #cdpr #witcher #cyberpunk2077 #rpg #rebel_wolves
-                        </p>
-                        <h3 class="comments">Comments: 3</h3>
-                    </div>
-                </a> 
-            </article>
-            <article class="twit">
-                <a class="twit__ref" href="twit.html">
-                    <div class="twit__content">
-                        <div class="twit__header">
-                            <div>
-                                <h2 class="username">Seltikes</h2>
-                                <h3 class="date">17:40 01.03.2022</h3>
-                            </div>
-                            <div class="twit__icons">
-                                <button class="edit__twit">
-                                    <span class="iconify" data-icon="system-uicons:pen"></span>
-                                </button>
-                                <button class="delete__twit">
-                                    <span class="iconify" data-icon="akar-icons:cross"></span>
-                                </button>
-                            </div>
-                        </div>
-                        <p>
-                            Бывшие разработчики Ведьмака 3 и  Cyberpunk 2077 основали новую студию и уже готовят мрачную 
-                            фэнтэзи RPG на Unreal Engine 5.
-                            Игра будет называться Rebel Wolves.
-                            #cdpr #witcher #cyberpunk2077 #rpg #rebel_wolves
-                        </p>
-                        <h3 class="comments">Comments: 3</h3>
-                    </div>
-                </a> 
-            </article>
-            <article class="twit">
-                <a class="twit__ref" href="twit.html">
-                    <div class="twit__content">
-                        <div class="twit__header">
-                            <div>
-                                <h2 class="username">Seltikes</h2>
-                                <h3 class="date">17:40 01.03.2022</h3>
-                            </div>
-                            <div class="twit__icons">
-                                <button class="edit__twit">
-                                    <span class="iconify" data-icon="system-uicons:pen"></span>
-                                </button>
-                                <button class="delete__twit">
-                                    <span class="iconify" data-icon="akar-icons:cross"></span>
-                                </button>
-                            </div>
-                        </div>
-                        <p>
-                            Бывшие разработчики Ведьмака 3 и  Cyberpunk 2077 основали новую студию и уже готовят мрачную 
-                            фэнтэзи RPG на Unreal Engine 5.
-                            Игра будет называться Rebel Wolves.
-                            #cdpr #witcher #cyberpunk2077 #rpg #rebel_wolves
-                        </p>
-                        <h3 class="comments">Comments: 3</h3>
-                    </div>
-                </a> 
-            </article>
-            <article class="twit">
-                <a class="twit__ref" href="twit.html">
-                    <div class="twit__content">
-                        <div class="twit__header">
-                            <div>
-                                <h2 class="username">Seltikes</h2>
-                                <h3 class="date">17:40 01.03.2022</h3>
-                            </div>
-                            <div class="twit__icons">
-                                <button class="edit__twit">
-                                    <span class="iconify" data-icon="system-uicons:pen"></span>
-                                </button>
-                                <button class="delete__twit">
-                                    <span class="iconify" data-icon="akar-icons:cross"></span>
-                                </button>
-                            </div>
-                        </div>
-                        <p>
-                            Бывшие разработчики Ведьмака 3 и  Cyberpunk 2077 основали новую студию и уже готовят мрачную 
-                            фэнтэзи RPG на Unreal Engine 5.
-                            Игра будет называться Rebel Wolves.
-                            #cdpr #witcher #cyberpunk2077 #rpg #rebel_wolves
-                        </p>
-                        <h3 class="comments">Comments: 3</h3>
-                    </div>
-                </a> 
-            </article>
-            <article class="twit">
-                <a class="twit__ref" href="twit.html">
-                    <div class="twit__content">
-                        <div class="twit__header">
-                            <div>
-                                <h2 class="username">Seltikes</h2>
-                                <h3 class="date">17:40 01.03.2022</h3>
-                            </div>
-                            <div class="twit__icons">
-                                <button class="edit__twit">
-                                    <span class="iconify" data-icon="system-uicons:pen"></span>
-                                </button>
-                                <button class="delete__twit">
-                                    <span class="iconify" data-icon="akar-icons:cross"></span>
-                                </button>
-                            </div>
-                        </div>
-                        <p>
-                            Бывшие разработчики Ведьмака 3 и  Cyberpunk 2077 основали новую студию и уже готовят мрачную 
-                            фэнтэзи RPG на Unreal Engine 5.
-                            Игра будет называться Rebel Wolves.
-                            #cdpr #witcher #cyberpunk2077 #rpg #rebel_wolves
-                        </p>
-                        <h3 class="comments">Comments: 3</h3>
-                    </div>
-                </a> 
-            </article>
-            <article class="twit">
-                <a class="twit__ref" href="twit.html">
-                    <div class="twit__content">
-                        <div class="twit__header">
-                            <div>
-                                <h2 class="username">Seltikes</h2>
-                                <h3 class="date">17:40 01.03.2022</h3>
-                            </div>
-                            <div class="twit__icons">
-                                <button class="edit__twit">
-                                    <span class="iconify" data-icon="system-uicons:pen"></span>
-                                </button>
-                                <button class="delete__twit">
-                                    <span class="iconify" data-icon="akar-icons:cross"></span>
-                                </button>
-                            </div>
-                        </div>
-                        <p>
-                            Бывшие разработчики Ведьмака 3 и  Cyberpunk 2077 основали новую студию и уже готовят мрачную 
-                            фэнтэзи RPG на Unreal Engine 5.
-                            Игра будет называться Rebel Wolves.
-                            #cdpr #witcher #cyberpunk2077 #rpg #rebel_wolves
-                        </p>
-                        <h3 class="comments">Comments: 3</h3>
-                    </div>
-                </a> 
-            </article>
-            <article class="twit">
-                <a class="twit__ref" href="twit.html">
-                    <div class="twit__content">
-                        <div class="twit__header">
-                            <div>
-                                <h2 class="username">Seltikes</h2>
-                                <h3 class="date">17:40 01.03.2022</h3>
-                            </div>
-                            <div class="twit__icons">
-                                <button class="edit__twit">
-                                    <span class="iconify" data-icon="system-uicons:pen"></span>
-                                </button>
-                                <button class="delete__twit">
-                                    <span class="iconify" data-icon="akar-icons:cross"></span>
-                                </button>
-                            </div>
-                        </div>
-                        <p>
-                            Бывшие разработчики Ведьмака 3 и  Cyberpunk 2077 основали новую студию и уже готовят мрачную 
-                            фэнтэзи RPG на Unreal Engine 5.
-                            Игра будет называться Rebel Wolves.
-                            #cdpr #witcher #cyberpunk2077 #rpg #rebel_wolves
-                        </p>
-                        <h3 class="comments">Comments: 3</h3>
-                    </div>
-                </a> 
-            </article>
+        <section class="tweet__feed" id="tweet-feed-id">
 
-            <article class="show__more">
-                <button class="show__more__button">Show more</button>
+            <!-- <article class="twit">
+                <a class="twit__ref" href="twit.html">
+                    <div class="twit__content">
+                        <div class="twit__header">
+                            <div>
+                                <h2 class="username">Seltikes</h2>
+                                <h3 class="date">17:40 01.03.2022</h3>
+                            </div>
+                            <div class="twit__icons">
+                                <button class="edit__twit">
+                                    <span class="iconify" data-icon="system-uicons:pen"></span>
+                                </button>
+                                <button class="delete__twit">
+                                    <span class="iconify" data-icon="akar-icons:cross"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <p>
+                            Бывшие разработчики Ведьмака 3 и  Cyberpunk 2077 основали новую студию и уже готовят мрачную 
+                            фэнтэзи RPG на Unreal Engine 5.
+                            Игра будет называться Rebel Wolves.
+                            #cdpr #witcher #cyberpunk2077 #rpg #rebel_wolves
+                        </p>
+                        <h3 class="comments">Comments: 3</h3>
+                    </div>
+                </a> 
             </article>
+            <article class="twit">
+                <a class="twit__ref" href="twit.html">
+                    <div class="twit__content">
+                        <div class="twit__header">
+                            <div>
+                                <h2 class="username">Seltikes</h2>
+                                <h3 class="date">17:40 01.03.2022</h3>
+                            </div>
+                            <div class="twit__icons">
+                                <button class="edit__twit">
+                                    <span class="iconify" data-icon="system-uicons:pen"></span>
+                                </button>
+                                <button class="delete__twit">
+                                    <span class="iconify" data-icon="akar-icons:cross"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <p>
+                            Бывшие разработчики Ведьмака 3 и  Cyberpunk 2077 основали новую студию и уже готовят мрачную 
+                            фэнтэзи RPG на Unreal Engine 5.
+                            Игра будет называться Rebel Wolves.
+                            #cdpr #witcher #cyberpunk2077 #rpg #rebel_wolves
+                        </p>
+                        <h3 class="comments">Comments: 3</h3>
+                    </div>
+                </a> 
+            </article>
+            <article class="twit">
+                <a class="twit__ref" href="twit.html">
+                    <div class="twit__content">
+                        <div class="twit__header">
+                            <div>
+                                <h2 class="username">Seltikes</h2>
+                                <h3 class="date">17:40 01.03.2022</h3>
+                            </div>
+                            <div class="twit__icons">
+                                <button class="edit__twit">
+                                    <span class="iconify" data-icon="system-uicons:pen"></span>
+                                </button>
+                                <button class="delete__twit">
+                                    <span class="iconify" data-icon="akar-icons:cross"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <p>
+                            Бывшие разработчики Ведьмака 3 и  Cyberpunk 2077 основали новую студию и уже готовят мрачную 
+                            фэнтэзи RPG на Unreal Engine 5.
+                            Игра будет называться Rebel Wolves.
+                            #cdpr #witcher #cyberpunk2077 #rpg #rebel_wolves
+                        </p>
+                        <h3 class="comments">Comments: 3</h3>
+                    </div>
+                </a> 
+            </article>
+            <article class="twit">
+                <a class="twit__ref" href="twit.html">
+                    <div class="twit__content">
+                        <div class="twit__header">
+                            <div>
+                                <h2 class="username">Seltikes</h2>
+                                <h3 class="date">17:40 01.03.2022</h3>
+                            </div>
+                            <div class="twit__icons">
+                                <button class="edit__twit">
+                                    <span class="iconify" data-icon="system-uicons:pen"></span>
+                                </button>
+                                <button class="delete__twit">
+                                    <span class="iconify" data-icon="akar-icons:cross"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <p>
+                            Бывшие разработчики Ведьмака 3 и  Cyberpunk 2077 основали новую студию и уже готовят мрачную 
+                            фэнтэзи RPG на Unreal Engine 5.
+                            Игра будет называться Rebel Wolves.
+                            #cdpr #witcher #cyberpunk2077 #rpg #rebel_wolves
+                        </p>
+                        <h3 class="comments">Comments: 3</h3>
+                    </div>
+                </a> 
+            </article>
+            <article class="twit">
+                <a class="twit__ref" href="twit.html">
+                    <div class="twit__content">
+                        <div class="twit__header">
+                            <div>
+                                <h2 class="username">Seltikes</h2>
+                                <h3 class="date">17:40 01.03.2022</h3>
+                            </div>
+                            <div class="twit__icons">
+                                <button class="edit__twit">
+                                    <span class="iconify" data-icon="system-uicons:pen"></span>
+                                </button>
+                                <button class="delete__twit">
+                                    <span class="iconify" data-icon="akar-icons:cross"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <p>
+                            Бывшие разработчики Ведьмака 3 и  Cyberpunk 2077 основали новую студию и уже готовят мрачную 
+                            фэнтэзи RPG на Unreal Engine 5.
+                            Игра будет называться Rebel Wolves.
+                            #cdpr #witcher #cyberpunk2077 #rpg #rebel_wolves
+                        </p>
+                        <h3 class="comments">Comments: 3</h3>
+                    </div>
+                </a> 
+            </article>
+            <article class="twit">
+                <a class="twit__ref" href="twit.html">
+                    <div class="twit__content">
+                        <div class="twit__header">
+                            <div>
+                                <h2 class="username">Seltikes</h2>
+                                <h3 class="date">17:40 01.03.2022</h3>
+                            </div>
+                            <div class="twit__icons">
+                                <button class="edit__twit">
+                                    <span class="iconify" data-icon="system-uicons:pen"></span>
+                                </button>
+                                <button class="delete__twit">
+                                    <span class="iconify" data-icon="akar-icons:cross"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <p>
+                            Бывшие разработчики Ведьмака 3 и  Cyberpunk 2077 основали новую студию и уже готовят мрачную 
+                            фэнтэзи RPG на Unreal Engine 5.
+                            Игра будет называться Rebel Wolves.
+                            #cdpr #witcher #cyberpunk2077 #rpg #rebel_wolves
+                        </p>
+                        <h3 class="comments">Comments: 3</h3>
+                    </div>
+                </a> 
+            </article>
+            <article class="twit">
+                <a class="twit__ref" href="twit.html">
+                    <div class="twit__content">
+                        <div class="twit__header">
+                            <div>
+                                <h2 class="username">Seltikes</h2>
+                                <h3 class="date">17:40 01.03.2022</h3>
+                            </div>
+                            <div class="twit__icons">
+                                <button class="edit__twit">
+                                    <span class="iconify" data-icon="system-uicons:pen"></span>
+                                </button>
+                                <button class="delete__twit">
+                                    <span class="iconify" data-icon="akar-icons:cross"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <p>
+                            Бывшие разработчики Ведьмака 3 и  Cyberpunk 2077 основали новую студию и уже готовят мрачную 
+                            фэнтэзи RPG на Unreal Engine 5.
+                            Игра будет называться Rebel Wolves.
+                            #cdpr #witcher #cyberpunk2077 #rpg #rebel_wolves
+                        </p>
+                        <h3 class="comments">Comments: 3</h3>
+                    </div>
+                </a> 
+            </article>
+            <article class="twit">
+                <a class="twit__ref" href="twit.html">
+                    <div class="twit__content">
+                        <div class="twit__header">
+                            <div>
+                                <h2 class="username">Seltikes</h2>
+                                <h3 class="date">17:40 01.03.2022</h3>
+                            </div>
+                            <div class="twit__icons">
+                                <button class="edit__twit">
+                                    <span class="iconify" data-icon="system-uicons:pen"></span>
+                                </button>
+                                <button class="delete__twit">
+                                    <span class="iconify" data-icon="akar-icons:cross"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <p>
+                            Бывшие разработчики Ведьмака 3 и  Cyberpunk 2077 основали новую студию и уже готовят мрачную 
+                            фэнтэзи RPG на Unreal Engine 5.
+                            Игра будет называться Rebel Wolves.
+                            #cdpr #witcher #cyberpunk2077 #rpg #rebel_wolves
+                        </p>
+                        <h3 class="comments">Comments: 3</h3>
+                    </div>
+                </a> 
+            </article>
+            <article class="twit">
+                <a class="twit__ref" href="twit.html">
+                    <div class="twit__content">
+                        <div class="twit__header">
+                            <div>
+                                <h2 class="username">Seltikes</h2>
+                                <h3 class="date">17:40 01.03.2022</h3>
+                            </div>
+                            <div class="twit__icons">
+                                <button class="edit__twit">
+                                    <span class="iconify" data-icon="system-uicons:pen"></span>
+                                </button>
+                                <button class="delete__twit">
+                                    <span class="iconify" data-icon="akar-icons:cross"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <p>
+                            Бывшие разработчики Ведьмака 3 и  Cyberpunk 2077 основали новую студию и уже готовят мрачную 
+                            фэнтэзи RPG на Unreal Engine 5.
+                            Игра будет называться Rebel Wolves.
+                            #cdpr #witcher #cyberpunk2077 #rpg #rebel_wolves
+                        </p>
+                        <h3 class="comments">Comments: 3</h3>
+                    </div>
+                </a> 
+            </article>
+            <article class="twit">
+                <a class="twit__ref" href="twit.html">
+                    <div class="twit__content">
+                        <div class="twit__header">
+                            <div>
+                                <h2 class="username">Seltikes</h2>
+                                <h3 class="date">17:40 01.03.2022</h3>
+                            </div>
+                            <div class="twit__icons">
+                                <button class="edit__twit">
+                                    <span class="iconify" data-icon="system-uicons:pen"></span>
+                                </button>
+                                <button class="delete__twit">
+                                    <span class="iconify" data-icon="akar-icons:cross"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <p>
+                            Бывшие разработчики Ведьмака 3 и  Cyberpunk 2077 основали новую студию и уже готовят мрачную 
+                            фэнтэзи RPG на Unreal Engine 5.
+                            Игра будет называться Rebel Wolves.
+                            #cdpr #witcher #cyberpunk2077 #rpg #rebel_wolves
+                        </p>
+                        <h3 class="comments">Comments: 3</h3>
+                    </div>
+                </a> 
+            </article> -->
+
+        </section>
+
+        <section class="show__more hidden">
+            <button class="show__more__button">Show more</button>
         </section>
     </main>
 
@@ -343,7 +346,13 @@
     <script src="./js/comment.js"></script>
     <script src="./js/tweet.js"></script>
     <script src="./js/tweetcollection.js"></script>
-    <script src="./js/test.js"></script>
+
+    <script src="./js/headerview.js"></script>
+    <script src="./js/tweetfeedview.js"></script>
+    <script src="./js/filterview.js"></script>
+    <script src="./js/tweetview.js"></script>
+
+    <script src="./js/script.js"></script>
 
 </body>
 </html>
