@@ -63,4 +63,4 @@ function createCalendar(elem, year, month) {
   elem.innerHTML = str;
 }
 
-createCalendar(elementForTable, 2021, 10);
+createCalendar(elementForTable, 2021, 2);
