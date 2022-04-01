@@ -329,6 +329,7 @@ header {
   font: inherit;
   font-size: 14px;
   height: calc(4 * var(--default-offset));
+  resize: none;
   width: 85%;
 }
 
