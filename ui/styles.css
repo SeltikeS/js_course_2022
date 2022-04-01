@@ -230,6 +230,37 @@ header {
   opacity: 0.7;
 }
 
+/* ADD TWEET */
+
+.add__tweet {
+  border-top: 2px solid var(--grey-color);
+  width: 100%;
+}
+
+.add__tweet__form {
+  display: flex;
+}
+
+.add__tweet__textarea {
+  border: none;
+  font: inherit;
+  font-size: calc(1.2 * var(--default-offset));
+  resize: none;
+  width: 100%;
+}
+
+.add__tweet__button {
+  background: none;
+  border: none;
+  color: var(--grey-color);
+  font-size: calc(2 * var(--default-offset));
+}
+
+.add__tweet__button:hover {
+  background-color: var(--light-grey-color);
+  opacity: 0.9;
+}
+
 /* SHOW MORE */
 .show__more {
   border-top: 2px solid var(--grey-color);

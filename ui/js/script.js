@@ -190,13 +190,9 @@ const tweetFeedView = new TweetFeedView('tweet-feed-id');
 const filterView = new FilterView('filter-id');
 const tweetView = new TweetView('tweet-feed-id');
 
-function setCurrentUser(user) {
-  tweets.user = user;
-  headerView.display(tweets.user);
-}
-
 function getFeed(skip, top, filterConfig) {
   const filters = document.querySelector('.filters');
+  const addTweetArea = document.querySelector('.add__tweet');
   const showMore = document.querySelector('.show__more');
   if (filters.classList.contains('hidden')) {
     filters.classList.remove('hidden');
@@ -207,7 +203,22 @@ function getFeed(skip, top, filterConfig) {
 
   const tweetFeed = tweets.getPage(skip, top, filterConfig);
   filterView.display(filterConfig);
+  if (!headerView._container.querySelector('.header__username').classList.contains('hidden')
+      && addTweetArea.classList.contains('hidden')) {
+    addTweetArea.classList.remove('hidden');
+  }
   tweetFeedView.display(tweetFeed);
+}
+
+function setCurrentUser(user) {
+  const addTweetArea = document.querySelector('.add__tweet');
+  tweets.user = user;
+  headerView.display(tweets.user);
+  if (!headerView._container.querySelector('.header__username').classList.contains('hidden')
+      && addTweetArea.classList.contains('hidden')) {
+    addTweetArea.classList.remove('hidden');
+  }
+  getFeed();
 }
 
 function addTweet(text) {
@@ -227,9 +238,13 @@ function removeTweet(id) {
 
 function showTweet(id = null) {
   const filters = document.querySelector('.filters');
+  const addTweetArea = document.querySelector('.add__tweet');
   const showMore = document.querySelector('.show__more');
   if (!filters.classList.contains('hidden')) {
     filters.classList.add('hidden');
+  }
+  if (!addTweetArea.classList.contains('hidden')) {
+    addTweetArea.classList.add('hidden');
   }
   if (!showMore.classList.contains('hidden')) {
     showMore.classList.add('hidden');
@@ -240,3 +255,5 @@ function showTweet(id = null) {
     tweetView.display(tweet);
   }
 }
+
+getFeed();
