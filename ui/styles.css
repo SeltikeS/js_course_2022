@@ -692,6 +692,10 @@ footer {
     opacity: 0.7;
   }
 
+  .add__tweet {
+    display: none;
+  }
+
   /* SIGN UP PAGE */
 
   .signup__background {
@@ -756,5 +760,13 @@ footer {
   .signup__footer {
     background-color: var(--white-color);
     color: var(--black-color);
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .go__home {
+    display: none;
   }
 }

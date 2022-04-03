@@ -161,9 +161,7 @@ const tweetObjects = [{
     author: 'Dora',
   }],
 }];
-
 let count = 0;
-
 const tweetsTweet = tweetObjects.map((tw) => {
   const newTweet = new Tweet(
     String(++count),
@@ -193,7 +191,9 @@ const tweetView = new TweetView('tweet-feed-id');
 function getFeed(skip, top, filterConfig) {
   const filters = document.querySelector('.filters');
   const addTweetArea = document.querySelector('.add__tweet');
+  const addTweetPanel = document.querySelector('.panel__add');
   const showMore = document.querySelector('.show__more');
+
   if (filters.classList.contains('hidden')) {
     filters.classList.remove('hidden');
   }
@@ -207,44 +207,59 @@ function getFeed(skip, top, filterConfig) {
       && addTweetArea.classList.contains('hidden')) {
     addTweetArea.classList.remove('hidden');
   }
+  if (!headerView._container.querySelector('.header__username').classList.contains('hidden')
+      && addTweetPanel.classList.contains('hidden')) {
+    addTweetPanel.classList.remove('hidden');
+  }
   tweetFeedView.display(tweetFeed);
 }
 
 function setCurrentUser(user) {
   const addTweetArea = document.querySelector('.add__tweet');
+  const addTweetPanel = document.querySelector('.panel__add');
+
   tweets.user = user;
   headerView.display(tweets.user);
   if (!headerView._container.querySelector('.header__username').classList.contains('hidden')
       && addTweetArea.classList.contains('hidden')) {
     addTweetArea.classList.remove('hidden');
   }
+  if (!headerView._container.querySelector('.header__username').classList.contains('hidden')
+      && addTweetPanel.classList.contains('hidden')) {
+    addTweetPanel.classList.remove('hidden');
+  }
   getFeed();
 }
 
 function addTweet(text) {
   tweets.add(text);
-  getFeed(0, 10);
+  getFeed();
 }
 
 function editTweet(id, text) {
   tweets.edit(id, text);
-  getFeed(0, 10);
+  getFeed();
 }
 
 function removeTweet(id) {
   tweets.remove(id);
-  getFeed(0, 10);
+  getFeed();
 }
 
 function showTweet(id = null) {
   const filters = document.querySelector('.filters');
   const addTweetArea = document.querySelector('.add__tweet');
+  const addTweetPanel = document.querySelector('.panel__add');
   const showMore = document.querySelector('.show__more');
+
   if (!filters.classList.contains('hidden')) {
     filters.classList.add('hidden');
   }
   if (!addTweetArea.classList.contains('hidden')) {
     addTweetArea.classList.add('hidden');
+  }
+  if (!addTweetPanel.classList.contains('hidden')) {
+    addTweetPanel.classList.add('hidden');
   }
   if (!showMore.classList.contains('hidden')) {
     showMore.classList.add('hidden');
