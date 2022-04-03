@@ -765,4 +765,8 @@ footer {
   .hidden {
     display: none;
   }
+
+  .go__home {
+    display: none;
+  }
 }
