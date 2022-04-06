@@ -17,6 +17,18 @@ class TweetFeedView {
     return num;
   }
 
+  static greyHashtags(text) {
+    const array = text.split(' ');
+    const newArray = array.map((word) => {
+      if (word.includes('#')) {
+        return `<span class="hashtags">${word}</span>`;
+      }
+      return word;
+    });
+    console.log(newArray);
+    return newArray.join(' ');
+  }
+
   // Принимает массив твитов. Выводит их на экран
   display(tws) {
     let str = '';
@@ -40,7 +52,7 @@ class TweetFeedView {
                                       </div>
                                   </div>
                                   <p>
-                                    ${tw.text}
+                                    ${TweetFeedView.greyHashtags(tw.text)}
                                   </p>
                                   <h3 class="comments">Comments: ${tw._comments.length}</h3>
                               </div>

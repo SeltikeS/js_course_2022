@@ -246,12 +246,20 @@ header {
 
 .filters__label {
   display: flex;
+  margin: 0.2rem 0;
 }
 
 .filters__filter__name {
   display: flex;
   padding-left: 1rem;
   min-width: 5rem;
+}
+
+.filters__input {
+  border: none;
+  border-bottom: 1px solid var(--grey-color);
+  font: inherit;
+  opacity: 0.8;
 }
 
 /* ADD TWEET */
@@ -283,6 +291,10 @@ header {
 .add__tweet__button:hover {
   background-color: var(--light-grey-color);
   opacity: 0.9;
+}
+
+.hashtags {
+  color: var(--grey-color);
 }
 
 /* SHOW MORE */
