@@ -190,6 +190,7 @@ header {
 
 .filter__buttons {
   display: flex;
+  padding: calc(0.4 * var(--default-offset)) 0;
 }
 
 .arrow {
@@ -241,18 +242,19 @@ header {
 .filters__form  {
   display: flex;
   flex-flow: column;
+  padding: calc(1 * var(--default-offset)) 0;
   width: 100%;
 }
 
 .filters__label {
   display: flex;
-  margin: 0.2rem 0;
+  margin: 0 0 calc(0.2 * var(--default-offset)) 0;
 }
 
 .filters__filter__name {
   display: flex;
-  padding-left: 1rem;
-  min-width: 5rem;
+  padding-left: calc(1 * var(--default-offset));
+  min-width: calc(5 * var(--default-offset));
 }
 
 .filters__input {
@@ -774,6 +776,11 @@ footer {
         )
     );
     padding: var(--default-offset);
+  }
+
+  .input__button {
+    border: 2px solid var(--green-color);
+    font-size: 18px;
   }
 
   .form {

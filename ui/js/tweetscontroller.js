@@ -95,4 +95,9 @@ class TweetsController {
       this._tweetView.display(tweet);
     }
   }
+
+  addUser(user) {
+    this._users.add(user);
+    this.setCurrentUser(user.login);
+  }
 }

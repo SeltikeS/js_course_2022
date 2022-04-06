@@ -25,7 +25,6 @@ class TweetFeedView {
       }
       return word;
     });
-    console.log(newArray);
     return newArray.join(' ');
   }
 
