@@ -1,3 +1,5 @@
+/* eslint-disable no-use-before-define */
+/* eslint-disable prefer-destructuring */
 /* eslint-disable no-plusplus */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-undef */
@@ -182,6 +184,230 @@ const tweetsTweet = tweetObjects.map((tw) => {
   return newTweet;
 });
 
-const tweetsController = new TweetsController(tweetsTweet, count);
+const createKeyIfEmpty = (key) => {
+  if (!localStorage.getItem(`${key}`)) {
+    localStorage.setItem(`${key}`, JSON.stringify([]));
+  }
+};
 
-tweetsController.getFeed();
+window.onload = () => {
+  // If LocalStorage hasn't tweets or users create empty array
+  createKeyIfEmpty('tweets');
+  createKeyIfEmpty('users');
+
+  localStorage.setItem('tweets', JSON.stringify(tweetsTweet));
+
+  const tweetsFromStorage = jsonToTweets(JSON.parse(localStorage.getItem('tweets')));
+
+  // Create controller
+  const tweetsController = new TweetsController([], tweetsFromStorage, count);
+  tweetsController.getFeed();
+
+  // Callback functions
+  function loginOpen() {
+    const modal = document.querySelector('.modal');
+    const modalLogin = modal.querySelector('.modal__login');
+    const modalSignup = modal.querySelector('.modal__signup');
+    const inputLogin = modal.querySelector('.input__button__login');
+    const inputSignup = modal.querySelector('.input__button__signup');
+    const repeate = document.forms.autorization.repeate;
+
+    if (modal.classList.contains('hidden')) {
+      modal.classList.remove('hidden');
+    }
+    if (!repeate.classList.contains('hidden')) {
+      repeate.classList.add('hidden');
+    }
+
+    if (inputLogin.classList.contains('hidden')) {
+      inputLogin.classList.remove('hidden');
+    }
+    if (!inputSignup.classList.contains('hidden')) {
+      inputSignup.classList.add('hidden');
+    }
+
+    if (modalLogin.classList.contains('modal__grey')) {
+      modalLogin.classList.remove('modal__grey');
+    }
+    if (!modalLogin.classList.contains('modal__active')) {
+      modalLogin.classList.add('modal__active');
+    }
+
+    if (!modalSignup.classList.contains('modal__grey')) {
+      modalSignup.classList.add('modal__grey');
+    }
+    if (modalSignup.classList.contains('modal__active')) {
+      modalSignup.classList.remove('modal__active');
+    }
+
+    modalLogin.removeEventListener('click', loginOpen);
+    modalSignup.addEventListener('click', signupOpen);
+  }
+
+  function signupOpen() {
+    const modal = document.querySelector('.modal');
+    const modalLogin = modal.querySelector('.modal__login');
+    const modalSignup = modal.querySelector('.modal__signup');
+    const inputLogin = modal.querySelector('.input__button__login');
+    const inputSignup = modal.querySelector('.input__button__signup');
+    const repeate = document.forms.autorization.repeate;
+
+    if (modal.classList.contains('hidden')) {
+      modal.classList.remove('hidden');
+    }
+    if (repeate.classList.contains('hidden')) {
+      repeate.classList.remove('hidden');
+    }
+
+    if (inputSignup.classList.contains('hidden')) {
+      inputSignup.classList.remove('hidden');
+    }
+    if (!inputLogin.classList.contains('hidden')) {
+      inputLogin.classList.add('hidden');
+    }
+
+    if (modalSignup.classList.contains('modal__grey')) {
+      modalSignup.classList.remove('modal__grey');
+    }
+    if (!modalSignup.classList.contains('modal__active')) {
+      modalSignup.classList.add('modal__active');
+    }
+
+    if (!modalLogin.classList.contains('modal__grey')) {
+      modalLogin.classList.add('modal__grey');
+    }
+    if (modalLogin.classList.contains('modal__active')) {
+      modalLogin.classList.remove('modal__active');
+    }
+
+    modalSignup.removeEventListener('click', signupOpen);
+    modalLogin.addEventListener('click', loginOpen);
+  }
+
+  function modalClose() {
+    const modal = document.querySelector('.modal');
+
+    if (!modal.classList.contains('hidden')) {
+      modal.classList.add('hidden');
+    }
+  }
+
+  function arrowOpen() {
+    const form = document.querySelector('.filters__form');
+    const filters = document.querySelector('.filters__space');
+
+    form.classList.remove('hidden');
+    filters.classList.add('hidden');
+
+    this.classList.remove('arrow__down');
+    this.classList.add('arrow__up');
+
+    this.removeEventListener('click', arrowOpen);
+    this.addEventListener('click', arrowClose);
+  }
+
+  function arrowClose() {
+    const form = document.querySelector('.filters__form');
+    const filters = document.querySelector('.filters__space');
+
+    form.classList.add('hidden');
+    filters.classList.remove('hidden');
+
+    this.classList.add('arrow__down');
+    this.classList.remove('arrow__up');
+
+    this.removeEventListener('click', arrowClose);
+    this.addEventListener('click', arrowOpen);
+  }
+
+  function parseDate(date) {
+    if (date && date !== '') {
+      const array = date.split('.');
+      array.reverse();
+      const parsed = `${array.join('-')}T00:00:00`;
+      return parsed;
+    }
+    return '';
+  }
+
+  function filtersInputs() {
+    const form = document.forms.filters;
+    const author = form.author.value;
+    const datefrom = parseDate(form.datefrom.value);
+    const dateto = parseDate(form.dateto.value);
+    const text = form.text.value;
+    const tags = form.tags.value.split(' ').map((tag) => ((tag[0] === '#') ? tag.slice(1) : tag));
+
+    const filters = {};
+    if (author && author !== '') {
+      filters.author = author;
+    }
+    if (datefrom && datefrom !== '') {
+      filters.dateFrom = datefrom;
+    }
+    if (dateto && dateto !== '') {
+      filters.dateTo = dateto;
+    }
+    if (text && text !== '') {
+      filters.text = text;
+    }
+    if (tags && tags !== [] && tags !== ['']) {
+      filters.hashtags = tags;
+      filters.hashtags = filters.hashtags.filter((e) => (e !== ''));
+    }
+
+    tweetsController.getFeed(0, 10, filters);
+  }
+
+  function clearInputs() {
+    const filterInputs = document.forms.filters;
+    filterInputs.author.value = '';
+    filterInputs.datefrom.value = '';
+    filterInputs.dateto.value = '';
+    filterInputs.text.value = '';
+    filterInputs.tags.value = '';
+    tweetsController.getFeed();
+  }
+
+  function jsonToTweets(tws) {
+    const tweets = [];
+    tws.forEach((tw) => {
+      const newTweet = new Tweet(
+        tw._id,
+        tw._text,
+        tw._author,
+        new Date(tw._createdAt),
+      );
+
+      tw._comments.forEach((com) => {
+        const newComment = new Comment(
+          com._id,
+          com._text,
+          com._author,
+          new Date(com._createdAt),
+        );
+        newTweet._comments.push(newComment);
+      });
+
+      tweets.push(newTweet);
+    });
+
+    return tweets;
+  }
+
+  // Login and signup
+  const login = document.querySelector('.log__in');
+  const signup = document.querySelector('.sign__up');
+  const goHome = document.querySelector('.signup__home');
+  login.addEventListener('click', loginOpen);
+  signup.addEventListener('click', signupOpen);
+  goHome.addEventListener('click', modalClose);
+
+  // Filters
+  const arrow = document.querySelector('.arrow');
+  const clearAll = document.querySelector('.filters__reset');
+  const filters = document.forms.filters;
+  arrow.addEventListener('click', arrowOpen);
+  filters.addEventListener('input', filtersInputs);
+  clearAll.addEventListener('click', clearInputs);
+};

@@ -90,7 +90,7 @@ header {
   color: var(--green-color);
   padding: calc(0.5 * var(--default-offset)) var(--default-offset);
   text-decoration: none;
-
+  font-size: var(--default-offset);
   font-weight: 600;
 }
 
@@ -110,7 +110,7 @@ header {
   color: var(--white-color);
   padding: calc(0.5 * var(--default-offset)) var(--default-offset);
   text-decoration: none;
-
+  font-size: var(--default-offset);
   font-weight: 600;
 }
 
@@ -192,7 +192,7 @@ header {
   display: flex;
 }
 
-.arrow__down {
+.arrow {
   align-items: center;
   border: none;
   background-color: var(--white-color);
@@ -201,13 +201,21 @@ header {
   max-height: calc(2.5 * var(--default-offset));
 }
 
-.arrow__down:hover {
+.arrow:hover {
   background-color: var(--light-grey-color);
   border-radius: 5px;
 }
 
-.arrow__down:active {
+.arrow:active {
   opacity: 0.7;
+}
+
+.arrow__down {
+  transform: rotate(0deg);
+}
+
+.arrow__up {
+  transform: rotate(180deg);
 }
 
 .filters__reset {
@@ -228,6 +236,22 @@ header {
 
 .filters__reset:active {
   opacity: 0.7;
+}
+
+.filters__form  {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+}
+
+.filters__label {
+  display: flex;
+}
+
+.filters__filter__name {
+  display: flex;
+  padding-left: 1rem;
+  min-width: 5rem;
 }
 
 /* ADD TWEET */
@@ -498,34 +522,34 @@ footer {
   width: 50%;
 }
 
-.signup__active,
-.login__active {
+.modal__signup,
+.modal__login {
   align-items: center;
+  background: var(--black-color);
+  display: flex;
+  font-size: 20px;
+  font-weight: 600;
+  justify-content: center;
+  width: 100%;
+}
+
+.modal__active {
   border: 2px solid var(--white-color);
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   border-bottom: none;
   color: var(--white-color);
-  display: flex;
-  font-size: 20px;
-  font-weight: 600;
-  justify-content: center;
   padding: calc(1.05 * var(--default-offset)) 0;
-  width: 100%;
 }
 
-.login__grey,
-.signup__grey {
-  align-items: center;
+.modal__grey {
   border: 2px solid var(--grey-color);
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   border-bottom: 2px solid var(--white-color);
   color: var(--grey-color);
-  display: flex;
-  justify-content: center;
+  cursor: pointer;
   padding: calc(1 * var(--default-offset)) 0;
-  width: 100%;
 }
 
 .login__grey:hover {
@@ -576,6 +600,7 @@ footer {
 }
 
 .form__buttons {
+  align-items: center;
   display: flex;
   justify-content: center;
   width: 100%;
@@ -586,6 +611,7 @@ footer {
 }
 
 .input__button {
+  align-items: center;
   background-color: var(--green-color);
   border: none;
   border-radius: 5px;
@@ -616,6 +642,17 @@ footer {
 
   font-weight: 200;
   font-size: 14px;
+}
+
+/* MODAL */
+
+.modal {
+  background: var(--black-color);
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  z-index: 100;
 }
 
 .hidden {
@@ -697,12 +734,16 @@ footer {
   }
 
   /* SIGN UP PAGE */
+  .modul {
+    background: var(--white-color);
+  }
 
   .signup__background {
     background-color: var(--white-color);
   }
 
   .signup__header {
+    background: var(--white-color);
     height: calc(15 * var(--default-offset));
     justify-content: flex-end;
   }
@@ -712,6 +753,7 @@ footer {
   }
 
   .signup__main {
+    background: var(--white-color);
     height: calc(
       100% -
         (
@@ -760,6 +802,10 @@ footer {
   .signup__footer {
     background-color: var(--white-color);
     color: var(--black-color);
+  }
+
+  .main__panel {
+    background: var(--white-color);
   }
 
   .hidden {

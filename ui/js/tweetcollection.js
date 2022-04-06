@@ -6,7 +6,7 @@
 // Class TweetCollection
 class TweetCollection {
   constructor(tws = [], newCnt = 0) {
-    this._user = 'SeltikeS';
+    this._user = '';
     this._id = new Counter(newCnt);
     this._tweets = tws;
     this._filterConfig = {};

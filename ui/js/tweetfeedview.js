@@ -22,7 +22,7 @@ class TweetFeedView {
     let str = '';
 
     tws.forEach((tw) => {
-      const tweetCode = `<article class="twit">
+      const tweetCode = `<article class="twit"  data-id="${tw.id}">
                           <div class="twit__ref" href="twit.html">
                               <div class="twit__content">
                                   <div class="twit__header">

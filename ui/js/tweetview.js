@@ -17,7 +17,7 @@ class TweetView {
             <span class="iconify" data-icon="ant-design:home-filled"></span>
         </a>
     </article>
-    <article class="twit">
+    <article class="twit"  data-id="${tw.id}">
                 <div class="twit__ref">
                     <div class="twit__content">
                         <div class="twit__header">
@@ -41,7 +41,7 @@ class TweetView {
 
     // Для каждого коммента рисую его тело
     tw._comments.forEach((com) => {
-      str += `<div class="single__comment">
+      str += `<div class="single__comment"  data-id="${com.id}">
           <h3 class="comment__username">${com.author}</h3>
           <h3 class="date">${TweetFeedView.addZero(com.createdAt.getHours())}:${TweetFeedView.addZero(com.createdAt.getMinutes())} ${TweetFeedView.addZero(com.createdAt.getDate())}.${TweetFeedView.addZero(com.createdAt.getMonth() + 1)}.${com.createdAt.getFullYear()}</h3>
           <p class="comment__text">

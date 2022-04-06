@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable no-plusplus */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-undef */
@@ -6,7 +7,8 @@
 
 // Class TweetsController
 class TweetsController {
-  constructor(tws, count = 0) {
+  constructor(users = [], tws = [], count = 0) {
+    this._users = new UserCollection(users);
     this._tweets = new TweetCollection(tws, count);
     this._headerView = new HeaderView('header-id');
     this._tweetFeedView = new TweetFeedView('tweet-feed-id');
@@ -27,12 +29,13 @@ class TweetsController {
   }
 
   _viewIfHasUser(item) {
-    if (!this._headerView._container.querySelector('.header__username').classList.contains('hidden')
+    if (this._tweets.user !== ''
     && item.classList.contains('hidden')) {
       item.classList.remove('hidden');
     }
   }
 
+  // Methods
   getFeed(skip, top, filterConfig) {
     const filters = document.querySelector('.filters');
     const addTweetArea = document.querySelector('.add__tweet');

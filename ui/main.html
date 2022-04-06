@@ -14,8 +14,8 @@
         <img class="black__logo" src="img/minilogo.svg" alt="logo">
 
         <div class="header__right" id="header__right">
-            <a class="log__in" href="login.html">Log In</a>
-            <a class="sign__up" href="signup.html">Sign Up</a>
+            <button class="log__in">Log In</button>
+            <button class="sign__up">Sign Up</button>
             <div class="header__username hidden">Username</div>
             <button class="button log__out hidden">Log Out</button>
         </div>    
@@ -24,6 +24,26 @@
     <main class="main">
         <section class="filters hidden">
             <h3 class="filters__header">Filters: </h3>
+            <form class="filters__form hidden" name="filters">
+                <label class="filters__label">
+                    <span class="filters__filter__name">Author</span> 
+                    <input type="text" name="author">
+                </label>
+                <label class="filters__label">
+                    <span class="filters__filter__name">Date</span> 
+                    <input type="text" name="datefrom">
+                    <span>&nbsp;-&nbsp;</span>
+                    <input type="text" name="dateto">
+                </label>
+                <label class="filters__label">
+                    <span class="filters__filter__name">Text</span> 
+                    <input type="text" name="text">
+                </label>
+                <label class="filters__label">
+                    <span class="filters__filter__name">#tags</span> 
+                    <input type="text" name="tags">
+                </label>
+            </form>
             <div class="filters__space">
                 <div class="active__filters" id="filter-id">
                 </div>
@@ -32,7 +52,7 @@
                 <button class="filters__reset">
                     clear all
                 </button>
-                <button class="arrow__down">
+                <button class="arrow  arrow__down">
                     <span class="iconify" data-icon="dashicons:arrow-down-alt2"></span>
                 </button>
             </div>
@@ -78,6 +98,51 @@
             <span>01.03.2022</span>  
         </div>
     </footer>
+
+    <div class="modal hidden">
+        <div class="signup__header">
+            <div class="signup__home">
+                <span class="iconify" data-icon="ant-design:home-filled"></span>
+            </div>
+            <div class="signup__logo">
+                <img class="white__logo" src="img/wlogo.svg" alt="logo">
+                <img class="black__logo" src="img/minilogo.svg" alt="logo">
+            </div>
+        </div>
+    
+        <div class="signup__main">
+            <div class="form__header">
+                <button class="modal__signup modal__grey">Sign Up</button>
+                <button class="modal__login modal__active">Log In</button>
+            </div>
+            <div class="form__field">
+                <form class="form" name="autorization">
+                    <input class="input__user" name="username" type="text" placeholder="Username">
+                    <input class="input__pass" name="pass" type="password" placeholder="Password">
+                    <input class="input__pass" name="repeate" type="password" placeholder="Repeate Password">
+                    <div class="form__buttons">
+                        <button class="form__button">Sign Up</button>
+                        <button type="submit" class="input__button input__button__login">Log In</button>
+                        <button type="submit" class="input__button input__button__signup">Sign Up</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    
+        <div>
+            <div class="main__panel">
+                <div class="panel__item" href="main.html">
+                    <span class="iconify" data-icon="ant-design:home-filled"></span>
+                </div>
+            </div>
+            <div class="signup__footer">
+                <span>LetsPlay</span>  
+                <span>Maxim Gorelikov</span>  
+                <span>pschenka@gmail.com</span>  
+                <span>01.03.2022</span>  
+            </div>
+        </div>
+    </div>
 
 
     <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
