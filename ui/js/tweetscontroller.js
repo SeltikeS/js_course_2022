@@ -35,6 +35,13 @@ class TweetsController {
     }
   }
 
+  _hideIfHasntUser(item) {
+    if (this._tweets.user === ''
+    && !item.classList.contains('hidden')) {
+      item.classList.add('hidden');
+    }
+  }
+
   // Methods
   getFeed(skip, top, filterConfig) {
     const filters = document.querySelector('.filters');
@@ -56,11 +63,20 @@ class TweetsController {
     const addTweetArea = document.querySelector('.add__tweet');
     const addTweetPanel = document.querySelector('.panel__add');
 
-    this._tweets.user = user;
-    this._headerView.display(this._tweets.user);
-    this._viewIfHasUser(addTweetArea);
-    this._viewIfHasUser(addTweetPanel);
-    this.getFeed();
+    if (user !== '') {
+      this._tweets.user = user;
+      this._headerView.display(this._tweets.user);
+      this._viewIfHasUser(addTweetArea);
+      this._viewIfHasUser(addTweetPanel);
+      this.getFeed();
+    }
+    if (user === '') {
+      this._tweets.user = user;
+      this._headerView.hide(this._tweets.user);
+      this._hideIfHasntUser(addTweetArea);
+      this._hideIfHasntUser(addTweetPanel);
+      this.getFeed();
+    }
   }
 
   addTweet(text) {
@@ -97,7 +113,18 @@ class TweetsController {
   }
 
   addUser(user) {
-    this._users.add(user);
-    this.setCurrentUser(user.login);
+    const isOk = this._users.add(user);
+    if (isOk) {
+      this.setCurrentUser(user.login);
+    }
+    return isOk;
+  }
+
+  login(user) {
+    const isOk = this._users.login(user);
+    if (isOk) {
+      this.setCurrentUser(user.login);
+    }
+    return isOk;
   }
 }

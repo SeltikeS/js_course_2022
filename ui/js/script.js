@@ -201,18 +201,30 @@ const tweetsController = new TweetsController();
 tweetsController.getFeed();
 
 // Support functions
-function addHidden(item) {
+function removeHidden(item) {
   if (item.classList.contains('hidden')) {
     item.classList.remove('hidden');
   }
 }
-function removeHidden(item) {
+function addHidden(item) {
   if (!item.classList.contains('hidden')) {
     item.classList.add('hidden');
   }
 }
 
-// Callback functions
+function parseDate(date) {
+  if (date && date !== '') {
+    const array = date.split('.');
+    array.reverse();
+    const parsed = `${array.join('-')}T00:00:00`;
+    return parsed;
+  }
+  return '';
+}
+
+// ------CALLBACK---FUNCTIONS------
+
+// Open login window
 function loginOpen(e) {
   const modal = document.querySelector('.modal');
   const modalLogin = modal.querySelector('.modal__login');
@@ -221,16 +233,34 @@ function loginOpen(e) {
   const inputSignup = modal.querySelector('.input__button__signup');
   const goSignup = modal.querySelector('.form__button__signup');
   const goLogin = modal.querySelector('.form__button__login');
-  const repeate = document.forms.autorization.repeate;
+
+  const form = document.forms.autorization;
+  const username = form.username;
+  const pass = form.pass;
+  const repeate = form.repeate;
+  const error = form.querySelector('.input__errors');
+
+  const login = document.querySelector('.input__button__login');
+  const signup = document.querySelector('.input__button__signup');
+  login.addEventListener('click', loginUser);
+  signup.removeEventListener('click', createUser);
+
+  username.value = '';
+  pass.value = '';
+  repeate.value = '';
+  username.style.border = 'none';
+  pass.style.border = 'none';
+  repeate.style.border = 'none';
+  addHidden(error);
 
   e.preventDefault();
 
-  addHidden(modal);
-  addHidden(inputLogin);
-  addHidden(goSignup);
-  removeHidden(repeate);
-  removeHidden(inputSignup);
-  removeHidden(goLogin);
+  removeHidden(modal);
+  removeHidden(inputLogin);
+  removeHidden(goSignup);
+  addHidden(repeate);
+  addHidden(inputSignup);
+  addHidden(goLogin);
 
   if (modalLogin.classList.contains('modal__grey')) {
     modalLogin.classList.remove('modal__grey');
@@ -252,6 +282,7 @@ function loginOpen(e) {
   goSignup.addEventListener('click', signupOpen);
 }
 
+// Open signup window
 function signupOpen(e) {
   const modal = document.querySelector('.modal');
   const modalLogin = modal.querySelector('.modal__login');
@@ -260,16 +291,34 @@ function signupOpen(e) {
   const inputSignup = modal.querySelector('.input__button__signup');
   const goSignup = modal.querySelector('.form__button__signup');
   const goLogin = modal.querySelector('.form__button__login');
-  const repeate = document.forms.autorization.repeate;
+
+  const form = document.forms.autorization;
+  const username = form.username;
+  const pass = form.pass;
+  const repeate = form.repeate;
+  const error = form.querySelector('.input__errors');
+
+  const login = document.querySelector('.input__button__login');
+  const signup = document.querySelector('.input__button__signup');
+  login.removeEventListener('click', loginUser);
+  signup.addEventListener('click', createUser);
+
+  username.value = '';
+  pass.value = '';
+  repeate.value = '';
+  username.style.border = 'none';
+  pass.style.border = 'none';
+  repeate.style.border = 'none';
+  addHidden(error);
 
   e.preventDefault();
 
-  addHidden(modal);
-  removeHidden(inputLogin);
-  removeHidden(goSignup);
-  addHidden(repeate);
-  addHidden(inputSignup);
-  addHidden(goLogin);
+  removeHidden(modal);
+  addHidden(inputLogin);
+  addHidden(goSignup);
+  removeHidden(repeate);
+  removeHidden(inputSignup);
+  removeHidden(goLogin);
 
   if (modalSignup.classList.contains('modal__grey')) {
     modalSignup.classList.remove('modal__grey');
@@ -291,6 +340,7 @@ function signupOpen(e) {
   goLogin.addEventListener('click', loginOpen);
 }
 
+// Close login or signup window
 function modalClose() {
   const modal = document.querySelector('.modal');
 
@@ -299,6 +349,7 @@ function modalClose() {
   }
 }
 
+// Open filters
 function arrowOpen() {
   const form = document.querySelector('.filters__form');
   const filters = document.querySelector('.filters__space');
@@ -313,6 +364,7 @@ function arrowOpen() {
   this.addEventListener('click', arrowClose);
 }
 
+// Close filters
 function arrowClose() {
   const form = document.querySelector('.filters__form');
   const filters = document.querySelector('.filters__space');
@@ -327,16 +379,7 @@ function arrowClose() {
   this.addEventListener('click', arrowOpen);
 }
 
-function parseDate(date) {
-  if (date && date !== '') {
-    const array = date.split('.');
-    array.reverse();
-    const parsed = `${array.join('-')}T00:00:00`;
-    return parsed;
-  }
-  return '';
-}
-
+// Get new tweet feed if have filter
 function filtersInputs() {
   const form = document.forms.filters;
   const author = form.author.value;
@@ -361,11 +404,15 @@ function filtersInputs() {
   if (tags && tags !== [] && tags !== ['']) {
     filters.hashtags = tags;
     filters.hashtags = filters.hashtags.filter((e) => (e !== ''));
+    if (filters.hashtags.length === 0) {
+      delete filters.hashtags;
+    }
   }
 
   tweetsController.getFeed(0, 10, filters);
 }
 
+// Clear all button
 function clearInputs() {
   const filterInputs = document.forms.filters;
   filterInputs.author.value = '';
@@ -376,18 +423,121 @@ function clearInputs() {
   tweetsController.getFeed();
 }
 
+// Create new user
+function createUser(e) {
+  e.preventDefault();
+
+  const form = document.forms.autorization;
+  const username = form.username;
+  const pass = form.pass;
+  const repeate = form.repeate;
+  const error = form.querySelector('.input__errors');
+
+  username.style.border = 'none';
+  pass.style.border = 'none';
+  repeate.style.border = 'none';
+
+  if (!username.value) {
+    username.style.border = '2px solid var(--red-color)';
+    error.classList.remove('hidden');
+    error.textContent = '*Empty username';
+  } else if (!pass.value) {
+    pass.style.border = '2px solid var(--red-color)';
+    error.classList.remove('hidden');
+    error.textContent = '*Empty password';
+  } else if (!repeate.value) {
+    repeate.style.border = '2px solid var(--red-color)';
+    error.classList.remove('hidden');
+    error.textContent = '*Empty repeate password';
+  } else if (pass.value !== repeate.value) {
+    pass.style.border = '2px solid var(--red-color)';
+    repeate.style.border = '2px solid var(--red-color)';
+    error.textContent = '*Different passwords entered';
+  } else {
+    const newUser = {
+      login: username.value,
+      pass: pass.value,
+    };
+    const isExist = tweetsController._users.isExist(newUser);
+    if (isExist) {
+      username.style.border = '2px solid var(--red-color)';
+      error.classList.remove('hidden');
+      error.textContent = '*Username is already exist';
+    } else {
+      tweetsController.addUser(newUser);
+      modalClose();
+    }
+  }
+}
+
+// Log in as user
+function loginUser(e) {
+  e.preventDefault();
+
+  const form = document.forms.autorization;
+  const username = form.username;
+  const pass = form.pass;
+  const error = form.querySelector('.input__errors');
+
+  username.style.border = 'none';
+  pass.style.border = 'none';
+  repeate.style.border = 'none';
+
+  if (!username.value) {
+    username.style.border = '2px solid var(--red-color)';
+    error.classList.remove('hidden');
+    error.textContent = '*Empty username';
+  } else if (!pass.value) {
+    pass.style.border = '2px solid var(--red-color)';
+    error.classList.remove('hidden');
+    error.textContent = '*Empty password';
+  } else {
+    const newUser = {
+      login: username.value,
+      pass: pass.value,
+    };
+    const isExist = tweetsController._users.isExist(newUser);
+    if (!isExist) {
+      username.style.border = '2px solid var(--red-color)';
+      error.classList.remove('hidden');
+      error.textContent = '*Incorrect username';
+    } else {
+      const isLogin = tweetsController._users.login(newUser);
+      if (!isLogin) {
+        pass.style.border = '2px solid var(--red-color)';
+        error.classList.remove('hidden');
+        error.textContent = '*Incorrect password';
+      } else {
+        tweetsController.login(newUser);
+        modalClose();
+      }
+    }
+  }
+}
+
+function logOutUser() {
+  tweetsController.setCurrentUser('');
+}
+
+// ------EVENT---LISTENERS------
+
 // Login and signup
-const login = document.querySelector('.log__in');
-const signup = document.querySelector('.sign__up');
+const goLogIn = document.querySelector('.log__in');
+const goSignUp = document.querySelector('.sign__up');
 const panelLogin = document.querySelector('.panel__item__login');
 const goHome = document.querySelector('.signup__home');
 const panelHome = document.querySelector('.panel__item__home');
 
-login.addEventListener('click', loginOpen);
+goLogIn.addEventListener('click', loginOpen);
 panelLogin.addEventListener('click', loginOpen);
-signup.addEventListener('click', signupOpen);
+goSignUp.addEventListener('click', signupOpen);
 goHome.addEventListener('click', modalClose);
 panelHome.addEventListener('click', modalClose);
+
+// Logout
+
+const logout = document.querySelector('.log__out');
+logout.addEventListener('click', logOutUser);
 
 // Filters
 const arrow = document.querySelector('.arrow');

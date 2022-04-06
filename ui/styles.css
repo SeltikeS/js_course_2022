@@ -1,5 +1,6 @@
 :root {
   --black-color: #000;
+  --red-color: #DE6277;
   --green-color: #11bf30;
   --grey-color: #bfbfbf;
   --light-grey-color: #eee;
@@ -598,7 +599,7 @@ footer {
   display: flex;
   flex-flow: column;
   justify-content: flex-start;
-  height: 60%;
+  min-height: 60%;
   width: 60%;
 }
 
@@ -610,6 +611,13 @@ footer {
   font: inherit;
   font-size: 18px;
   margin-bottom: calc(2 * var(--default-offset));
+  width: 100%;
+}
+
+.input__errors {
+  color: var(--red-color);
+  font-size: 14px;
+  padding: calc(0.2 * var(--default-offset)) var(--default-offset);
   width: 100%;
 }
 

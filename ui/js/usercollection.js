@@ -10,16 +10,40 @@ class UserCollection {
     this.restore();
   }
 
+  isExist(user) {
+    let isExist = false;
+    this._users.forEach((usr) => {
+      if (usr.login === user.login) {
+        isExist = true;
+      }
+    });
+    return isExist;
+  }
+
+  login(user) {
+    let isOk = false;
+    this._users.forEach((usr) => {
+      if (usr.login === user.login
+          && usr.pass === user.pass) {
+        isOk = true;
+      }
+    });
+    return isOk;
+  }
+
   add(user) {
     if (user
         && (typeof (user) === 'object')
         && (user.login)
         && (typeof (user.login) === 'string')
         && (user.pass)
-        && (typeof (user.pass) === 'string')) {
+        && (typeof (user.pass) === 'string')
+        && (!this.isExist(user))) {
       this._users.push(new User(user.login, user.pass));
+      this.save();
+      return true;
     }
-    this.save();
+    return false;
   }
 
   save() {
