@@ -248,9 +248,9 @@ function loginOpen(e) {
   username.value = '';
   pass.value = '';
   repeate.value = '';
-  username.style.border = 'none';
-  pass.style.border = 'none';
-  repeate.style.border = 'none';
+  username.style.border = '1px solid var(--black-color)';
+  pass.style.border = '1px solid var(--black-color)';
+  repeate.style.border = '1px solid var(--black-color)';
   addHidden(error);
 
   e.preventDefault();
@@ -306,9 +306,9 @@ function signupOpen(e) {
   username.value = '';
   pass.value = '';
   repeate.value = '';
-  username.style.border = 'none';
-  pass.style.border = 'none';
-  repeate.style.border = 'none';
+  username.style.border = '1px solid var(--black-color)';
+  pass.style.border = '1px solid var(--black-color)';
+  repeate.style.border = '1px solid var(--black-color)';
   addHidden(error);
 
   e.preventDefault();
@@ -433,9 +433,9 @@ function createUser(e) {
   const repeate = form.repeate;
   const error = form.querySelector('.input__errors');
 
-  username.style.border = 'none';
-  pass.style.border = 'none';
-  repeate.style.border = 'none';
+  username.style.border = '1px solid var(--black-color)';
+  pass.style.border = '1px solid var(--black-color)';
+  repeate.style.border = '1px solid var(--black-color)';
 
   if (!username.value) {
     username.style.border = '2px solid var(--red-color)';
@@ -479,9 +479,9 @@ function loginUser(e) {
   const pass = form.pass;
   const error = form.querySelector('.input__errors');
 
-  username.style.border = 'none';
-  pass.style.border = 'none';
-  repeate.style.border = 'none';
+  username.style.border = '1px solid var(--black-color)';
+  pass.style.border = '1px solid var(--black-color)';
+  repeate.style.border = '1px solid var(--black-color)';
 
   if (!username.value) {
     username.style.border = '2px solid var(--red-color)';
