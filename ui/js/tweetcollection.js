@@ -6,10 +6,10 @@
 // Class TweetCollection
 class TweetCollection {
   constructor(tws = [], newCnt = 0) {
-    this._user = 'SeltikeS';
+    this._user = '';
     this._id = new Counter(newCnt);
     this._tweets = tws;
-    this._filterConfig = {};
+    this.restore();
   }
 
   static filterConfigCheck(filt, tw) {
@@ -59,7 +59,6 @@ class TweetCollection {
     const out = [];
     let skipCnt = skip;
     let topCnt = top;
-    this._filterConfig = filterConfig;
 
     for (let i = this._tweets.length - 1; i >= 0; --i) {
       if (TweetCollection.filterConfigCheck(filterConfig, this._tweets[i])) {
@@ -89,6 +88,7 @@ class TweetCollection {
       const newTweet = new Tweet(this.id.next(), text, this.user);
       if (Tweet.validate(newTweet)) {
         this._tweets.push(newTweet);
+        this.save();
         return true;
       }
     }
@@ -99,6 +99,7 @@ class TweetCollection {
     const tw = this.get(id);
     if (Tweet.validate(tw) && tw.author === this.user) {
       tw.text = text;
+      this.save();
       return true;
     }
     return false;
@@ -110,6 +111,7 @@ class TweetCollection {
                                                     && tweet.id === id);
     if (index >= 0) {
       this._tweets.splice(index, 1);
+      this.save();
       return true;
     }
     return false;
@@ -118,6 +120,7 @@ class TweetCollection {
   addComment(id, text) {
     if (id && text && text.length <= 280) {
       this.get(id).addComment(this.id.next(), text, this.user);
+      this.save();
       return true;
     }
     return false;
@@ -148,11 +151,41 @@ class TweetCollection {
         invalidTweets.push(tw);
       }
     });
-
+    this.save();
     return invalidTweets;
   }
 
   clear() {
     this._tweets = [];
+  }
+
+  save() {
+    const jsonTweets = JSON.stringify(this._tweets);
+    localStorage.setItem('tweets', jsonTweets);
+  }
+
+  restore() {
+    const jsonTweets = localStorage.getItem('tweets');
+    const tws = JSON.parse(jsonTweets);
+    tws.forEach((tw) => {
+      const newTweet = new Tweet(
+        this.id.next(),
+        tw._text,
+        tw._author,
+        new Date(tw._createdAt),
+      );
+
+      tw._comments.forEach((com) => {
+        const newComment = new Comment(
+          this.id.next(),
+          com._text,
+          com._author,
+          new Date(com._createdAt),
+        );
+        newTweet._comments.push(newComment);
+      });
+
+      this._tweets.push(newTweet);
+    });
   }
 }

@@ -1,3 +1,5 @@
+/* eslint-disable no-use-before-define */
+/* eslint-disable prefer-destructuring */
 /* eslint-disable no-plusplus */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-undef */
@@ -182,93 +184,514 @@ const tweetsTweet = tweetObjects.map((tw) => {
   return newTweet;
 });
 
-const tweets = new TweetCollection(tweetsTweet, count);
-const headerView = new HeaderView('header-id');
-const tweetFeedView = new TweetFeedView('tweet-feed-id');
-const filterView = new FilterView('filter-id');
-const tweetView = new TweetView('tweet-feed-id');
+const createKeyIfEmpty = (key) => {
+  if (!localStorage.getItem(`${key}`)) {
+    localStorage.setItem(`${key}`, JSON.stringify([]));
+  }
+};
 
-function getFeed(skip, top, filterConfig) {
-  const filters = document.querySelector('.filters');
-  const addTweetArea = document.querySelector('.add__tweet');
-  const addTweetPanel = document.querySelector('.panel__add');
-  const showMore = document.querySelector('.show__more');
+// If LocalStorage hasn't tweets or users create empty array
+createKeyIfEmpty('tweets');
+createKeyIfEmpty('users');
 
-  if (filters.classList.contains('hidden')) {
-    filters.classList.remove('hidden');
-  }
-  if (showMore.classList.contains('hidden')) {
-    showMore.classList.remove('hidden');
-  }
+localStorage.setItem('tweets', JSON.stringify(tweetsTweet));
 
-  const tweetFeed = tweets.getPage(skip, top, filterConfig);
-  filterView.display(filterConfig);
-  if (!headerView._container.querySelector('.header__username').classList.contains('hidden')
-      && addTweetArea.classList.contains('hidden')) {
-    addTweetArea.classList.remove('hidden');
+// Create controller
+const tweetsController = new TweetsController();
+
+// Support functions
+function removeHidden(item) {
+  if (item.classList.contains('hidden')) {
+    item.classList.remove('hidden');
   }
-  if (!headerView._container.querySelector('.header__username').classList.contains('hidden')
-      && addTweetPanel.classList.contains('hidden')) {
-    addTweetPanel.classList.remove('hidden');
-  }
-  tweetFeedView.display(tweetFeed);
 }
-
-function setCurrentUser(user) {
-  const addTweetArea = document.querySelector('.add__tweet');
-  const addTweetPanel = document.querySelector('.panel__add');
-
-  tweets.user = user;
-  headerView.display(tweets.user);
-  if (!headerView._container.querySelector('.header__username').classList.contains('hidden')
-      && addTweetArea.classList.contains('hidden')) {
-    addTweetArea.classList.remove('hidden');
-  }
-  if (!headerView._container.querySelector('.header__username').classList.contains('hidden')
-      && addTweetPanel.classList.contains('hidden')) {
-    addTweetPanel.classList.remove('hidden');
-  }
-  getFeed();
-}
-
-function addTweet(text) {
-  tweets.add(text);
-  getFeed();
-}
-
-function editTweet(id, text) {
-  tweets.edit(id, text);
-  getFeed();
-}
-
-function removeTweet(id) {
-  tweets.remove(id);
-  getFeed();
-}
-
-function showTweet(id = null) {
-  const filters = document.querySelector('.filters');
-  const addTweetArea = document.querySelector('.add__tweet');
-  const addTweetPanel = document.querySelector('.panel__add');
-  const showMore = document.querySelector('.show__more');
-
-  if (!filters.classList.contains('hidden')) {
-    filters.classList.add('hidden');
-  }
-  if (!addTweetArea.classList.contains('hidden')) {
-    addTweetArea.classList.add('hidden');
-  }
-  if (!addTweetPanel.classList.contains('hidden')) {
-    addTweetPanel.classList.add('hidden');
-  }
-  if (!showMore.classList.contains('hidden')) {
-    showMore.classList.add('hidden');
-  }
-  tweetFeedView.display([]);
-  const tweet = tweets.get(id);
-  if (tweet) {
-    tweetView.display(tweet);
+function addHidden(item) {
+  if (!item.classList.contains('hidden')) {
+    item.classList.add('hidden');
   }
 }
 
-getFeed();
+function parseDate(date) {
+  if (date && date !== '') {
+    const array = date.split('.');
+    array.reverse();
+    const parsed = `${array.join('-')}T00:00:00`;
+    return parsed;
+  }
+  return '';
+}
+
+// ------CALLBACK---FUNCTIONS------
+
+// Open login window
+function loginOpen(e) {
+  const modal = document.querySelector('.modal');
+  const modalLogin = modal.querySelector('.modal__login');
+  const modalSignup = modal.querySelector('.modal__signup');
+  const inputLogin = modal.querySelector('.input__button__login');
+  const inputSignup = modal.querySelector('.input__button__signup');
+  const goSignup = modal.querySelector('.form__button__signup');
+  const goLogin = modal.querySelector('.form__button__login');
+
+  const form = document.forms.autorization;
+  const username = form.username;
+  const pass = form.pass;
+  const repeate = form.repeate;
+  const error = form.querySelector('.input__errors');
+
+  const login = document.querySelector('.input__button__login');
+  const signup = document.querySelector('.input__button__signup');
+  login.addEventListener('click', loginUser);
+  signup.removeEventListener('click', createUser);
+
+  username.value = '';
+  pass.value = '';
+  repeate.value = '';
+  username.style.border = '1px solid var(--black-color)';
+  pass.style.border = '1px solid var(--black-color)';
+  repeate.style.border = '1px solid var(--black-color)';
+  addHidden(error);
+
+  e.preventDefault();
+
+  removeHidden(modal);
+  removeHidden(inputLogin);
+  removeHidden(goSignup);
+  addHidden(repeate);
+  addHidden(inputSignup);
+  addHidden(goLogin);
+
+  if (modalLogin.classList.contains('modal__grey')) {
+    modalLogin.classList.remove('modal__grey');
+  }
+  if (!modalLogin.classList.contains('modal__active')) {
+    modalLogin.classList.add('modal__active');
+  }
+
+  if (!modalSignup.classList.contains('modal__grey')) {
+    modalSignup.classList.add('modal__grey');
+  }
+  if (modalSignup.classList.contains('modal__active')) {
+    modalSignup.classList.remove('modal__active');
+  }
+
+  modalLogin.removeEventListener('click', loginOpen);
+  goLogin.removeEventListener('click', loginOpen);
+  modalSignup.addEventListener('click', signupOpen);
+  goSignup.addEventListener('click', signupOpen);
+
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.removeEventListener('click', getTweet);
+}
+
+// Open signup window
+function signupOpen(e) {
+  const modal = document.querySelector('.modal');
+  const modalLogin = modal.querySelector('.modal__login');
+  const modalSignup = modal.querySelector('.modal__signup');
+  const inputLogin = modal.querySelector('.input__button__login');
+  const inputSignup = modal.querySelector('.input__button__signup');
+  const goSignup = modal.querySelector('.form__button__signup');
+  const goLogin = modal.querySelector('.form__button__login');
+
+  const form = document.forms.autorization;
+  const username = form.username;
+  const pass = form.pass;
+  const repeate = form.repeate;
+  const error = form.querySelector('.input__errors');
+
+  const login = document.querySelector('.input__button__login');
+  const signup = document.querySelector('.input__button__signup');
+  login.removeEventListener('click', loginUser);
+  signup.addEventListener('click', createUser);
+
+  username.value = '';
+  pass.value = '';
+  repeate.value = '';
+  username.style.border = '1px solid var(--black-color)';
+  pass.style.border = '1px solid var(--black-color)';
+  repeate.style.border = '1px solid var(--black-color)';
+  addHidden(error);
+
+  e.preventDefault();
+
+  removeHidden(modal);
+  addHidden(inputLogin);
+  addHidden(goSignup);
+  removeHidden(repeate);
+  removeHidden(inputSignup);
+  removeHidden(goLogin);
+
+  if (modalSignup.classList.contains('modal__grey')) {
+    modalSignup.classList.remove('modal__grey');
+  }
+  if (!modalSignup.classList.contains('modal__active')) {
+    modalSignup.classList.add('modal__active');
+  }
+
+  if (!modalLogin.classList.contains('modal__grey')) {
+    modalLogin.classList.add('modal__grey');
+  }
+  if (modalLogin.classList.contains('modal__active')) {
+    modalLogin.classList.remove('modal__active');
+  }
+
+  modalSignup.removeEventListener('click', signupOpen);
+  goSignup.removeEventListener('click', signupOpen);
+  modalLogin.addEventListener('click', loginOpen);
+  goLogin.addEventListener('click', loginOpen);
+
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.removeEventListener('click', getTweet);
+}
+
+// Close login or signup window
+function modalClose() {
+  const modal = document.querySelector('.modal');
+
+  if (!modal.classList.contains('hidden')) {
+    modal.classList.add('hidden');
+  }
+
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.addEventListener('click', getTweet);
+}
+
+// Open filters
+function arrowOpen() {
+  const form = document.querySelector('.filters__form');
+  const filters = document.querySelector('.filters__space');
+
+  form.classList.remove('hidden');
+  filters.classList.add('hidden');
+
+  this.classList.remove('arrow__down');
+  this.classList.add('arrow__up');
+
+  this.removeEventListener('click', arrowOpen);
+  this.addEventListener('click', arrowClose);
+
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.addEventListener('click', getTweet);
+}
+
+// Close filters
+function arrowClose() {
+  const form = document.querySelector('.filters__form');
+  const filters = document.querySelector('.filters__space');
+
+  form.classList.add('hidden');
+  filters.classList.remove('hidden');
+
+  this.classList.add('arrow__down');
+  this.classList.remove('arrow__up');
+
+  this.removeEventListener('click', arrowClose);
+  this.addEventListener('click', arrowOpen);
+
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.addEventListener('click', getTweet);
+}
+
+// Get new tweet feed if have filter
+function filtersInputs() {
+  const form = document.forms.filters;
+  const author = form.author.value;
+  const datefrom = parseDate(form.datefrom.value);
+  const dateto = parseDate(form.dateto.value);
+  const text = form.text.value;
+  const tags = form.tags.value.split(' ').map((tag) => ((tag[0] === '#') ? tag.slice(1) : tag));
+
+  const filters = {};
+  if (author && author !== '') {
+    filters.author = author;
+  }
+  if (datefrom && datefrom !== '') {
+    filters.dateFrom = datefrom;
+  }
+  if (dateto && dateto !== '') {
+    filters.dateTo = dateto;
+  }
+  if (text && text !== '') {
+    filters.text = text;
+  }
+  if (tags && tags !== [] && tags !== ['']) {
+    filters.hashtags = tags;
+    filters.hashtags = filters.hashtags.filter((e) => (e !== ''));
+    if (filters.hashtags.length === 0) {
+      delete filters.hashtags;
+    }
+  }
+
+  tweetsController.getFeed(0, 10, filters);
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.addEventListener('click', getTweet);
+}
+
+// Clear all button
+function clearInputs() {
+  const filterInputs = document.forms.filters;
+  filterInputs.author.value = '';
+  filterInputs.datefrom.value = '';
+  filterInputs.dateto.value = '';
+  filterInputs.text.value = '';
+  filterInputs.tags.value = '';
+  tweetsController.getFeed();
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.addEventListener('click', getTweet);
+}
+
+// Create new user
+function createUser(e) {
+  e.preventDefault();
+
+  const form = document.forms.autorization;
+  const username = form.username;
+  const pass = form.pass;
+  const repeate = form.repeate;
+  const error = form.querySelector('.input__errors');
+
+  username.style.border = '1px solid var(--black-color)';
+  pass.style.border = '1px solid var(--black-color)';
+  repeate.style.border = '1px solid var(--black-color)';
+
+  if (!username.value) {
+    username.style.border = '2px solid var(--red-color)';
+    error.classList.remove('hidden');
+    error.textContent = '*Empty username';
+  } else if (!pass.value) {
+    pass.style.border = '2px solid var(--red-color)';
+    error.classList.remove('hidden');
+    error.textContent = '*Empty password';
+  } else if (!repeate.value) {
+    repeate.style.border = '2px solid var(--red-color)';
+    error.classList.remove('hidden');
+    error.textContent = '*Empty repeate password';
+  } else if (pass.value !== repeate.value) {
+    pass.style.border = '2px solid var(--red-color)';
+    repeate.style.border = '2px solid var(--red-color)';
+    error.textContent = '*Different passwords entered';
+  } else {
+    const newUser = {
+      login: username.value,
+      pass: pass.value,
+    };
+    const isExist = tweetsController._users.isExist(newUser);
+    if (isExist) {
+      username.style.border = '2px solid var(--red-color)';
+      error.classList.remove('hidden');
+      error.textContent = '*Username is already exist';
+    } else {
+      tweetsController.addUser(newUser);
+      modalClose();
+    }
+  }
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.addEventListener('click', getTweet);
+}
+
+// Log in as user
+function loginUser(e) {
+  e.preventDefault();
+
+  const form = document.forms.autorization;
+  const username = form.username;
+  const pass = form.pass;
+  const error = form.querySelector('.input__errors');
+
+  username.style.border = '1px solid var(--black-color)';
+  pass.style.border = '1px solid var(--black-color)';
+  repeate.style.border = '1px solid var(--black-color)';
+
+  if (!username.value) {
+    username.style.border = '2px solid var(--red-color)';
+    error.classList.remove('hidden');
+    error.textContent = '*Empty username';
+  } else if (!pass.value) {
+    pass.style.border = '2px solid var(--red-color)';
+    error.classList.remove('hidden');
+    error.textContent = '*Empty password';
+  } else {
+    const newUser = {
+      login: username.value,
+      pass: pass.value,
+    };
+    const isExist = tweetsController._users.isExist(newUser);
+    if (!isExist) {
+      username.style.border = '2px solid var(--red-color)';
+      error.classList.remove('hidden');
+      error.textContent = '*Incorrect username';
+    } else {
+      const isLogin = tweetsController._users.login(newUser);
+      if (!isLogin) {
+        pass.style.border = '2px solid var(--red-color)';
+        error.classList.remove('hidden');
+        error.textContent = '*Incorrect password';
+      } else {
+        tweetsController.login(newUser);
+        modalClose();
+      }
+    }
+  }
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.addEventListener('click', getTweet);
+}
+
+// Log out user
+function logOutUser() {
+  tweetsController.setCurrentUser('');
+
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.addEventListener('click', getTweet);
+}
+
+// Get tweet by id
+function getTweet(e) {
+  const tweet = e.target.closest('.twit');
+  const id = tweet.dataset.id;
+
+  tweetsController.showTweet(`${id}`);
+
+  const editTweet = document.querySelector('.edit__twit');
+  const deleteTweet = document.querySelector('.delete__twit');
+
+  if (tweetsController._tweets.user !== tweetsController._tweets.get(id).author) {
+    addHidden(editTweet);
+    addHidden(deleteTweet);
+  }
+
+  deleteTweet.addEventListener('click', deleteTweetFunction);
+
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.removeEventListener('click', getTweet);
+
+  const goHomeFromTweet = document.querySelector('.go__home__ref');
+
+  goHomeFromTweet.addEventListener('click', goHomePage);
+}
+
+// Main page
+function mainPage() {
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.textContent = '';
+
+  tweetsController.getFeed();
+  tweetFeed.addEventListener('click', getTweet);
+}
+
+// Delete tweet
+function deleteTweetFunction() {
+  const deleteModal = document.querySelector('.delete__modal');
+  removeHidden(deleteModal);
+
+  const cancelButton = document.querySelector('.delete__button__cancel');
+  const deleteButton = document.querySelector('.delete__button__delete');
+  cancelButton.addEventListener('click', () => {
+    addHidden(deleteModal);
+  });
+  deleteButton.addEventListener('click', () => {
+    const tw = document.querySelector('.twit');
+    const twid = tw.dataset.id;
+
+    tweetsController.removeTweet(twid);
+  });
+}
+
+// Go home page
+function goHomePage() {
+  const goHomeFromTweet = document.querySelector('.go__home__ref');
+  goHomeFromTweet.removeEventListener('click', goHomePage);
+
+  tweetsController.getFeed();
+
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.addEventListener('click', getTweet);
+}
+
+// New tweet
+function addNewTweet(e) {
+  e.preventDefault();
+
+  const newTweetTextarea = document.querySelector('.add__tweet__textarea');
+  if (newTweetTextarea.value !== '') {
+    tweetsController.addTweet(`${newTweetTextarea.value}`);
+
+    const tweetFeed = document.getElementById('tweet-feed-id');
+    tweetFeed.addEventListener('click', getTweet);
+    newTweetTextarea.value = '';
+  }
+}
+
+// Show more
+function showMoreTweets() {
+  const tweets = document.querySelectorAll('.twit');
+  const form = document.forms.filters;
+  const author = form.author.value;
+  const datefrom = parseDate(form.datefrom.value);
+  const dateto = parseDate(form.dateto.value);
+  const text = form.text.value;
+  const tags = form.tags.value.split(' ').map((tag) => ((tag[0] === '#') ? tag.slice(1) : tag));
+
+  const filters = {};
+  if (author && author !== '') {
+    filters.author = author;
+  }
+  if (datefrom && datefrom !== '') {
+    filters.dateFrom = datefrom;
+  }
+  if (dateto && dateto !== '') {
+    filters.dateTo = dateto;
+  }
+  if (text && text !== '') {
+    filters.text = text;
+  }
+  if (tags && tags !== [] && tags !== ['']) {
+    filters.hashtags = tags;
+    filters.hashtags = filters.hashtags.filter((e) => (e !== ''));
+    if (filters.hashtags.length === 0) {
+      delete filters.hashtags;
+    }
+  }
+
+  tweetsController.getFeed(0, tweets.length + 10, filters);
+}
+
+// ------EVENT---LISTENERS------
+
+// Login and signup
+const goLogIn = document.querySelector('.log__in');
+const goSignUp = document.querySelector('.sign__up');
+const panelLogin = document.querySelector('.panel__item__login');
+const goHome = document.querySelector('.signup__home');
+const panelHome = document.querySelector('.panel__item__home');
+
+goLogIn.addEventListener('click', loginOpen);
+panelLogin.addEventListener('click', loginOpen);
+goSignUp.addEventListener('click', signupOpen);
+goHome.addEventListener('click', modalClose);
+panelHome.addEventListener('click', modalClose);
+
+// Logout
+
+const logout = document.querySelector('.log__out');
+logout.addEventListener('click', logOutUser);
+
+// Filters
+const arrow = document.querySelector('.arrow');
+const clearAll = document.querySelector('.filters__reset');
+const filters = document.forms.filters;
+arrow.addEventListener('click', arrowOpen);
+filters.addEventListener('input', filtersInputs);
+clearAll.addEventListener('click', clearInputs);
+
+// Add tweet
+
+const addTweet = document.querySelector('.add__tweet__button');
+addTweet.addEventListener('click', addNewTweet);
+
+// Show more
+const showMore = document.querySelector('.show__more__button');
+showMore.addEventListener('click', showMoreTweets);
+
+// Show main page
+mainPage();

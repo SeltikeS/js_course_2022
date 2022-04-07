@@ -32,4 +32,27 @@ class HeaderView {
 
     username.textContent = user;
   }
+
+  hide(user) {
+    const logIn = this._container.querySelector('.log__in');
+    const signUp = this._container.querySelector('.sign__up');
+    const username = this._container.querySelector('.header__username');
+    const logOut = this._container.querySelector('.log__out');
+
+    if (logIn.classList.contains('hidden')) {
+      logIn.classList.remove('hidden');
+    }
+    if (signUp.classList.contains('hidden')) {
+      signUp.classList.remove('hidden');
+    }
+
+    if (!username.classList.contains('hidden')) {
+      username.classList.add('hidden');
+    }
+    if (!logOut.classList.contains('hidden')) {
+      logOut.classList.add('hidden');
+    }
+
+    username.textContent = user;
+  }
 }

@@ -43,20 +43,21 @@ class FilterView {
       if (!dateFromDate) {
         dateFromStr = '<div class="active__filter">Begin</div>';
       } else {
-        dateFromStr = `<div class="active__filter">${FilterView.addZero(new Date(filterConfig.dateFrom).getHours())}:${FilterView.addZero(new Date(filterConfig.dateFrom).getMinutes())} ${FilterView.addZero(new Date(filterConfig.dateFrom).getDate())}.${FilterView.addZero(new Date(filterConfig.dateFrom).getMonth() + 1)}.${new Date(filterConfig.dateFrom).getFullYear()}</div>`;
+        dateFromStr = `<div class="active__filter">${FilterView.addZero(new Date(filterConfig.dateFrom).getDate())}.${FilterView.addZero(new Date(filterConfig.dateFrom).getMonth() + 1)}.${new Date(filterConfig.dateFrom).getFullYear()}</div>`;
       }
 
       if (!dateToDate) {
         dateToStr = '<div class="active__filter">Now</div>';
       } else {
-        dateToStr = `<div class="active__filter">${FilterView.addZero(new Date(filterConfig.dateTo).getHours())}:${FilterView.addZero(new Date(filterConfig.dateTo).getMinutes())} ${FilterView.addZero(new Date(filterConfig.dateTo).getDate())}.${FilterView.addZero(new Date(filterConfig.dateTo).getMonth() + 1)}.${new Date(filterConfig.dateTo).getFullYear()}</div>`;
+        dateToStr = `<div class="active__filter">${FilterView.addZero(new Date(filterConfig.dateTo).getDate())}.${FilterView.addZero(new Date(filterConfig.dateTo).getMonth() + 1)}.${new Date(filterConfig.dateTo).getFullYear()}</div>`;
       }
 
       str += `<div class="filter__line">
       <span class="filter__line__property">Date&nbsp;</span> ${dateFromStr}&nbsp; - &nbsp;${dateToStr}
       </div>`;
     }
-    if (filterConfig.hashtags && filterConfig.hashtags !== null) {
+    if (filterConfig.hashtags
+        && filterConfig.hashtags !== null) {
       str += `<div class="filter__line">
       <span class="filter__line__property">Hashtags&nbsp</span>`;
       filterConfig.hashtags.forEach((hashtag) => {
