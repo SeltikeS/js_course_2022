@@ -504,6 +504,47 @@ header {
   height: 50%;
 }
 
+.delete__modal {
+  align-items: center;
+  background: var(--white-color);
+  display: flex;
+  position: absolute;
+  top: 0;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.delete__buttons {
+  display: flex;
+  justify-content: space-around;
+  width: 50%;
+}
+
+.delete__button {
+  border: none;
+  border-radius: 5px;
+  font: inherit;
+  padding: calc(0.2 * var(--default-offset)) var(--default-offset);
+}
+
+.delete__button__cancel {
+  background-color: var(--white-color);
+}
+
+.delete__button__cancel:hover {
+  background: var(--light-grey-color);
+}
+
+.delete__button__delete {
+  background: var(--red-color);
+  color: var(--white-color);
+}
+
+.delete__button__delete:hover {
+  opacity: 0.9;
+}
+
 .twit__edit__button:hover {
   background: var(--light-grey-color);
 }

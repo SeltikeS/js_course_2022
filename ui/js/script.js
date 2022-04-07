@@ -198,7 +198,6 @@ localStorage.setItem('tweets', JSON.stringify(tweetsTweet));
 
 // Create controller
 const tweetsController = new TweetsController();
-tweetsController.getFeed();
 
 // Support functions
 function removeHidden(item) {
@@ -561,12 +560,41 @@ function getTweet(e) {
     addHidden(deleteTweet);
   }
 
+  deleteTweet.addEventListener('click', deleteTweetFunction);
+
   const tweetFeed = document.getElementById('tweet-feed-id');
   tweetFeed.removeEventListener('click', getTweet);
 
   const goHomeFromTweet = document.querySelector('.go__home__ref');
 
   goHomeFromTweet.addEventListener('click', goHomePage);
+}
+
+// Main page
+function mainPage() {
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.textContent = '';
+
+  tweetsController.getFeed();
+  tweetFeed.addEventListener('click', getTweet);
+}
+
+// Delete tweet
+function deleteTweetFunction() {
+  const deleteModal = document.querySelector('.delete__modal');
+  removeHidden(deleteModal);
+
+  const cancelButton = document.querySelector('.delete__button__cancel');
+  const deleteButton = document.querySelector('.delete__button__delete');
+  cancelButton.addEventListener('click', () => {
+    addHidden(deleteModal);
+  });
+  deleteButton.addEventListener('click', () => {
+    const tw = document.querySelector('.twit');
+    const twid = tw.dataset.id;
+
+    tweetsController.removeTweet(twid);
+  });
 }
 
 // Go home page
@@ -656,11 +684,6 @@ arrow.addEventListener('click', arrowOpen);
 filters.addEventListener('input', filtersInputs);
 clearAll.addEventListener('click', clearInputs);
 
-// Tweet Feed
-
-const tweetFeed = document.getElementById('tweet-feed-id');
-tweetFeed.addEventListener('click', getTweet);
-
 // Add tweet
 
 const addTweet = document.querySelector('.add__tweet__button');
@@ -669,3 +692,6 @@ addTweet.addEventListener('click', addNewTweet);
 // Show more
 const showMore = document.querySelector('.show__more__button');
 showMore.addEventListener('click', showMoreTweets);
+
+// Show main page
+mainPage();

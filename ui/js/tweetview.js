@@ -36,11 +36,17 @@ class TweetView {
                             </div>`;
 
     str += `</div>
-                        <p>
-                            ${tw.text}
-                        </p>
-                        <div class="comments">`;
+      <p>
+        ${tw.text}
+      </p>
+    <div class="comments">`;
 
+    str += `<div class="delete__modal hidden">
+      <div class="delete__buttons">
+        <button class="delete__button delete__button__cancel">Cancel</button>
+        <button class="delete__button delete__button__delete">Delete</button>
+      </div>
+    </div>`;
     // Для каждого коммента рисую его тело
     tw._comments.forEach((com) => {
       str += `<div class="single__comment"  data-id="${com.id}">
