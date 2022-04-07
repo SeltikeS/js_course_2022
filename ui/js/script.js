@@ -501,7 +501,6 @@ function loginUser(e) {
 
   username.style.border = '1px solid var(--black-color)';
   pass.style.border = '1px solid var(--black-color)';
-  repeate.style.border = '1px solid var(--black-color)';
 
   if (!username.value) {
     username.style.border = '2px solid var(--red-color)';
