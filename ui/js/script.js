@@ -280,6 +280,9 @@ function loginOpen(e) {
   goLogin.removeEventListener('click', loginOpen);
   modalSignup.addEventListener('click', signupOpen);
   goSignup.addEventListener('click', signupOpen);
+
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.removeEventListener('click', getTweet);
 }
 
 // Open signup window
@@ -338,6 +341,9 @@ function signupOpen(e) {
   goSignup.removeEventListener('click', signupOpen);
   modalLogin.addEventListener('click', loginOpen);
   goLogin.addEventListener('click', loginOpen);
+
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.removeEventListener('click', getTweet);
 }
 
 // Close login or signup window
@@ -347,6 +353,9 @@ function modalClose() {
   if (!modal.classList.contains('hidden')) {
     modal.classList.add('hidden');
   }
+
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.addEventListener('click', getTweet);
 }
 
 // Open filters
@@ -362,6 +371,9 @@ function arrowOpen() {
 
   this.removeEventListener('click', arrowOpen);
   this.addEventListener('click', arrowClose);
+
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.addEventListener('click', getTweet);
 }
 
 // Close filters
@@ -377,6 +389,9 @@ function arrowClose() {
 
   this.removeEventListener('click', arrowClose);
   this.addEventListener('click', arrowOpen);
+
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.addEventListener('click', getTweet);
 }
 
 // Get new tweet feed if have filter
@@ -410,6 +425,8 @@ function filtersInputs() {
   }
 
   tweetsController.getFeed(0, 10, filters);
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.addEventListener('click', getTweet);
 }
 
 // Clear all button
@@ -421,6 +438,8 @@ function clearInputs() {
   filterInputs.text.value = '';
   filterInputs.tags.value = '';
   tweetsController.getFeed();
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.addEventListener('click', getTweet);
 }
 
 // Create new user
@@ -468,6 +487,8 @@ function createUser(e) {
       modalClose();
     }
   }
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.addEventListener('click', getTweet);
 }
 
 // Log in as user
@@ -513,11 +534,16 @@ function loginUser(e) {
       }
     }
   }
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.addEventListener('click', getTweet);
 }
 
 // Log out user
 function logOutUser() {
   tweetsController.setCurrentUser('');
+
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.addEventListener('click', getTweet);
 }
 
 // Get tweet by id
@@ -526,6 +552,14 @@ function getTweet(e) {
   const id = tweet.dataset.id;
 
   tweetsController.showTweet(`${id}`);
+
+  const editTweet = document.querySelector('.edit__twit');
+  const deleteTweet = document.querySelector('.delete__twit');
+
+  if (tweetsController._tweets.user !== tweetsController._tweets.get(id).author) {
+    addHidden(editTweet);
+    addHidden(deleteTweet);
+  }
 
   const tweetFeed = document.getElementById('tweet-feed-id');
   tweetFeed.removeEventListener('click', getTweet);
@@ -538,13 +572,60 @@ function getTweet(e) {
 // Go home page
 function goHomePage() {
   const goHomeFromTweet = document.querySelector('.go__home__ref');
-
   goHomeFromTweet.removeEventListener('click', goHomePage);
 
   tweetsController.getFeed();
 
   const tweetFeed = document.getElementById('tweet-feed-id');
   tweetFeed.addEventListener('click', getTweet);
+}
+
+// New tweet
+function addNewTweet(e) {
+  e.preventDefault();
+
+  const newTweetTextarea = document.querySelector('.add__tweet__textarea');
+  if (newTweetTextarea.value !== '') {
+    tweetsController.addTweet(`${newTweetTextarea.value}`);
+
+    const tweetFeed = document.getElementById('tweet-feed-id');
+    tweetFeed.addEventListener('click', getTweet);
+    newTweetTextarea.value = '';
+  }
+}
+
+// Show more
+function showMoreTweets() {
+  const tweets = document.querySelectorAll('.twit');
+  const form = document.forms.filters;
+  const author = form.author.value;
+  const datefrom = parseDate(form.datefrom.value);
+  const dateto = parseDate(form.dateto.value);
+  const text = form.text.value;
+  const tags = form.tags.value.split(' ').map((tag) => ((tag[0] === '#') ? tag.slice(1) : tag));
+
+  const filters = {};
+  if (author && author !== '') {
+    filters.author = author;
+  }
+  if (datefrom && datefrom !== '') {
+    filters.dateFrom = datefrom;
+  }
+  if (dateto && dateto !== '') {
+    filters.dateTo = dateto;
+  }
+  if (text && text !== '') {
+    filters.text = text;
+  }
+  if (tags && tags !== [] && tags !== ['']) {
+    filters.hashtags = tags;
+    filters.hashtags = filters.hashtags.filter((e) => (e !== ''));
+    if (filters.hashtags.length === 0) {
+      delete filters.hashtags;
+    }
+  }
+
+  tweetsController.getFeed(0, tweets.length + 10, filters);
 }
 
 // ------EVENT---LISTENERS------
@@ -579,3 +660,12 @@ clearAll.addEventListener('click', clearInputs);
 
 const tweetFeed = document.getElementById('tweet-feed-id');
 tweetFeed.addEventListener('click', getTweet);
+
+// Add tweet
+
+const addTweet = document.querySelector('.add__tweet__button');
+addTweet.addEventListener('click', addNewTweet);
+
+// Show more
+const showMore = document.querySelector('.show__more__button');
+showMore.addEventListener('click', showMoreTweets);

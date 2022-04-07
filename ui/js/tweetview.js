@@ -24,16 +24,18 @@ class TweetView {
                             <div>
                                 <h2 class="username">${tw.author}</h2>
                                 <h3 class="date">${TweetFeedView.addZero(tw.createdAt.getHours())}:${TweetFeedView.addZero(tw.createdAt.getMinutes())} ${TweetFeedView.addZero(tw.createdAt.getDate())}.${TweetFeedView.addZero(tw.createdAt.getMonth() + 1)}.${tw.createdAt.getFullYear()}</h3>
-                            </div>
-                            <div class="twit__icons">
+                            </div>`;
+
+    str += `<div class="twit__icons">
                                 <button class="edit__twit">
                                     <span class="iconify" data-icon="system-uicons:pen"></span>
                                 </button>
                                 <button class="delete__twit">
                                     <span class="iconify" data-icon="akar-icons:cross"></span>
                                 </button>
-                            </div>
-                        </div>
+                            </div>`;
+
+    str += `</div>
                         <p>
                             ${tw.text}
                         </p>
