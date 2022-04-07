@@ -34,20 +34,12 @@ class TweetFeedView {
 
     tws.forEach((tw) => {
       const tweetCode = `<article class="twit"  data-id="${tw.id}">
-                          <div class="twit__ref" href="twit.html">
+                          <div class="twit__ref">
                               <div class="twit__content">
                                   <div class="twit__header">
                                       <div>
                                           <h2 class="username">${tw.author}</h2>
                                           <h3 class="date">${TweetFeedView.addZero(tw.createdAt.getHours())}:${TweetFeedView.addZero(tw.createdAt.getMinutes())} ${TweetFeedView.addZero(tw.createdAt.getDate())}.${TweetFeedView.addZero(tw.createdAt.getMonth() + 1)}.${tw.createdAt.getFullYear()}</h3>
-                                      </div>
-                                      <div class="twit__icons">
-                                          <button class="edit__twit">
-                                              <span class="iconify" data-icon="system-uicons:pen"></span>
-                                          </button>
-                                          <button class="delete__twit">
-                                              <span class="iconify" data-icon="akar-icons:cross"></span>
-                                          </button>
                                       </div>
                                   </div>
                                   <p>
@@ -55,6 +47,13 @@ class TweetFeedView {
                                   </p>
                                   <h3 class="comments">Comments: ${tw._comments.length}</h3>
                               </div>
+                          </div>
+                          <div class="twit__edit__modal hidden">
+                            <textarea class="twit__edit__textarea">${tw.text}</textarea>
+                            <div class="twit__edit__buttons">
+                              <button class="twit__edit__button twit__edit__apply">Apply</button>
+                              <button class="twit__edit__button twit__edit__cancel">Cancel</button>
+                            </div>
                           </div> 
                       </article>`;
       str += tweetCode;

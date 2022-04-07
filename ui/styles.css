@@ -326,6 +326,7 @@ header {
 /* TWIT */
 .twit {
   border-top: 2px solid var(--grey-color);
+  position: relative;
 }
 
 .twit__ref {
@@ -472,6 +473,39 @@ header {
   display: flex;
   justify-content: center;
   width: 100%;
+}
+
+.twit__edit__modal {
+  display: flex;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.twit__edit__textarea {
+  border: none;
+  font: inherit;
+  resize: none;
+  width: 100%;
+}
+
+.twit__edit__buttons {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.twit__edit__button {
+  background: var(--white-color);
+  border: none;
+  font: inherit;
+  height: 50%;
+}
+
+.twit__edit__button:hover {
+  background: var(--light-grey-color);
 }
 
 /* FOOTER */

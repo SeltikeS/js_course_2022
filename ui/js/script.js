@@ -515,8 +515,36 @@ function loginUser(e) {
   }
 }
 
+// Log out user
 function logOutUser() {
   tweetsController.setCurrentUser('');
+}
+
+// Get tweet by id
+function getTweet(e) {
+  const tweet = e.target.closest('.twit');
+  const id = tweet.dataset.id;
+
+  tweetsController.showTweet(`${id}`);
+
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.removeEventListener('click', getTweet);
+
+  const goHomeFromTweet = document.querySelector('.go__home__ref');
+
+  goHomeFromTweet.addEventListener('click', goHomePage);
+}
+
+// Go home page
+function goHomePage() {
+  const goHomeFromTweet = document.querySelector('.go__home__ref');
+
+  goHomeFromTweet.removeEventListener('click', goHomePage);
+
+  tweetsController.getFeed();
+
+  const tweetFeed = document.getElementById('tweet-feed-id');
+  tweetFeed.addEventListener('click', getTweet);
 }
 
 // ------EVENT---LISTENERS------
@@ -546,3 +574,8 @@ const filters = document.forms.filters;
 arrow.addEventListener('click', arrowOpen);
 filters.addEventListener('input', filtersInputs);
 clearAll.addEventListener('click', clearInputs);
+
+// Tweet Feed
+
+const tweetFeed = document.getElementById('tweet-feed-id');
+tweetFeed.addEventListener('click', getTweet);
