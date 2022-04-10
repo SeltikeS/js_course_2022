@@ -1,0 +1,131 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: 'Rubik Glitch', cursive;
+  font-size: 10px;
+  padding: 0;
+  margin: 0;
+}
+
+:root {
+  --window-height: 100vh;
+  --window-width: 100vw;
+  --cell: calc(0.22 * var(--window-height));
+  --element: calc(0.8 * var(--cell));
+  --font: calc(0.05 * var(--window-height));
+  --default: calc(0.02 * var(--window-height));
+
+  --background: #fcfcfc;
+  --main-color: black;
+  --border-color: grey;
+  --cell-color: rgba(255, 255, 255, 0.2);
+  --grey-color: #2B2A2F;
+  --cross-color: #D96690;
+  --circle-color: #89C2D9;
+}
+
+.container {
+  align-items: center;
+  background-color: var(--background);
+  color: var(--main-color);
+  justify-content: flex-start;
+  display: flex;
+  flex-flow: column;
+  font-size: var(--font);
+  position: relative;
+  padding: var(--default);
+  height: var(--window-height);
+  width: var(--window-width);
+}
+
+.line-horizontal {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.line-vertical {
+  transform: rotate(90deg);
+}
+
+.line {
+  margin: calc(5 * var(--default)) 0;
+  height: 5%;
+  width: 100%;
+}
+
+.new-game {
+  background: none;
+  border: none;
+  border-radius: calc(0.2 * var(--default));
+  color: #fff;
+  font: inherit;
+  font-size: var(--font);
+  padding: calc(2 * var(--default));
+  position: relative;
+  z-index: 10;
+  height: calc(0.7 * var(--cell));
+  width: calc(3 * var(--cell));
+}
+
+.new-game::after {
+  content: '';
+  background: url('../lab7-2/line.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  top: var(--default);
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+}
+
+.column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+  margin: var(--default);
+  position: relative;
+}
+
+.raw {
+  display: flex;
+}
+
+.cell {
+  align-items: center;
+  background: none;
+  border: none;
+  border-radius: calc(0.2 * var(--default));
+  display: flex;
+  justify-content: center;
+  height: var(--cell);
+  width: var(--cell);
+  z-index: 10;
+}
+
+.cross {
+  color: var(--cross-color);
+  height: var(--element);
+  width: var(--element);
+}
+
+.circle {
+  color: var(--circle-color);
+  height: var(--element);
+  width: var(--element);
+}
+
+.hidden {
+  display: none;
+}

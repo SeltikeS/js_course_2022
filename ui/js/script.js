@@ -194,7 +194,7 @@ const createKeyIfEmpty = (key) => {
 createKeyIfEmpty('tweets');
 createKeyIfEmpty('users');
 
-localStorage.setItem('tweets', JSON.stringify(tweetsTweet));
+// localStorage.setItem('tweets', JSON.stringify(tweetsTweet));
 
 // Create controller
 const tweetsController = new TweetsController();
