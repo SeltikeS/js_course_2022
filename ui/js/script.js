@@ -193,8 +193,7 @@ const createKeyIfEmpty = (key) => {
 // If LocalStorage hasn't tweets or users create empty array
 createKeyIfEmpty('tweets');
 createKeyIfEmpty('users');
-
-// localStorage.setItem('tweets', JSON.stringify(tweetsTweet));
+createKeyIfEmpty('currentUser');
 
 // Create controller
 const tweetsController = new TweetsController();
@@ -239,11 +238,6 @@ function loginOpen(e) {
   const repeate = form.repeate;
   const error = form.querySelector('.input__errors');
 
-  const login = document.querySelector('.input__button__login');
-  const signup = document.querySelector('.input__button__signup');
-  login.addEventListener('click', loginUser);
-  signup.removeEventListener('click', createUser);
-
   username.value = '';
   pass.value = '';
   repeate.value = '';
@@ -279,9 +273,6 @@ function loginOpen(e) {
   goLogin.removeEventListener('click', loginOpen);
   modalSignup.addEventListener('click', signupOpen);
   goSignup.addEventListener('click', signupOpen);
-
-  const tweetFeed = document.getElementById('tweet-feed-id');
-  tweetFeed.removeEventListener('click', getTweet);
 }
 
 // Open signup window
@@ -299,11 +290,6 @@ function signupOpen(e) {
   const pass = form.pass;
   const repeate = form.repeate;
   const error = form.querySelector('.input__errors');
-
-  const login = document.querySelector('.input__button__login');
-  const signup = document.querySelector('.input__button__signup');
-  login.removeEventListener('click', loginUser);
-  signup.addEventListener('click', createUser);
 
   username.value = '';
   pass.value = '';
@@ -340,21 +326,6 @@ function signupOpen(e) {
   goSignup.removeEventListener('click', signupOpen);
   modalLogin.addEventListener('click', loginOpen);
   goLogin.addEventListener('click', loginOpen);
-
-  const tweetFeed = document.getElementById('tweet-feed-id');
-  tweetFeed.removeEventListener('click', getTweet);
-}
-
-// Close login or signup window
-function modalClose() {
-  const modal = document.querySelector('.modal');
-
-  if (!modal.classList.contains('hidden')) {
-    modal.classList.add('hidden');
-  }
-
-  const tweetFeed = document.getElementById('tweet-feed-id');
-  tweetFeed.addEventListener('click', getTweet);
 }
 
 // Open filters
@@ -437,136 +408,49 @@ function clearInputs() {
   filterInputs.text.value = '';
   filterInputs.tags.value = '';
   tweetsController.getFeed();
-  const tweetFeed = document.getElementById('tweet-feed-id');
-  tweetFeed.addEventListener('click', getTweet);
-}
-
-// Create new user
-function createUser(e) {
-  e.preventDefault();
-
-  const form = document.forms.autorization;
-  const username = form.username;
-  const pass = form.pass;
-  const repeate = form.repeate;
-  const error = form.querySelector('.input__errors');
-
-  username.style.border = '1px solid var(--black-color)';
-  pass.style.border = '1px solid var(--black-color)';
-  repeate.style.border = '1px solid var(--black-color)';
-
-  if (!username.value) {
-    username.style.border = '2px solid var(--red-color)';
-    error.classList.remove('hidden');
-    error.textContent = '*Empty username';
-  } else if (!pass.value) {
-    pass.style.border = '2px solid var(--red-color)';
-    error.classList.remove('hidden');
-    error.textContent = '*Empty password';
-  } else if (!repeate.value) {
-    repeate.style.border = '2px solid var(--red-color)';
-    error.classList.remove('hidden');
-    error.textContent = '*Empty repeate password';
-  } else if (pass.value !== repeate.value) {
-    pass.style.border = '2px solid var(--red-color)';
-    repeate.style.border = '2px solid var(--red-color)';
-    error.textContent = '*Different passwords entered';
-  } else {
-    const newUser = {
-      login: username.value,
-      pass: pass.value,
-    };
-    const isExist = tweetsController._users.isExist(newUser);
-    if (isExist) {
-      username.style.border = '2px solid var(--red-color)';
-      error.classList.remove('hidden');
-      error.textContent = '*Username is already exist';
-    } else {
-      tweetsController.addUser(newUser);
-      modalClose();
-    }
-  }
-  const tweetFeed = document.getElementById('tweet-feed-id');
-  tweetFeed.addEventListener('click', getTweet);
-}
-
-// Log in as user
-function loginUser(e) {
-  e.preventDefault();
-
-  const form = document.forms.autorization;
-  const username = form.username;
-  const pass = form.pass;
-  const error = form.querySelector('.input__errors');
-
-  username.style.border = '1px solid var(--black-color)';
-  pass.style.border = '1px solid var(--black-color)';
-
-  if (!username.value) {
-    username.style.border = '2px solid var(--red-color)';
-    error.classList.remove('hidden');
-    error.textContent = '*Empty username';
-  } else if (!pass.value) {
-    pass.style.border = '2px solid var(--red-color)';
-    error.classList.remove('hidden');
-    error.textContent = '*Empty password';
-  } else {
-    const newUser = {
-      login: username.value,
-      pass: pass.value,
-    };
-    const isExist = tweetsController._users.isExist(newUser);
-    if (!isExist) {
-      username.style.border = '2px solid var(--red-color)';
-      error.classList.remove('hidden');
-      error.textContent = '*Incorrect username';
-    } else {
-      const isLogin = tweetsController._users.login(newUser);
-      if (!isLogin) {
-        pass.style.border = '2px solid var(--red-color)';
-        error.classList.remove('hidden');
-        error.textContent = '*Incorrect password';
-      } else {
-        tweetsController.login(newUser);
-        modalClose();
-      }
-    }
-  }
-  const tweetFeed = document.getElementById('tweet-feed-id');
-  tweetFeed.addEventListener('click', getTweet);
 }
 
 // Log out user
 function logOutUser() {
   tweetsController.setCurrentUser('');
-
-  const tweetFeed = document.getElementById('tweet-feed-id');
-  tweetFeed.addEventListener('click', getTweet);
 }
 
 // Get tweet by id
 function getTweet(e) {
+  const editTweetButton = document.querySelector('.edit__twit');
+  const deleteTweetButton = document.querySelector('.delete__twit');
   const tweet = e.target.closest('.twit');
   const id = tweet.dataset.id;
 
   tweetsController.showTweet(`${id}`);
 
-  const editTweet = document.querySelector('.edit__twit');
-  const deleteTweet = document.querySelector('.delete__twit');
-
   if (tweetsController._tweets.user !== tweetsController._tweets.get(id).author) {
-    addHidden(editTweet);
-    addHidden(deleteTweet);
+    addHidden(editTweetButton);
+    addHidden(deleteTweetButton);
+  } else {
+    removeHidden(editTweetButton);
+    removeHidden(deleteTweetButton);
   }
 
-  deleteTweet.addEventListener('click', deleteTweetFunction);
+  checkUser();
+}
 
-  const tweetFeed = document.getElementById('tweet-feed-id');
-  tweetFeed.removeEventListener('click', getTweet);
+function checkUser() {
+  const newComment = document.querySelector('.new__comment');
 
-  const goHomeFromTweet = document.querySelector('.go__home__ref');
+  if (tweetsController._tweets.user === '') {
+    addHidden(newComment);
+  } else {
+    removeHidden(newComment);
+  }
+}
 
-  goHomeFromTweet.addEventListener('click', goHomePage);
+function modalClose() {
+  const modal = document.querySelector('.modal');
+
+  if (!modal.classList.contains('hidden')) {
+    modal.classList.add('hidden');
+  }
 }
 
 // Main page
@@ -578,33 +462,11 @@ function mainPage() {
   tweetFeed.addEventListener('click', getTweet);
 }
 
-// Delete tweet
-function deleteTweetFunction() {
-  const deleteModal = document.querySelector('.delete__modal');
-  removeHidden(deleteModal);
-
-  const cancelButton = document.querySelector('.delete__button__cancel');
-  const deleteButton = document.querySelector('.delete__button__delete');
-  cancelButton.addEventListener('click', () => {
-    addHidden(deleteModal);
-  });
-  deleteButton.addEventListener('click', () => {
-    const tw = document.querySelector('.twit');
-    const twid = tw.dataset.id;
-
-    tweetsController.removeTweet(twid);
-  });
-}
-
 // Go home page
 function goHomePage() {
-  const goHomeFromTweet = document.querySelector('.go__home__ref');
-  goHomeFromTweet.removeEventListener('click', goHomePage);
-
+  const tweetView = document.querySelector('.tweet-view');
+  tweetView.classList.add('hidden');
   tweetsController.getFeed();
-
-  const tweetFeed = document.getElementById('tweet-feed-id');
-  tweetFeed.addEventListener('click', getTweet);
 }
 
 // New tweet
@@ -614,9 +476,6 @@ function addNewTweet(e) {
   const newTweetTextarea = document.querySelector('.add__tweet__textarea');
   if (newTweetTextarea.value !== '') {
     tweetsController.addTweet(`${newTweetTextarea.value}`);
-
-    const tweetFeed = document.getElementById('tweet-feed-id');
-    tweetFeed.addEventListener('click', getTweet);
     newTweetTextarea.value = '';
   }
 }
@@ -655,6 +514,66 @@ function showMoreTweets() {
   tweetsController.getFeed(0, tweets.length + 10, filters);
 }
 
+// DeleteTweet
+function deleteTweet() {
+  const modal = document.querySelector('.delete__modal');
+  modal.classList.remove('hidden');
+}
+
+function deleteModalCancel() {
+  const modal = document.querySelector('.delete__modal');
+  modal.classList.add('hidden');
+}
+
+function deleteModalDelete() {
+  const tweetId = document.querySelector('.twit').dataset.id;
+
+  tweetsController.removeTweet(`${tweetId}`);
+
+  deleteModalCancel();
+  goHomePage();
+}
+
+function editTweet() {
+  const modal = document.querySelector('.edit__modal');
+  const tweetView = document.querySelector('.tweet-view');
+  const tweetText = tweetView.querySelector('.tweet-text').textContent;
+  const tweetTextarea = tweetView.querySelector('.edit__textarea');
+
+  tweetTextarea.value = tweetText;
+  modal.classList.remove('hidden');
+}
+
+function editModalCancel() {
+  const modal = document.querySelector('.edit__modal');
+  modal.classList.add('hidden');
+}
+
+function editModalEdit() {
+  const tweetView = document.querySelector('.tweet-view');
+  const tweetId = document.querySelector('.twit').dataset.id;
+  const tweetText = tweetView.querySelector('.tweet-text');
+  const tweetTextarea = tweetView.querySelector('.edit__textarea');
+
+  tweetsController.editTweet(`${tweetId}`, tweetTextarea.value);
+  tweetsController.showTweet(`${id}`);
+  editModalCancel();
+}
+
+function addNewComment(e) {
+  e.preventDefault();
+
+  const tweetView = document.querySelector('.tweet-view');
+  const commentTextarea = tweetView.querySelector('.new__comment__input');
+  const tweetId = tweetView.dataset.id;
+
+  if (commentTextarea.value) {
+    tweetsController._tweets.addComment(`${tweetId}`, commentTextarea.value);
+    commentTextarea.value = '';
+    tweetsController.showTweet(`${tweetId}`);
+  }
+}
+
 // ------EVENT---LISTENERS------
 
 // Login and signup
@@ -663,15 +582,20 @@ const goSignUp = document.querySelector('.sign__up');
 const panelLogin = document.querySelector('.panel__item__login');
 const goHome = document.querySelector('.signup__home');
 const panelHome = document.querySelector('.panel__item__home');
+const homeFromTweet = document.querySelector('.go__home');
 
 goLogIn.addEventListener('click', loginOpen);
 panelLogin.addEventListener('click', loginOpen);
 goSignUp.addEventListener('click', signupOpen);
 goHome.addEventListener('click', modalClose);
 panelHome.addEventListener('click', modalClose);
+homeFromTweet.addEventListener('click', goHomePage);
+
+// Login and Signup
+tweetsController._loginButton.addEventListener('click', tweetsController.login);
+tweetsController._signupButton.addEventListener('click', tweetsController.signup);
 
 // Logout
-
 const logout = document.querySelector('.log__out');
 logout.addEventListener('click', logOutUser);
 
@@ -692,5 +616,27 @@ addTweet.addEventListener('click', addNewTweet);
 const showMore = document.querySelector('.show__more__button');
 showMore.addEventListener('click', showMoreTweets);
 
-// Show main page
+// Delete tweet
+const deleteButton = document.querySelector('.delete__twit');
+const deleteCancel = document.querySelector('.delete__button__cancel');
+const deleteDelete = document.querySelector('.delete__button__delete');
+
+deleteButton.addEventListener('click', deleteTweet);
+deleteCancel.addEventListener('click', deleteModalCancel);
+deleteDelete.addEventListener('click', deleteModalDelete);
+
+// Edit tweet
+const editButton = document.querySelector('.edit__twit');
+const editCancel = document.querySelector('.edit__button__cancel');
+const editEdit = document.querySelector('.edit__button__edit');
+
+editButton.addEventListener('click', editTweet);
+editCancel.addEventListener('click', editModalCancel);
+editEdit.addEventListener('click', editModalEdit);
+
+// Add comment
+const newCommentButton = document.querySelector('.new__comment__button');
+newCommentButton.addEventListener('click', addNewComment);
+
+// Show main page when start
 mainPage();

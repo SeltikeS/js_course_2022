@@ -6,7 +6,7 @@
 // Class TweetCollection
 class TweetCollection {
   constructor(tws = [], newCnt = 0) {
-    this._user = '';
+    this._user = JSON.parse(localStorage.getItem('currentUser'));
     this._id = new Counter(newCnt);
     this._tweets = tws;
     this.restore();
