@@ -10,43 +10,20 @@ class TweetView {
   }
 
   display(tw) {
+    const username = this._container.querySelector('.username');
+    const date = this._container.querySelector('.date');
+    const text = this._container.querySelector('.tweet-text');
+    const comments = this._container.querySelector('.comments__container');
+
     let str = '';
-    // Отрисовываю тело твита
-    str += `<article class="go__home">
-        <a class="go__home__ref" href="#">
-            <span class="iconify" data-icon="ant-design:home-filled"></span>
-        </a>
-    </article>
-    <article class="twit"  data-id="${tw.id}">
-                <div class="twit__ref">
-                    <div class="twit__content">
-                        <div class="twit__header">
-                            <div>
-                                <h2 class="username">${tw.author}</h2>
-                                <h3 class="date">${TweetFeedView.addZero(tw.createdAt.getHours())}:${TweetFeedView.addZero(tw.createdAt.getMinutes())} ${TweetFeedView.addZero(tw.createdAt.getDate())}.${TweetFeedView.addZero(tw.createdAt.getMonth() + 1)}.${tw.createdAt.getFullYear()}</h3>
-                            </div>`;
 
-    str += `<div class="twit__icons">
-                                <button class="edit__twit">
-                                    <span class="iconify" data-icon="system-uicons:pen"></span>
-                                </button>
-                                <button class="delete__twit">
-                                    <span class="iconify" data-icon="akar-icons:cross"></span>
-                                </button>
-                            </div>`;
+    this._container.classList.remove('hidden');
 
-    str += `</div>
-      <p>
-        ${tw.text}
-      </p>
-    <div class="comments">`;
+    this._container.dataset.id = tw.id;
+    username.textContent = tw.author;
+    date.textContent = `${TweetFeedView.addZero(tw.createdAt.getHours())}:${TweetFeedView.addZero(tw.createdAt.getMinutes())} ${TweetFeedView.addZero(tw.createdAt.getDate())}.${TweetFeedView.addZero(tw.createdAt.getMonth() + 1)}.${tw.createdAt.getFullYear()}`;
+    text.textContent = tw.text;
 
-    str += `<div class="delete__modal hidden">
-      <div class="delete__buttons">
-        <button class="delete__button delete__button__cancel">Cancel</button>
-        <button class="delete__button delete__button__delete">Delete</button>
-      </div>
-    </div>`;
     // Для каждого коммента рисую его тело
     tw._comments.forEach((com) => {
       str += `<div class="single__comment"  data-id="${com.id}">
@@ -58,15 +35,6 @@ class TweetView {
       </div>`;
     });
 
-    str += `<form class="new__comment" action="">
-                <textarea class="new__comment__input" placeholder="Leave new comment..." wrap="soft"></textarea>
-                <input class="new__comment__button" type="submit" value="submit">
-            </form>
-          </div>
-        </div>
-      </div> 
-    </article>`;
-
-    this._container.innerHTML = str;
+    comments.innerHTML = str;
   }
 }

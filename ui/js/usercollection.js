@@ -53,6 +53,6 @@ class UserCollection {
 
   restore() {
     const jsonUsers = localStorage.getItem('users') || [];
-    this._users = JSON.parse(jsonUsers).map((user) => new User(user.login, user.pass));
+    this._users = JSON.parse(jsonUsers).map((user) => new User(user._login, user._pass));
   }
 }

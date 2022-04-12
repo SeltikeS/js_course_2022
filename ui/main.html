@@ -14,8 +14,8 @@
         <img class="black__logo" src="img/minilogo.svg" alt="logo">
 
         <div class="header__right" id="header__right">
-            <button class="log__in">Log In</button>
-            <button class="sign__up">Sign Up</button>
+            <button class="log__in hidden">Log In</button>
+            <button class="sign__up hidden">Sign Up</button>
             <div class="header__username hidden">Username</div>
             <button class="button log__out hidden">Log Out</button>
         </div>    
@@ -74,6 +74,57 @@
         <section class="show__more hidden">
             <button class="show__more__button">Show more</button>
         </section>
+
+        <div class="tweet-view hidden" id="tweet-view-id">
+            <div class="go__home">
+                <span class="iconify" data-icon="ant-design:home-filled"></span>
+            </div>
+            <div class="twit">
+                <div class="twit__ref">
+                    <div class="twit__content">
+                        <div class="twit__header">
+                            <div>
+                                <h2 class="username">$author</h2>
+                                <h3 class="date">date</h3>
+                            </div>
+                            <div class="twit__icons">
+                                <button class="edit__twit">
+                                    <span class="iconify" data-icon="system-uicons:pen"></span>
+                                </button>
+                                <button class="delete__twit">
+                                    <span class="iconify" data-icon="akar-icons:cross"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <p class="tweet-text">
+                          text
+                        </p>
+                        <div class="comments">
+                            <div class="comments__container">
+                                comment
+                            </div>
+                            <form class="new__comment" action="">
+                                <textarea class="new__comment__input" placeholder="Leave new comment..." wrap="soft"></textarea>
+                                <input class="new__comment__button" type="submit" value="submit">
+                            </form>
+                        </div>
+                        <div class="delete__modal hidden">
+                            <div class="delete__buttons">
+                                <button class="delete__button delete__button__cancel">Cancel</button>
+                                <button class="delete__button delete__button__delete">Delete</button>
+                            </div>
+                        </div>
+                        <div class="edit__modal hidden">
+                            <textarea name="edit-tweet" class="edit__textarea"></textarea>
+                            <div class="edit__buttons">
+                                <button class="edit__button edit__button__cancel">Cancel</button>
+                                <button class="edit__button edit__button__edit">Edit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer>
@@ -145,6 +196,8 @@
             </div>
         </div>
     </div>
+
+
 
 
     <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
