@@ -552,11 +552,10 @@ function editModalCancel() {
 function editModalEdit() {
   const tweetView = document.querySelector('.tweet-view');
   const tweetId = document.querySelector('.twit').dataset.id;
-  const tweetText = tweetView.querySelector('.tweet-text');
   const tweetTextarea = tweetView.querySelector('.edit__textarea');
 
   tweetsController.editTweet(`${tweetId}`, tweetTextarea.value);
-  tweetsController.showTweet(`${id}`);
+  tweetsController.showTweet(`${tweetId}`);
   editModalCancel();
 }
 
