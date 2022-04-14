@@ -14,6 +14,7 @@ class TweetsController {
     this._tweetFeedView = new TweetFeedView('tweet-feed-id');
     this._filterView = new FilterView('filter-id');
     this._tweetView = new TweetView('tweet-view-id');
+    this._tweetFeedApiServise = new TweetFeedApiService('https://jslabapi.datamola.com/');
     this._loginButton = document.querySelector('.input__button__login');
     this._signupButton = document.querySelector('.input__button__signup');
     this.setCurrentUser(this._tweets.user);
