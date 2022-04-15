@@ -1,3 +1,4 @@
+/* eslint-disable object-shorthand */
 /* eslint-disable no-undef */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
@@ -20,7 +21,7 @@ class TweetFeedApiService {
       },
       body: JSON.stringify(message),
     });
-    const requestResult = (await (await fetch(request)).json());
+    const requestResult = await fetch(request);
     return requestResult;
   }
 
@@ -36,7 +37,7 @@ class TweetFeedApiService {
       },
       body: JSON.stringify(message),
     });
-    const requestResult = (await (await fetch(request)).json());
+    const requestResult = await fetch(request);
     return requestResult;
   }
 
@@ -52,7 +53,7 @@ class TweetFeedApiService {
       },
       body: JSON.stringify(message),
     });
-    const requestResult = (await (await fetch(request)).json());
+    const requestResult = await fetch(request);
     return requestResult;
   }
 
@@ -68,7 +69,7 @@ class TweetFeedApiService {
       },
       body: JSON.stringify(message),
     });
-    const requestResult = (await (await fetch(request)).json());
+    const requestResult = await fetch(request);
     return requestResult;
   }
 
@@ -96,45 +97,48 @@ class TweetFeedApiService {
       },
       body: JSON.stringify(message),
     });
-    const requestResult = (await (await fetch(request)).json());
+    const requestResult = await fetch(request);
     return requestResult;
   }
 
   async getTweet(from = 0, count = 10, filters = {
     author: '',
-    dateFrom: '1970-01-01T00:00:00.001Z',
-    dateTo: `${new Date()}`,
+    dateFrom: new Date(0),
+    dateTo: new Date(),
     hashtags: [],
     text: '',
   }) {
-    const query = {
-      author: '',
-      text: '',
-      dateFrom: '1970-01-01T00:00:00.001Z',
-      dateTo: `${new Date()}`,
-      from: 0,
-      count: 10,
-      hashtags: '',
-    };
-    query.author = (filters.author) ? filters.author : '';
-    query.text = (filters.text) ? filters.text : '';
-    query.dateFrom = (filters.dateFrom) ? filters.dateFrom : '1970-01-01T00:00:00.001Z';
-    query.dateTo = (filters.dateTo) ? filters.dateTo : `${new Date()}`;
-    query.from = (from) || 0;
-    query.count = (count) || 10;
-    query.hashtags = (filters.hashtags === []
-                      || filters.hashtags === null)
-      ? filters.hashtags.join(',')
-      : '';
+    const query = {};
+
+    query.author = filters.author || '';
+    query.text = filters.text || '';
+    query.dateFrom = (filters.dateFrom || new Date(0));
+    query.dateTo = (filters.dateTo || new Date());
+    query.from = from || 0;
+    query.count = count || 10;
+
+    if (!filters.hashtags || filters.hashtags === []) {
+      query.hashtags = '';
+    } else {
+      query.hashtags = filters.hashtags.join(',');
+    }
+
+    // console.log(query);
 
     const request = new Request(`${this._url}tweet`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      query: JSON.stringify(query),
+      // query: JSON.stringify(query),
+      query: query.toString(),
     });
-    const requestResult = (await (await fetch(request)).json());
+
+    // const url = new URL(`${this._url}tweet`);
+    // url.search = (new URLSearchParams(query)).toString();
+
+    const requestResult = await fetch(request);
+    // console.log(requestResult);
     return requestResult;
   }
 }

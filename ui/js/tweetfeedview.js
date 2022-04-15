@@ -39,13 +39,13 @@ class TweetFeedView {
                                   <div class="twit__header">
                                       <div>
                                           <h2 class="username">${tw.author}</h2>
-                                          <h3 class="date">${TweetFeedView.addZero(tw.createdAt.getHours())}:${TweetFeedView.addZero(tw.createdAt.getMinutes())} ${TweetFeedView.addZero(tw.createdAt.getDate())}.${TweetFeedView.addZero(tw.createdAt.getMonth() + 1)}.${tw.createdAt.getFullYear()}</h3>
+                                          <h3 class="date">${TweetFeedView.addZero((new Date(tw.createdAt)).getHours())}:${TweetFeedView.addZero((new Date(tw.createdAt)).getMinutes())} ${TweetFeedView.addZero((new Date(tw.createdAt)).getDate())}.${TweetFeedView.addZero((new Date(tw.createdAt)).getMonth() + 1)}.${(new Date(tw.createdAt)).getFullYear()}</h3>
                                       </div>
                                   </div>
                                   <p>
                                     ${TweetFeedView.greyHashtags(tw.text)}
                                   </p>
-                                  <h3 class="comments">Comments: ${tw._comments.length}</h3>
+                                  <h3 class="comments">Comments: ${tw.comments.length}</h3>
                               </div>
                           </div>
                           <div class="twit__edit__modal hidden">
