@@ -8,6 +8,8 @@
 // Class TweetsController
 class TweetsController {
   constructor() {
+    this._tweets = [];
+
     this._headerView = new HeaderView('header-id');
     this._tweetFeedView = new TweetFeedView('tweet-feed-id');
     this._filterView = new FilterView('filter-id');
@@ -62,6 +64,7 @@ class TweetsController {
     this._viewIfHasUser(addTweetArea);
     this._viewIfHasUser(addTweetPanel);
     tweetFeed.then((res) => {
+      this._tweets = res;
       this._tweetFeedView.display(res);
     });
   }
@@ -86,27 +89,85 @@ class TweetsController {
     }
   }
 
-  // addTweet(text) {
-  //   this._tweets.add(text);
-  //   this.getFeed();
-  // }
+  addTweet(text) {
+    const token = JSON.parse(localStorage.getItem('currentUser')).token;
+    const response = this._api.postTweet(token, text);
+    response.then(async (res) => {
+      if (res.status >= 400) {
+        console.log('error addTweet');
+      } else {
+        this.getFeed();
+      }
+    });
+  }
 
-  // editTweet(id, text) {
-  //   this._tweets.edit(id, text);
-  //   this.getFeed();
-  // }
+  editTweet(id, text) {
+    const token = JSON.parse(localStorage.getItem('currentUser')).token;
+    const response = this._api.putTweet(token, id, text);
+    response
+      .then(async (res) => {
+        if ((await res).status >= 400) {
+          console.log('error editTweet');
+        } else {
+          this.getFeed();
+        }
+      });
+  }
 
-  // removeTweet(id) {
-  //   this._tweets.remove(id);
-  //   this.getFeed();
-  // }
+  removeTweet(id) {
+    const token = JSON.parse(localStorage.getItem('currentUser')).token;
+    const response = this._api.deleteTweet(token, id);
+    response
+      .then(async (res) => {
+        if ((await res).status >= 400) {
+          console.log('error removeTweet');
+        } else {
+          this.getFeed();
+        }
+      });
+  }
 
-  // showTweet(id = null) {
-  //   const tweet = this._tweets.get(id);
-  //   if (tweet) {
-  //     this._tweetView.display(tweet);
-  //   }
-  // }
+  addComment(id, text) {
+    const token = JSON.parse(localStorage.getItem('currentUser')).token;
+    const response = this._api.postComment(token, id, text);
+    response
+      .then(async (res) => {
+        if ((await res).status >= 400) {
+          console.log('error addComment');
+        } else {
+          this.getFeed();
+        }
+      });
+  }
+
+  showTweet(id = null) {
+    const tweet = this._getById(id);
+    if (tweet) {
+      this._tweetView.display(tweet);
+      document.querySelector('.go__home').scrollIntoView(true, { block: 'start' });
+    }
+  }
+
+  _error(status = '404', text = 'Page not found') {
+    const errorPage = document.querySelector('.error');
+    const statusError = errorPage.querySelector('.error__status');
+    const textError = errorPage.querySelector('.error__text');
+
+    errorPage.classList.remove('hidden');
+    statusError.textContent = status;
+    textError.textContent = text;
+  }
+
+  _getById(id) {
+    let tweet = {};
+    for (let i = 0; i < this._tweets.length; ++i) {
+      if (this._tweets[i].id === id) {
+        tweet = this._tweets[i];
+        break;
+      }
+    }
+    return tweet;
+  }
 
   _modalClose() {
     const modal = document.querySelector('.modal');
@@ -118,10 +179,10 @@ class TweetsController {
 
   _checkUser() {
     const newComment = document.querySelector('.new__comment');
-    if (JSON.parse(localStorage.getItem('currentUser')) === '') {
-      addHidden(newComment);
+    if (JSON.parse(localStorage.getItem('currentUser')).login === '') {
+      this._hiddenAdd(newComment);
     } else {
-      removeHidden(newComment);
+      this._hiddenRemove(newComment);
     }
   }
 }

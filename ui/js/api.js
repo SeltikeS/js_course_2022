@@ -103,42 +103,38 @@ class TweetFeedApiService {
 
   async getTweet(from = 0, count = 10, filters = {
     author: '',
-    dateFrom: new Date(0),
-    dateTo: new Date(),
+    dateFrom: `${new Date(0)}`,
+    dateTo: `${new Date()}`,
     hashtags: [],
     text: '',
   }) {
-    const query = {};
+    let query = '?';
 
-    query.author = filters.author || '';
-    query.text = filters.text || '';
-    query.dateFrom = (filters.dateFrom || new Date(0));
-    query.dateTo = (filters.dateTo || new Date());
-    query.from = from || 0;
-    query.count = count || 10;
-
-    if (!filters.hashtags || filters.hashtags === []) {
-      query.hashtags = '';
-    } else {
-      query.hashtags = filters.hashtags.join(',');
+    if (filters.author) {
+      query += `author=${filters.author}&`;
+    }
+    if (filters.text) {
+      query += `text=${filters.text}&`;
+    }
+    if (filters.hashtags && (filters.hashtags.length !== 0)) {
+      query += `hashtags=${filters.hashtags.join(',')}&`;
+    }
+    if (filters.dateFrom) {
+      query += `dateFrom=${(new Date(filters.dateFrom)).toISOString()}&`;
+    }
+    if (filters.dateTo) {
+      query += `dateTo=${(new Date(filters.dateTo)).toISOString()}&`;
     }
 
-    // console.log(query);
+    query += `from=${from}&count=${count}`;
 
-    const request = new Request(`${this._url}tweet`, {
+
+    const request = new Request(`${this._url}tweet${query}`, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      // query: JSON.stringify(query),
-      query: query.toString(),
     });
 
-    // const url = new URL(`${this._url}tweet`);
-    // url.search = (new URLSearchParams(query)).toString();
 
     const requestResult = await fetch(request);
-    // console.log(requestResult);
     return requestResult;
   }
 }

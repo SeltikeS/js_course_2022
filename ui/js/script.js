@@ -250,7 +250,7 @@ function getTweet(e) {
 
   tweetsController.showTweet(`${id}`);
 
-  if (tweetsController._tweets.user !== tweetsController._tweets.get(id).author) {
+  if (JSON.parse(localStorage.getItem('currentUser')).login !== tweetsController._getById(id).author) {
     addHidden(editTweetButton);
     addHidden(deleteTweetButton);
   } else {
@@ -264,7 +264,7 @@ function getTweet(e) {
 function checkUser() {
   const newComment = document.querySelector('.new__comment');
 
-  if (tweetsController._tweets.user === '') {
+  if (JSON.parse(localStorage.getItem('currentUser')).login === '') {
     addHidden(newComment);
   } else {
     removeHidden(newComment);
@@ -282,7 +282,6 @@ function modalClose() {
 // Main page
 function mainPage() {
   const tweetFeed = document.getElementById('tweet-feed-id');
-  tweetFeed.textContent = '';
 
   tweetsController.getFeed();
   tweetFeed.addEventListener('click', getTweet);
@@ -337,7 +336,7 @@ function showMoreTweets() {
     }
   }
 
-  tweetsController.getFeed(0, tweets.length + 10, filters);
+  tweetsController.getFeed(0, tweets.length + 9, filters);
 }
 
 // DeleteTweet
@@ -383,6 +382,7 @@ function editModalEdit() {
   tweetsController.editTweet(`${tweetId}`, tweetTextarea.value);
   tweetsController.showTweet(`${tweetId}`);
   editModalCancel();
+  goHomePage();
 }
 
 function addNewComment(e) {
@@ -393,9 +393,10 @@ function addNewComment(e) {
   const tweetId = tweetView.dataset.id;
 
   if (commentTextarea.value) {
-    tweetsController._tweets.addComment(`${tweetId}`, commentTextarea.value);
+    tweetsController.addComment(`${tweetId}`, commentTextarea.value);
     commentTextarea.value = '';
     tweetsController.showTweet(`${tweetId}`);
+    goHomePage();
   }
 }
 
@@ -502,6 +503,14 @@ function signup(e) {
   }
 }
 
+// Error close
+function errorClose() {
+  const errorPage = document.querySelector('.error');
+  errorPage.classList.add('hidden');
+
+  tweetsController.getFeed();
+}
+
 // ------EVENT---LISTENERS------
 
 // Login and signup
@@ -565,6 +574,10 @@ editEdit.addEventListener('click', editModalEdit);
 // Add comment
 const newCommentButton = document.querySelector('.new__comment__button');
 newCommentButton.addEventListener('click', addNewComment);
+
+// Error button
+const errorButton = document.querySelector('.error__button');
+errorButton.addEventListener('click', errorClose);
 
 // Show main page when start
 mainPage();
