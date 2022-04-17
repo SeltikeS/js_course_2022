@@ -36,21 +36,21 @@ class TweetsController {
   }
 
   _viewIfHasUser(item) {
-    if (JSON.parse(localStorage.getItem('currentUser')) !== ''
+    if (JSON.parse(localStorage.getItem('currentUser')).login !== ''
     && item.classList.contains('hidden')) {
       item.classList.remove('hidden');
     }
   }
 
   _hideIfHasntUser(item) {
-    if (JSON.parse(localStorage.getItem('currentUser')) === ''
+    if (JSON.parse(localStorage.getItem('currentUser')).login === ''
     && !item.classList.contains('hidden')) {
       item.classList.add('hidden');
     }
   }
 
   // Methods
-  async getFeed(skip, top, filterConfig) {
+  getFeed(skip, top, filterConfig) {
     const filters = document.querySelector('.filters');
     const addTweetArea = document.querySelector('.add__tweet');
     const addTweetPanel = document.querySelector('.panel__add');
@@ -59,14 +59,17 @@ class TweetsController {
     this._hiddenRemove(filters);
     this._hiddenRemove(showMore);
 
-    const tweetFeed = (await this._api.getTweet(skip, top, filterConfig)).json();
+    const tweetFeed = this._api.getTweet(skip, top, filterConfig);
     this._filterView.display(filterConfig);
     this._viewIfHasUser(addTweetArea);
     this._viewIfHasUser(addTweetPanel);
-    tweetFeed.then((res) => {
-      this._tweets = res;
-      this._tweetFeedView.display(res);
-    });
+    tweetFeed
+      .then(async (res) => {
+        if ((await res).status < 400) {
+          this._tweets = (await (await res).json());
+          this._tweetFeedView.display(this._tweets);
+        }
+      });
   }
 
   setCurrentUser(user) {
@@ -93,7 +96,7 @@ class TweetsController {
     const token = JSON.parse(localStorage.getItem('currentUser')).token;
     const response = this._api.postTweet(token, text);
     response.then(async (res) => {
-      if (res.status >= 400) {
+      if ((await res).status >= 400) {
         const responseJson = (await (await res).json());
         this._error(responseJson.statusCode, responseJson.message);
       } else {
@@ -148,7 +151,7 @@ class TweetsController {
     const tweet = this._getById(id);
     if (tweet) {
       this._tweetView.display(tweet);
-      document.querySelector('.go__home').scrollIntoView(true, { block: 'start' });
+      document.querySelector('.tweet-view').scrollIntoView(true, { block: 'start' });
     }
   }
 

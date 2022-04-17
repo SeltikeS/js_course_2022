@@ -164,9 +164,6 @@ function arrowOpen() {
 
   this.removeEventListener('click', arrowOpen);
   this.addEventListener('click', arrowClose);
-
-  const tweetFeed = document.getElementById('tweet-feed-id');
-  tweetFeed.addEventListener('click', getTweet);
 }
 
 // Close filters
@@ -182,9 +179,110 @@ function arrowClose() {
 
   this.removeEventListener('click', arrowClose);
   this.addEventListener('click', arrowOpen);
+}
 
-  const tweetFeed = document.getElementById('tweet-feed-id');
-  tweetFeed.addEventListener('click', getTweet);
+function adaptiveFiltersOpen() {
+  const form = document.querySelector('.filters__form');
+  const filters = document.querySelector('.filters');
+  const filtersSpace = document.querySelector('.filters__space');
+  const arrow = document.querySelector('.arrow');
+
+  arrow.classList.remove('arrow__down');
+  arrow.classList.add('arrow__up');
+
+  arrow.removeEventListener('click', arrowOpen);
+  arrow.addEventListener('click', arrowClose);
+
+  form.classList.remove('hidden');
+  filtersSpace.classList.add('hidden');
+
+  filters.classList.add('filters__adaptive');
+
+  const itemItemMain = document.querySelector('.panel__item__main');
+  const itemLoop = document.querySelector('.panel__item__filters');
+  const itemAdd = document.querySelector('.panel__add');
+  const itemLogin = document.querySelector('.panel__item__login');
+
+  itemLoop.classList.add('hidden');
+  itemAdd.classList.add('hidden');
+  itemLogin.classList.add('hidden');
+
+  itemItemMain.removeEventListener('click', goHomePage);
+  itemItemMain.addEventListener('click', adaptiveFiltersClose);
+}
+
+function adaptiveFiltersClose() {
+  const form = document.querySelector('.filters__form');
+  const filters = document.querySelector('.filters');
+  const filtersSpace = document.querySelector('.filters__space');
+  const arrow = document.querySelector('.arrow');
+
+  form.classList.add('hidden');
+  filtersSpace.classList.remove('hidden');
+
+  arrow.classList.add('arrow__down');
+  arrow.classList.remove('arrow__up');
+
+  arrow.removeEventListener('click', arrowClose);
+  arrow.addEventListener('click', arrowOpen);
+
+  filters.classList.remove('filters__adaptive');
+
+  const itemItemMain = document.querySelector('.panel__item__main');
+  const itemLoop = document.querySelector('.panel__item__filters');
+  const itemAdd = document.querySelector('.panel__add');
+  const itemLogin = document.querySelector('.panel__item__login');
+
+  itemLoop.classList.remove('hidden');
+  if (JSON.parse(localStorage.getItem('currentUser')).login !== '') {
+    itemAdd.classList.remove('hidden');
+  }
+  itemLogin.classList.remove('hidden');
+
+  itemItemMain.removeEventListener('click', adaptiveFiltersClose);
+  itemItemMain.addEventListener('click', goHomePage);
+}
+
+function addTweetOpen() {
+  const addTweetContainer = document.querySelector('.add__tweet');
+  const addTweetForm = document.querySelector('.add__tweet__form');
+
+  addTweetContainer.classList.add('add__tweet__adaptive');
+  addTweetForm.classList.add('add__tweet__adaptive');
+
+  const itemItemMain = document.querySelector('.panel__item__main');
+  const itemLoop = document.querySelector('.panel__item__filters');
+  const itemAdd = document.querySelector('.panel__add');
+  const itemLogin = document.querySelector('.panel__item__login');
+
+  itemLoop.classList.add('hidden');
+  itemAdd.classList.add('hidden');
+  itemLogin.classList.add('hidden');
+
+  itemItemMain.removeEventListener('click', goHomePage);
+  itemItemMain.addEventListener('click', addTweetClose);
+}
+
+function addTweetClose() {
+  const addTweetContainer = document.querySelector('.add__tweet');
+  const addTweetForm = document.querySelector('.add__tweet__form');
+
+  addTweetContainer.classList.remove('add__tweet__adaptive');
+  addTweetForm.classList.remove('add__tweet__adaptive');
+
+  const itemItemMain = document.querySelector('.panel__item__main');
+  const itemLoop = document.querySelector('.panel__item__filters');
+  const itemAdd = document.querySelector('.panel__add');
+  const itemLogin = document.querySelector('.panel__item__login');
+
+  itemLoop.classList.remove('hidden');
+  if (JSON.parse(localStorage.getItem('currentUser')).login !== '') {
+    itemAdd.classList.remove('hidden');
+  }
+  itemLogin.classList.remove('hidden');
+
+  itemItemMain.removeEventListener('click', addTweetClose);
+  itemItemMain.addEventListener('click', goHomePage);
 }
 
 // Get new tweet feed if have filter
@@ -520,6 +618,7 @@ const panelLogin = document.querySelector('.panel__item__login');
 const goHome = document.querySelector('.signup__home');
 const panelHome = document.querySelector('.panel__item__home');
 const homeFromTweet = document.querySelector('.go__home');
+const itemMain = document.querySelector('.panel__item__main');
 
 goLogIn.addEventListener('click', loginOpen);
 panelLogin.addEventListener('click', loginOpen);
@@ -527,6 +626,7 @@ goSignUp.addEventListener('click', signupOpen);
 goHome.addEventListener('click', modalClose);
 panelHome.addEventListener('click', modalClose);
 homeFromTweet.addEventListener('click', goHomePage);
+itemMain.addEventListener('click', goHomePage);
 
 // Login and Signup
 tweetsController._loginButton.addEventListener('click', login);
@@ -540,14 +640,26 @@ logout.addEventListener('click', logOutUser);
 const arrow = document.querySelector('.arrow');
 const clearAll = document.querySelector('.filters__reset');
 const filters = document.forms.filters;
+const adaptiveFilters = document.querySelector('.panel__item__filters');
+let timer = null;
 arrow.addEventListener('click', arrowOpen);
-filters.addEventListener('input', filtersInputs);
+adaptiveFilters.addEventListener('click', adaptiveFiltersOpen);
+filters.addEventListener('input', () => {
+  if (timer) {
+    clearTimeout(timer);
+    timer = null;
+  }
+  timer = setTimeout(filtersInputs, 200);
+});
 clearAll.addEventListener('click', clearInputs);
 
 // Add tweet
 
 const addTweet = document.querySelector('.add__tweet__button');
 addTweet.addEventListener('click', addNewTweet);
+
+const adaptiveAdd = document.querySelector('.panel__add');
+adaptiveAdd.addEventListener('click', addTweetOpen);
 
 // Show more
 const showMore = document.querySelector('.show__more__button');

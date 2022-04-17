@@ -934,6 +934,25 @@ footer {
     display: none;
   }
 
+  .filters__adaptive {
+    align-items: center;
+    justify-content: center;
+    background: var(--white-color);
+    display: flex;
+    flex-flow: column;
+    top: 0;
+    left: 0;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 100;
+  }
+
+  .filters__header,
+  .arrow {
+    display: none;
+  }
+
   /* FOOTER */
   .main__panel {
     align-items: center;
@@ -963,6 +982,20 @@ footer {
 
   .add__tweet {
     display: none;
+  }
+
+  .add__tweet__adaptive {
+    align-items: center;
+    justify-content: flex-start;
+    background: var(--white-color);
+    display: flex;
+    flex-flow: column;
+    top: 0;
+    left: 0;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 100;
   }
 
   /* SIGN UP PAGE */
