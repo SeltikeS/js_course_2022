@@ -14,7 +14,6 @@ class TweetView {
     const date = this._container.querySelector('.date');
     const text = this._container.querySelector('.tweet-text');
     const comments = this._container.querySelector('.comments__container');
-    document.querySelector('.go__home').scrollIntoView(true, { block: 'start' });
 
     let str = '';
 

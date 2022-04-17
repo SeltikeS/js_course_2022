@@ -94,7 +94,8 @@ class TweetsController {
     const response = this._api.postTweet(token, text);
     response.then(async (res) => {
       if (res.status >= 400) {
-        console.log('error addTweet');
+        const responseJson = (await (await res).json());
+        this._error(responseJson.statusCode, responseJson.message);
       } else {
         this.getFeed();
       }
@@ -107,7 +108,8 @@ class TweetsController {
     response
       .then(async (res) => {
         if ((await res).status >= 400) {
-          console.log('error editTweet');
+          const responseJson = (await (await res).json());
+          this._error(responseJson.statusCode, responseJson.message);
         } else {
           this.getFeed();
         }
@@ -120,7 +122,8 @@ class TweetsController {
     response
       .then(async (res) => {
         if ((await res).status >= 400) {
-          console.log('error removeTweet');
+          const responseJson = (await (await res).json());
+          this._error(responseJson.statusCode, responseJson.message);
         } else {
           this.getFeed();
         }
@@ -133,7 +136,8 @@ class TweetsController {
     response
       .then(async (res) => {
         if ((await res).status >= 400) {
-          console.log('error addComment');
+          const responseJson = (await (await res).json());
+          this._error(responseJson.statusCode, responseJson.message);
         } else {
           this.getFeed();
         }

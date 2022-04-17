@@ -128,11 +128,9 @@ class TweetFeedApiService {
 
     query += `from=${from}&count=${count}`;
 
-
     const request = new Request(`${this._url}tweet${query}`, {
       method: 'GET',
     });
-
 
     const requestResult = await fetch(request);
     return requestResult;
