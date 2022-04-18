@@ -6,193 +6,16 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
 
-// Test tweet collection
-const tweetObjects = [{
-  id: String(0),
-  text: "It's my first tweet",
-  createdAt: new Date('2021-12-12T22:02:02'),
-  author: 'SeltikeS',
-  comments: [],
-}, {
-  id: String(1),
-  text: 'Happy New Year!!! #newyear',
-  createdAt: new Date('2021-12-31T23:59:00'),
-  author: 'SeltikeS',
-  comments: [],
-}, {
-  id: String(2),
-  text: 'OMG, it was crazy',
-  createdAt: new Date('2022-01-01T12:00:00'),
-  author: 'Dora',
-  comments: [{
-    id: String(3),
-    text: 'Yeeee',
-    createdAt: new Date('2022-01-01T13:00:00'),
-    author: 'Kira',
-  }],
-}, {
-  id: String(4),
-  text: 'Hello, world #js',
-  createdAt: new Date('2022-01-01T18:10:00'),
-  author: 'SeltikeS',
-  comments: [],
-}, {
-  id: String(5),
-  text: 'Привет! #js #datamola',
-  createdAt: new Date('2022-01-10T10:10:00'),
-  author: 'user123',
-  comments: [{
-    id: String(6),
-    text: 'Hi',
-    createdAt: new Date('2022-01-10T11:10:00'),
-    author: 'SeltikeS',
-  }, {
-    id: String(7),
-    text: '=)',
-    createdAt: new Date('2022-01-10T13:10:00'),
-    author: 'user123',
-  }],
-}, {
-  id: String(8),
-  text: 'Netflix Buys Another Game Studio To Create "World Class" Games #netflix',
-  createdAt: new Date('2022-03-02T14:08:00'),
-  author: 'Eddie Makuch',
-  comments: [],
-}, {
-  id: String(9),
-  text: 'Pokemon Scarlet And Violet Preorders Are Live #pokemon',
-  createdAt: new Date('2022-03-02T15:26:00'),
-  author: 'Brendan Hesse',
-  comments: [],
-}, {
-  id: String(10),
-  text: 'Apex Legends Is Now Playable On Steam Deck #apex #steamdeck',
-  createdAt: new Date('2022-03-02T17:53:00'),
-  author: 'Demi Williams',
-  comments: [],
-}, {
-  id: String(11),
-  text: 'Elden Ring Has A Massive Start In The UK #eldenring',
-  createdAt: new Date('2022-03-03T14:18:00'),
-  author: 'George Yang',
-  comments: [],
-}, {
-  id: String(12),
-  text: 'Wrath Of The Lich King Classic Could Be In The Works #wow',
-  createdAt: new Date('2022-03-03T16:44:00'),
-  author: 'Cameron Koch',
-  comments: [{
-    id: String(13),
-    text: 'Wait it',
-    createdAt: new Date('2022-03-03T20:00:00'),
-    author: 'SeltikeS',
-  }],
-}, {
-  id: String(14),
-  text: 'Free Guy Sequels Are Coming #freeguys',
-  createdAt: new Date('2022-03-03T16:57:00'),
-  author: 'Eddie Makuch',
-  comments: [],
-}, {
-  id: String(15),
-  text: 'Disney Plus Adding Ad-Supported Version In US Later This Year #disney',
-  createdAt: new Date('2022-03-04T09:03:00'),
-  author: 'David Wolinsky',
-  comments: [],
-}, {
-  id: String(16),
-  text: 'Microsoft Is Ceasing All "New Sales" In Russia #microsoft',
-  createdAt: new Date('2022-03-04T10:30:00'),
-  author: 'Cameron Koch',
-  comments: [],
-}, {
-  id: String(17),
-  text: 'Russian Version Of New World No Longer In The Works #newworld',
-  createdAt: new Date('2022-03-04T14:28:00'),
-  author: 'Cameron Koch',
-  comments: [{
-    id: String(18),
-    text: 'Плак плак',
-    createdAt: new Date('2022-03-04T20:20:00'),
-    author: 'Yammy',
-  }],
-}, {
-  id: String(19),
-  text: 'Elden Ring May Be Getting A PVP Arena DLC #eldenring',
-  createdAt: new Date('2022-03-07T18:08:00'),
-  author: 'Demi Williams',
-  comments: [],
-}, {
-  id: String(20),
-  text: "Marvel's Guardians Of The Galaxy Did Not Meet Square Enix's Expectations #marvel #squareenix",
-  createdAt: new Date('2022-03-07T21:21:00'),
-  author: 'Eddie Makuch',
-  comments: [],
-}, {
-  id: String(21),
-  text: 'Lego Star Wars: The Skywalker Saga DLC Includes The Mandalorian And Young Lando #lego #starwars',
-  createdAt: new Date('2022-03-07T23:28:00'),
-  author: 'Darryn Bonthuys',
-  comments: [],
-}, {
-  id: String(22),
-  text: 'Next Pokemon TCG Expansion Revolves Around Pokemon Legends: Arceus #pokemon',
-  createdAt: new Date('2022-03-08T14:07:00'),
-  author: 'Brendan Hesse',
-  comments: [],
-}, {
-  id: String(23),
-  text: 'Elden Ring Speedrunner Beats Game In Less Than Three Hours #eldenring',
-  createdAt: new Date('2022-03-08T21:06:00'),
-  author: 'Gabe Gurwin',
-  comments: [{
-    id: String(24),
-    text: 'Wow. So fast',
-    createdAt: new Date('2022-03-08T23:06:00'),
-    author: 'Dora',
-  }],
-}, {
-  id: String(25),
-  text: 'Homework deadline is comming #js #datamola',
-  createdAt: new Date('2022-03-10T09:06:00'),
-  author: 'SeltikeS',
-  comments: [{
-    id: String(26),
-    text: '+++++++',
-    createdAt: new Date('2022-03-10T12:31:00'),
-    author: 'Dora',
-  }],
-}];
-let count = 0;
-const tweetsTweet = tweetObjects.map((tw) => {
-  const newTweet = new Tweet(
-    String(++count),
-    tw.text,
-    tw.author,
-    tw.createdAt,
-  );
-
-  tw.comments.forEach((element) => {
-    newTweet._comments.push(new Comment(
-      String(++count),
-      element.text,
-      element.author,
-      element.createdAt,
-    ));
-  });
-
-  return newTweet;
-});
-
 const createKeyIfEmpty = (key) => {
   if (!localStorage.getItem(`${key}`)) {
-    localStorage.setItem(`${key}`, JSON.stringify([]));
+    localStorage.setItem(`${key}`, JSON.stringify({
+      login: '',
+      token: '',
+    }));
   }
 };
 
 // If LocalStorage hasn't tweets or users create empty array
-createKeyIfEmpty('tweets');
-createKeyIfEmpty('users');
 createKeyIfEmpty('currentUser');
 
 // Create controller
@@ -341,9 +164,6 @@ function arrowOpen() {
 
   this.removeEventListener('click', arrowOpen);
   this.addEventListener('click', arrowClose);
-
-  const tweetFeed = document.getElementById('tweet-feed-id');
-  tweetFeed.addEventListener('click', getTweet);
 }
 
 // Close filters
@@ -359,9 +179,110 @@ function arrowClose() {
 
   this.removeEventListener('click', arrowClose);
   this.addEventListener('click', arrowOpen);
+}
 
-  const tweetFeed = document.getElementById('tweet-feed-id');
-  tweetFeed.addEventListener('click', getTweet);
+function adaptiveFiltersOpen() {
+  const form = document.querySelector('.filters__form');
+  const filters = document.querySelector('.filters');
+  const filtersSpace = document.querySelector('.filters__space');
+  const arrow = document.querySelector('.arrow');
+
+  arrow.classList.remove('arrow__down');
+  arrow.classList.add('arrow__up');
+
+  arrow.removeEventListener('click', arrowOpen);
+  arrow.addEventListener('click', arrowClose);
+
+  form.classList.remove('hidden');
+  filtersSpace.classList.add('hidden');
+
+  filters.classList.add('filters__adaptive');
+
+  const itemItemMain = document.querySelector('.panel__item__main');
+  const itemLoop = document.querySelector('.panel__item__filters');
+  const itemAdd = document.querySelector('.panel__add');
+  const itemLogin = document.querySelector('.panel__item__login');
+
+  itemLoop.classList.add('hidden');
+  itemAdd.classList.add('hidden');
+  itemLogin.classList.add('hidden');
+
+  itemItemMain.removeEventListener('click', goHomePage);
+  itemItemMain.addEventListener('click', adaptiveFiltersClose);
+}
+
+function adaptiveFiltersClose() {
+  const form = document.querySelector('.filters__form');
+  const filters = document.querySelector('.filters');
+  const filtersSpace = document.querySelector('.filters__space');
+  const arrow = document.querySelector('.arrow');
+
+  form.classList.add('hidden');
+  filtersSpace.classList.remove('hidden');
+
+  arrow.classList.add('arrow__down');
+  arrow.classList.remove('arrow__up');
+
+  arrow.removeEventListener('click', arrowClose);
+  arrow.addEventListener('click', arrowOpen);
+
+  filters.classList.remove('filters__adaptive');
+
+  const itemItemMain = document.querySelector('.panel__item__main');
+  const itemLoop = document.querySelector('.panel__item__filters');
+  const itemAdd = document.querySelector('.panel__add');
+  const itemLogin = document.querySelector('.panel__item__login');
+
+  itemLoop.classList.remove('hidden');
+  if (JSON.parse(localStorage.getItem('currentUser')).login !== '') {
+    itemAdd.classList.remove('hidden');
+  }
+  itemLogin.classList.remove('hidden');
+
+  itemItemMain.removeEventListener('click', adaptiveFiltersClose);
+  itemItemMain.addEventListener('click', goHomePage);
+}
+
+function addTweetOpen() {
+  const addTweetContainer = document.querySelector('.add__tweet');
+  const addTweetForm = document.querySelector('.add__tweet__form');
+
+  addTweetContainer.classList.add('add__tweet__adaptive');
+  addTweetForm.classList.add('add__tweet__adaptive');
+
+  const itemItemMain = document.querySelector('.panel__item__main');
+  const itemLoop = document.querySelector('.panel__item__filters');
+  const itemAdd = document.querySelector('.panel__add');
+  const itemLogin = document.querySelector('.panel__item__login');
+
+  itemLoop.classList.add('hidden');
+  itemAdd.classList.add('hidden');
+  itemLogin.classList.add('hidden');
+
+  itemItemMain.removeEventListener('click', goHomePage);
+  itemItemMain.addEventListener('click', addTweetClose);
+}
+
+function addTweetClose() {
+  const addTweetContainer = document.querySelector('.add__tweet');
+  const addTweetForm = document.querySelector('.add__tweet__form');
+
+  addTweetContainer.classList.remove('add__tweet__adaptive');
+  addTweetForm.classList.remove('add__tweet__adaptive');
+
+  const itemItemMain = document.querySelector('.panel__item__main');
+  const itemLoop = document.querySelector('.panel__item__filters');
+  const itemAdd = document.querySelector('.panel__add');
+  const itemLogin = document.querySelector('.panel__item__login');
+
+  itemLoop.classList.remove('hidden');
+  if (JSON.parse(localStorage.getItem('currentUser')).login !== '') {
+    itemAdd.classList.remove('hidden');
+  }
+  itemLogin.classList.remove('hidden');
+
+  itemItemMain.removeEventListener('click', addTweetClose);
+  itemItemMain.addEventListener('click', goHomePage);
 }
 
 // Get new tweet feed if have filter
@@ -412,7 +333,10 @@ function clearInputs() {
 
 // Log out user
 function logOutUser() {
-  tweetsController.setCurrentUser('');
+  tweetsController.setCurrentUser({
+    login: '',
+    token: '',
+  });
 }
 
 // Get tweet by id
@@ -424,7 +348,10 @@ function getTweet(e) {
 
   tweetsController.showTweet(`${id}`);
 
-  if (tweetsController._tweets.user !== tweetsController._tweets.get(id).author) {
+  const main = document.querySelector('main');
+  main.style.overflowY = 'hidden';
+
+  if (JSON.parse(localStorage.getItem('currentUser')).login !== tweetsController._getById(id).author) {
     addHidden(editTweetButton);
     addHidden(deleteTweetButton);
   } else {
@@ -438,7 +365,7 @@ function getTweet(e) {
 function checkUser() {
   const newComment = document.querySelector('.new__comment');
 
-  if (tweetsController._tweets.user === '') {
+  if (JSON.parse(localStorage.getItem('currentUser')).login === '') {
     addHidden(newComment);
   } else {
     removeHidden(newComment);
@@ -456,7 +383,6 @@ function modalClose() {
 // Main page
 function mainPage() {
   const tweetFeed = document.getElementById('tweet-feed-id');
-  tweetFeed.textContent = '';
 
   tweetsController.getFeed();
   tweetFeed.addEventListener('click', getTweet);
@@ -466,6 +392,10 @@ function mainPage() {
 function goHomePage() {
   const tweetView = document.querySelector('.tweet-view');
   tweetView.classList.add('hidden');
+
+  const main = document.querySelector('main');
+  main.style.overflowY = 'auto';
+
   tweetsController.getFeed();
 }
 
@@ -511,7 +441,7 @@ function showMoreTweets() {
     }
   }
 
-  tweetsController.getFeed(0, tweets.length + 10, filters);
+  tweetsController.getFeed(0, tweets.length + 9, filters);
 }
 
 // DeleteTweet
@@ -552,12 +482,12 @@ function editModalCancel() {
 function editModalEdit() {
   const tweetView = document.querySelector('.tweet-view');
   const tweetId = document.querySelector('.twit').dataset.id;
-  const tweetText = tweetView.querySelector('.tweet-text');
   const tweetTextarea = tweetView.querySelector('.edit__textarea');
 
   tweetsController.editTweet(`${tweetId}`, tweetTextarea.value);
-  tweetsController.showTweet(`${id}`);
+  tweetsController.showTweet(`${tweetId}`);
   editModalCancel();
+  goHomePage();
 }
 
 function addNewComment(e) {
@@ -568,10 +498,122 @@ function addNewComment(e) {
   const tweetId = tweetView.dataset.id;
 
   if (commentTextarea.value) {
-    tweetsController._tweets.addComment(`${tweetId}`, commentTextarea.value);
+    tweetsController.addComment(`${tweetId}`, commentTextarea.value);
     commentTextarea.value = '';
     tweetsController.showTweet(`${tweetId}`);
+    goHomePage();
   }
+}
+
+function login(e) {
+  e.preventDefault();
+
+  const form = document.forms.autorization;
+  const username = form.username;
+  const pass = form.pass;
+  const error = form.querySelector('.input__errors');
+
+  username.style.border = '1px solid var(--black-color)';
+  pass.style.border = '1px solid var(--black-color)';
+
+  if (!username.value) {
+    username.style.border = '2px solid var(--red-color)';
+    error.classList.remove('hidden');
+    error.textContent = '*Empty username';
+  } else if (!pass.value) {
+    pass.style.border = '2px solid var(--red-color)';
+    error.classList.remove('hidden');
+    error.textContent = '*Empty password';
+  } else {
+    const newUser = {
+      login: username.value,
+      token: '',
+    };
+
+    const loginUser = tweetsController._api.loginUser(username.value, pass.value);
+    loginUser
+      .then(async (res) => {
+        if ((await res).status >= 400) {
+          username.style.border = '2px solid var(--red-color)';
+          pass.style.border = '2px solid var(--red-color)';
+          error.classList.remove('hidden');
+          error.textContent = '*Wrong login or pass';
+        } else {
+          newUser.token = (await (await res).json()).token;
+          tweetsController.setCurrentUser(newUser);
+          tweetsController._modalClose();
+          tweetsController._checkUser();
+        }
+      });
+  }
+}
+
+function signup(e) {
+  e.preventDefault();
+
+  const form = document.forms.autorization;
+  const username = form.username;
+  const pass = form.pass;
+  const repeate = form.repeate;
+  const error = form.querySelector('.input__errors');
+
+  username.style.border = '1px solid var(--black-color)';
+  pass.style.border = '1px solid var(--black-color)';
+  repeate.style.border = '1px solid var(--black-color)';
+
+  if (!username.value) {
+    username.style.border = '2px solid var(--red-color)';
+    error.classList.remove('hidden');
+    error.textContent = '*Empty username';
+  } else if (!pass.value) {
+    pass.style.border = '2px solid var(--red-color)';
+    error.classList.remove('hidden');
+    error.textContent = '*Empty password';
+  } else if (!repeate.value) {
+    repeate.style.border = '2px solid var(--red-color)';
+    error.classList.remove('hidden');
+    error.textContent = '*Empty repeate password';
+  } else if (pass.value !== repeate.value) {
+    pass.style.border = '2px solid var(--red-color)';
+    repeate.style.border = '2px solid var(--red-color)';
+    error.classList.remove('hidden');
+    error.textContent = '*Different passwords entered';
+  } else {
+    const signupUser = tweetsController._api.registerUser(username.value, pass.value);
+    signupUser
+      .then(async (res) => {
+        if ((await res).status >= 400) {
+          username.style.border = '2px solid var(--red-color)';
+          pass.style.border = '2px solid var(--red-color)';
+          repeate.style.border = '2px solid var(--red-color)';
+          error.classList.remove('hidden');
+          error.textContent = '*User already exist';
+        } else {
+          const newUser = {
+            login: username.value,
+            token: '',
+          };
+          const loginUser = tweetsController._api.loginUser(username.value, pass.value);
+          loginUser
+            .then(async (logRes) => {
+              newUser.token = (await (await logRes).json()).token;
+              tweetsController.setCurrentUser(newUser);
+              tweetsController._modalClose();
+              tweetsController._checkUser();
+            });
+          tweetsController._modalClose();
+          tweetsController._checkUser();
+        }
+      });
+  }
+}
+
+// Error close
+function errorClose() {
+  const errorPage = document.querySelector('.error');
+  errorPage.classList.add('hidden');
+
+  tweetsController.getFeed();
 }
 
 // ------EVENT---LISTENERS------
@@ -583,6 +625,7 @@ const panelLogin = document.querySelector('.panel__item__login');
 const goHome = document.querySelector('.signup__home');
 const panelHome = document.querySelector('.panel__item__home');
 const homeFromTweet = document.querySelector('.go__home');
+const itemMain = document.querySelector('.panel__item__main');
 
 goLogIn.addEventListener('click', loginOpen);
 panelLogin.addEventListener('click', loginOpen);
@@ -590,10 +633,11 @@ goSignUp.addEventListener('click', signupOpen);
 goHome.addEventListener('click', modalClose);
 panelHome.addEventListener('click', modalClose);
 homeFromTweet.addEventListener('click', goHomePage);
+itemMain.addEventListener('click', goHomePage);
 
 // Login and Signup
-tweetsController._loginButton.addEventListener('click', tweetsController.login);
-tweetsController._signupButton.addEventListener('click', tweetsController.signup);
+tweetsController._loginButton.addEventListener('click', login);
+tweetsController._signupButton.addEventListener('click', signup);
 
 // Logout
 const logout = document.querySelector('.log__out');
@@ -603,14 +647,26 @@ logout.addEventListener('click', logOutUser);
 const arrow = document.querySelector('.arrow');
 const clearAll = document.querySelector('.filters__reset');
 const filters = document.forms.filters;
+const adaptiveFilters = document.querySelector('.panel__item__filters');
+let timer = null;
 arrow.addEventListener('click', arrowOpen);
-filters.addEventListener('input', filtersInputs);
+adaptiveFilters.addEventListener('click', adaptiveFiltersOpen);
+filters.addEventListener('input', () => {
+  if (timer) {
+    clearTimeout(timer);
+    timer = null;
+  }
+  timer = setTimeout(filtersInputs, 200);
+});
 clearAll.addEventListener('click', clearInputs);
 
 // Add tweet
 
 const addTweet = document.querySelector('.add__tweet__button');
 addTweet.addEventListener('click', addNewTweet);
+
+const adaptiveAdd = document.querySelector('.panel__add');
+adaptiveAdd.addEventListener('click', addTweetOpen);
 
 // Show more
 const showMore = document.querySelector('.show__more__button');
@@ -637,6 +693,10 @@ editEdit.addEventListener('click', editModalEdit);
 // Add comment
 const newCommentButton = document.querySelector('.new__comment__button');
 newCommentButton.addEventListener('click', addNewComment);
+
+// Error button
+const errorButton = document.querySelector('.error__button');
+errorButton.addEventListener('click', errorClose);
 
 // Show main page when start
 mainPage();

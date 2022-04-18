@@ -129,10 +129,10 @@
 
     <footer>
         <div class="main__panel">
-            <div class="panel__item">
+            <div class="panel__item panel__item__main">
                 <span class="iconify" data-icon="ant-design:home-filled"></span>
             </div>
-            <div class="panel__item">
+            <div class="panel__item panel__item__filters">
                 <span class="iconify" data-icon="pepicons:loop"></span>
             </div>
             <div class="panel__item panel__add hidden">
@@ -197,6 +197,32 @@
         </div>
     </div>
 
+    <div class="error hidden">
+        <div class="error__container">
+            <div class="error__wrap">
+                <div class="error__icon">
+                    <span class="iconify error__icon" data-icon="akar-icons:arrow-clockwise"></span>
+                </div>
+                <div class="error__info">
+                    <div class="error__info__top">
+                        <h2 class="error__status">404</h2>
+                        <h2 class="error__text">Page not found</h2>
+                    </div>
+                    <button class="error__button">RETRY</button>
+                </div>
+            </div>
+            <div class="error__footer">
+                <div class="error__footer__text">
+                    <span>LetsPlay</span>  
+                    <span>Maxim Gorelikov</span>  
+                    <span>pschenka@gmail.com</span>  
+                    <span>16.04.2022</span>  
+                </div>
+                <img class="error__logo" src="img/minilogo.svg" alt="logo">
+            </div>
+        </div>
+    </div>
+
 
 
 
@@ -214,6 +240,8 @@
 
     <script src="./js/user.js"></script>
     <script src="./js/usercollection.js"></script>
+
+    <script src="./js/api.js"></script>
 
     <script src="./js/tweetscontroller.js"></script>
     <script src="./js/script.js"></script>

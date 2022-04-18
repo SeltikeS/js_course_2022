@@ -7,16 +7,20 @@
 
 // Class TweetsController
 class TweetsController {
-  constructor(users = [], tws = [], count = 0) {
-    this._users = new UserCollection(users);
-    this._tweets = new TweetCollection(tws, count);
+  constructor() {
+    this._tweets = [];
+
     this._headerView = new HeaderView('header-id');
     this._tweetFeedView = new TweetFeedView('tweet-feed-id');
     this._filterView = new FilterView('filter-id');
     this._tweetView = new TweetView('tweet-view-id');
+
+    this._api = new TweetFeedApiService('https://jslabapi.datamola.com/');
+
     this._loginButton = document.querySelector('.input__button__login');
     this._signupButton = document.querySelector('.input__button__signup');
-    this.setCurrentUser(this._tweets.user);
+
+    this.setCurrentUser(JSON.parse(localStorage.getItem('currentUser')));
   }
 
   _hiddenAdd(item) {
@@ -32,14 +36,14 @@ class TweetsController {
   }
 
   _viewIfHasUser(item) {
-    if (this._tweets.user !== ''
+    if (JSON.parse(localStorage.getItem('currentUser')).login !== ''
     && item.classList.contains('hidden')) {
       item.classList.remove('hidden');
     }
   }
 
   _hideIfHasntUser(item) {
-    if (this._tweets.user === ''
+    if (JSON.parse(localStorage.getItem('currentUser')).login === ''
     && !item.classList.contains('hidden')) {
       item.classList.add('hidden');
     }
@@ -55,29 +59,33 @@ class TweetsController {
     this._hiddenRemove(filters);
     this._hiddenRemove(showMore);
 
-    const tweetFeed = this._tweets.getPage(skip, top, filterConfig);
+    const tweetFeed = this._api.getTweet(skip, top, filterConfig);
     this._filterView.display(filterConfig);
     this._viewIfHasUser(addTweetArea);
     this._viewIfHasUser(addTweetPanel);
-    this._tweetFeedView.display(tweetFeed);
+    tweetFeed
+      .then(async (res) => {
+        if ((await res).status < 400) {
+          this._tweets = (await (await res).json());
+          this._tweetFeedView.display(this._tweets);
+        }
+      });
   }
 
   setCurrentUser(user) {
     const addTweetArea = document.querySelector('.add__tweet');
     const addTweetPanel = document.querySelector('.panel__add');
 
-    if (user !== '') {
-      this._tweets.user = user;
+    if (user.login !== '') {
       localStorage.setItem('currentUser', JSON.stringify(user));
-      this._headerView.display(this._tweets.user);
+      this._headerView.display(user.login);
       this._viewIfHasUser(addTweetArea);
       this._viewIfHasUser(addTweetPanel);
       this.getFeed();
     }
-    if (user === '') {
-      this._tweets.user = user;
+    if (user.login === '') {
       localStorage.setItem('currentUser', JSON.stringify(user));
-      this._headerView.hide(this._tweets.user);
+      this._headerView.hide(user.login);
       this._hideIfHasntUser(addTweetArea);
       this._hideIfHasntUser(addTweetPanel);
       this.getFeed();
@@ -85,41 +93,87 @@ class TweetsController {
   }
 
   addTweet(text) {
-    this._tweets.add(text);
-    this.getFeed();
+    const token = JSON.parse(localStorage.getItem('currentUser')).token;
+    const response = this._api.postTweet(token, text);
+    response.then(async (res) => {
+      if ((await res).status >= 400) {
+        const responseJson = (await (await res).json());
+        this._error(responseJson.statusCode, responseJson.message);
+      } else {
+        this.getFeed();
+      }
+    });
   }
 
   editTweet(id, text) {
-    this._tweets.edit(id, text);
-    this.getFeed();
+    const token = JSON.parse(localStorage.getItem('currentUser')).token;
+    const response = this._api.putTweet(token, id, text);
+    response
+      .then(async (res) => {
+        if ((await res).status >= 400) {
+          const responseJson = (await (await res).json());
+          this._error(responseJson.statusCode, responseJson.message);
+        } else {
+          this.getFeed();
+        }
+      });
   }
 
   removeTweet(id) {
-    this._tweets.remove(id);
-    this.getFeed();
+    const token = JSON.parse(localStorage.getItem('currentUser')).token;
+    const response = this._api.deleteTweet(token, id);
+    response
+      .then(async (res) => {
+        if ((await res).status >= 400) {
+          const responseJson = (await (await res).json());
+          this._error(responseJson.statusCode, responseJson.message);
+        } else {
+          this.getFeed();
+        }
+      });
+  }
+
+  addComment(id, text) {
+    const token = JSON.parse(localStorage.getItem('currentUser')).token;
+    const response = this._api.postComment(token, id, text);
+    response
+      .then(async (res) => {
+        if ((await res).status >= 400) {
+          const responseJson = (await (await res).json());
+          this._error(responseJson.statusCode, responseJson.message);
+        } else {
+          this.getFeed();
+        }
+      });
   }
 
   showTweet(id = null) {
-    const tweet = this._tweets.get(id);
+    const tweet = this._getById(id);
     if (tweet) {
       this._tweetView.display(tweet);
+      document.querySelector('.tweet-view').scrollIntoView(true, { block: 'start' });
     }
   }
 
-  _addUser(user) {
-    const isOk = this._users.add(user);
-    if (isOk) {
-      this.setCurrentUser(user.login);
-    }
-    return isOk;
+  _error(status = '404', text = 'Page not found') {
+    const errorPage = document.querySelector('.error');
+    const statusError = errorPage.querySelector('.error__status');
+    const textError = errorPage.querySelector('.error__text');
+
+    errorPage.classList.remove('hidden');
+    statusError.textContent = status;
+    textError.textContent = text;
   }
 
-  _loginUser(user) {
-    const isOk = this._users.login(user);
-    if (isOk) {
-      this.setCurrentUser(user.login);
+  _getById(id) {
+    let tweet = {};
+    for (let i = 0; i < this._tweets.length; ++i) {
+      if (this._tweets[i].id === id) {
+        tweet = this._tweets[i];
+        break;
+      }
     }
-    return isOk;
+    return tweet;
   }
 
   _modalClose() {
@@ -132,101 +186,10 @@ class TweetsController {
 
   _checkUser() {
     const newComment = document.querySelector('.new__comment');
-    if (this._tweets.user === '') {
-      addHidden(newComment);
+    if (JSON.parse(localStorage.getItem('currentUser')).login === '') {
+      this._hiddenAdd(newComment);
     } else {
-      removeHidden(newComment);
-    }
-  }
-
-  login(e) {
-    e.preventDefault();
-
-    const form = document.forms.autorization;
-    const username = form.username;
-    const pass = form.pass;
-    const error = form.querySelector('.input__errors');
-
-    username.style.border = '1px solid var(--black-color)';
-    pass.style.border = '1px solid var(--black-color)';
-
-    if (!username.value) {
-      username.style.border = '2px solid var(--red-color)';
-      error.classList.remove('hidden');
-      error.textContent = '*Empty username';
-    } else if (!pass.value) {
-      pass.style.border = '2px solid var(--red-color)';
-      error.classList.remove('hidden');
-      error.textContent = '*Empty password';
-    } else {
-      const newUser = {
-        login: username.value,
-        pass: pass.value,
-      };
-      const isExist = tweetsController._users.isExist(newUser);
-      if (!isExist) {
-        username.style.border = '2px solid var(--red-color)';
-        error.classList.remove('hidden');
-        error.textContent = '*Incorrect username';
-      } else {
-        const isLogin = tweetsController._users.login(newUser);
-        if (!isLogin) {
-          pass.style.border = '2px solid var(--red-color)';
-          error.classList.remove('hidden');
-          error.textContent = '*Incorrect password';
-        } else {
-          tweetsController._loginUser(newUser);
-          tweetsController._modalClose();
-          tweetsController._checkUser();
-        }
-      }
-    }
-  }
-
-  signup(e) {
-    e.preventDefault();
-
-    const form = document.forms.autorization;
-    const username = form.username;
-    const pass = form.pass;
-    const repeate = form.repeate;
-    const error = form.querySelector('.input__errors');
-
-    username.style.border = '1px solid var(--black-color)';
-    pass.style.border = '1px solid var(--black-color)';
-    repeate.style.border = '1px solid var(--black-color)';
-
-    if (!username.value) {
-      username.style.border = '2px solid var(--red-color)';
-      error.classList.remove('hidden');
-      error.textContent = '*Empty username';
-    } else if (!pass.value) {
-      pass.style.border = '2px solid var(--red-color)';
-      error.classList.remove('hidden');
-      error.textContent = '*Empty password';
-    } else if (!repeate.value) {
-      repeate.style.border = '2px solid var(--red-color)';
-      error.classList.remove('hidden');
-      error.textContent = '*Empty repeate password';
-    } else if (pass.value !== repeate.value) {
-      pass.style.border = '2px solid var(--red-color)';
-      repeate.style.border = '2px solid var(--red-color)';
-      error.textContent = '*Different passwords entered';
-    } else {
-      const newUser = {
-        login: username.value,
-        pass: pass.value,
-      };
-      const isExist = tweetsController._users.isExist(newUser);
-      if (isExist) {
-        username.style.border = '2px solid var(--red-color)';
-        error.classList.remove('hidden');
-        error.textContent = '*Username is already exist';
-      } else {
-        tweetsController._addUser(newUser);
-        tweetsController._modalClose();
-        tweetsController._checkUser();
-      }
+      this._hiddenRemove(newComment);
     }
   }
 }
