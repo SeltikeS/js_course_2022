@@ -348,6 +348,9 @@ function getTweet(e) {
 
   tweetsController.showTweet(`${id}`);
 
+  const main = document.querySelector('main');
+  main.style.overflowY = 'hidden';
+
   if (JSON.parse(localStorage.getItem('currentUser')).login !== tweetsController._getById(id).author) {
     addHidden(editTweetButton);
     addHidden(deleteTweetButton);
@@ -389,6 +392,10 @@ function mainPage() {
 function goHomePage() {
   const tweetView = document.querySelector('.tweet-view');
   tweetView.classList.add('hidden');
+
+  const main = document.querySelector('main');
+  main.style.overflowY = 'auto';
+
   tweetsController.getFeed();
 }
 
