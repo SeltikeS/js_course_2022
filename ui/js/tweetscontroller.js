@@ -50,7 +50,7 @@ class TweetsController {
   }
 
   // Methods
-  async getFeed(skip, top, filterConfig) {
+  getFeed(skip, top, filterConfig) {
     const filters = document.querySelector('.filters');
     const addTweetArea = document.querySelector('.add__tweet');
     const addTweetPanel = document.querySelector('.panel__add');
@@ -59,16 +59,17 @@ class TweetsController {
     this._hiddenRemove(filters);
     this._hiddenRemove(showMore);
 
-    const tweetFeed = await this._api.getTweet(skip, top, filterConfig);
+    const tweetFeed = this._api.getTweet(skip, top, filterConfig);
     this._filterView.display(filterConfig);
     this._viewIfHasUser(addTweetArea);
     this._viewIfHasUser(addTweetPanel);
-
-    if (tweetFeed.status < 400) {
-      const tweets = await tweetFeed.json();
-      this._tweetFeedView.display(tweets);
-      this._tweets = tweets;
-    }
+    tweetFeed
+      .then(async (res) => {
+        if ((await res).status < 400) {
+          this._tweets = (await (await res).json());
+          this._tweetFeedView.display(this._tweets);
+        }
+      });
   }
 
   setCurrentUser(user) {
@@ -91,29 +92,34 @@ class TweetsController {
     }
   }
 
-  async addTweet(text) {
+  addTweet(text) {
     const token = JSON.parse(localStorage.getItem('currentUser')).token;
-    const response = await this._api.postTweet(token, text);
-    if (response.status >= 400) {
-      const responseJson = await response.json();
-      this._error(responseJson.statusCode, responseJson.message);
-    } else {
-      this.getFeed();
-    }
+    const response = this._api.postTweet(token, text);
+    response.then(async (res) => {
+      if ((await res).status >= 400) {
+        const responseJson = (await (await res).json());
+        this._error(responseJson.statusCode, responseJson.message);
+      } else {
+        this.getFeed();
+      }
+    });
   }
 
-  async editTweet(id, text) {
+  editTweet(id, text) {
     const token = JSON.parse(localStorage.getItem('currentUser')).token;
     const response = this._api.putTweet(token, id, text);
-    if (response.status >= 400) {
-      const responseJson = await response.json();
-      this._error(responseJson.statusCode, responseJson.message);
-    } else {
-      this.getFeed();
-    }
+    response
+      .then(async (res) => {
+        if ((await res).status >= 400) {
+          const responseJson = (await (await res).json());
+          this._error(responseJson.statusCode, responseJson.message);
+        } else {
+          this.getFeed();
+        }
+      });
   }
 
-  async removeTweet(id) {
+  removeTweet(id) {
     const token = JSON.parse(localStorage.getItem('currentUser')).token;
     const response = this._api.deleteTweet(token, id);
     response
@@ -127,7 +133,7 @@ class TweetsController {
       });
   }
 
-  async addComment(id, text) {
+  addComment(id, text) {
     const token = JSON.parse(localStorage.getItem('currentUser')).token;
     const response = this._api.postComment(token, id, text);
     response
